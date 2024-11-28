@@ -33,7 +33,7 @@ const Login = () => {
               router.push('/Admin');
               window.location.reload();
             } else {
-              router.push('/home');
+              router.push('/Home/home');
               window.location.reload();
             }
           }
