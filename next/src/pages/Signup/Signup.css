@@ -1,0 +1,236 @@
+.signup-container {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 100%;
+  }
+  
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 8px;
+    width: 500px;
+    box-sizing: border-box;
+    height: 85%;
+  }
+  
+  .signup-form h3 {
+    margin-top: 0;
+    font-size: 30px;
+    font-weight: 600;
+    margin-right: 305px;
+  }
+  
+  .signup-form div {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .signup-form .name-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .signup-form input,
+  .signup-form select {
+    width: 100%;
+    padding: 4px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    border-radius: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(0px);
+  }
+  
+  .signup-form input::placeholder,
+  .signup-form select {
+    color: rgb(255, 255, 255);
+  }
+  
+  .signup-form .password-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  .signup-form .password-container input {
+    flex-grow: 1;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    border-radius: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+  }
+  
+  .signup-form .password-container .passwordSwitch {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 10px;
+    font-size: 18px;
+  }
+  
+  .signup-form .signup-button {
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background: linear-gradient(to left, #a64efa , 60% ,  #6222cf);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(138, 74, 243, 0.4);
+    transition:transform 0.3s ease;
+    align-self: flex-end;
+    margin-top: -20px;
+  }
+  
+  .signup-form .signup-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .signup-form .error-message {
+    color: red;
+    font-size: 14px;
+  }
+  
+  .signup-form .input-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .signup-form .signup-link {
+    font-size: 14px;
+  }
+  
+  .signup-form .signup-link a {
+    color: #8a4af3;
+    text-decoration: none;
+  }
+  
+  .signup-form .signup-link a:hover {
+    text-decoration: underline;
+  }
+  
+  .signup-image {
+    width: 500px;
+    padding-right: 250px;
+    margin-top: 4px;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.878));
+  
+  }
+  
+  .gretting {
+    font-size: 25px;
+    margin-left: 50px;
+  }
+  
+  .signup-form select option {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+  
+  #email {
+    width: 100%;
+    padding: 4px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    border-radius: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(0px);
+  }
+  
+  #email::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .signup-form select {
+    width: 100%;
+    padding: 4px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    border-radius: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(0px);
+  }
+  
+  .signup-form select option {
+    background-color: rgba(173, 173, 173, 0.286) ;
+    color: rgb(7, 7, 7);
+  }
+  
+  .signup-form select:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  
+  
+  .swal2-title.swal-title-success {
+    color: #28a745; 
+  }
+  
+  .swal2-title.swal-title-error {
+    color: #ff1900; 
+  }
+  
+  .swal2-confirm.succes-custom-button {
+    border-radius: 20px;
+    padding: 15px 30px;
+    background-color: #28a745; 
+    color: white;
+    border: none;
+  }
+  
+  .swal2-confirm.succes-custom-button:hover {
+    background: #218838;
+    transform: scale(1.05);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .swal2-confirm.login-custom-button {
+    border-radius: 20px;
+    padding: 15px 30px;
+    background-color: #ff1900; 
+    color: white;
+    border: none;
+  }
+  
+  .swal2-confirm.login-custom-button:hover {
+    background: #be1300;
+    transform: scale(1.05);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .swal2-content {
+    color: white !important;
+  }
+  
