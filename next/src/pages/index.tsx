@@ -22,7 +22,6 @@ const Login = () => {
    let result = await axios.post("http://localhost:3000/user/login" , {email , password})
          console.log(result);
 
-<<<<<<< HEAD
         
         localStorage.setItem('user', JSON.stringify(result));
         localStorage.setItem('userType', 'user');
@@ -47,25 +46,6 @@ const Login = () => {
     } catch (error) {
       console.error("Error during Google login:", error);
       setError('An error occurred during Google login. Please try again later.');
-=======
-            if (user.type === 'admin') {
-              router.push('/Admin');
-              window.location.reload();
-            } else {
-              router.push('/Home/home');
-              // window.location.reload();
-            }
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          if (err.response && err.response.data.message === 'Invalid credentials') {
-            setError('Incorrect password. Please try again.');
-          } else {
-            setError('An error occurred during login. Please try again later.');
-          }
-        });
->>>>>>> bf5db77eae0fbe2d3264065e9ef940c11a4bc393
     }
   };
 
