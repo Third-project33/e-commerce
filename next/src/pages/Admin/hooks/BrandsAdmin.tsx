@@ -1,109 +1,153 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Swal from 'sweetalert2'
-import Image from 'next/image'
-import '../styles/BrandsAdmin.css'; 
+
+import Swal from 'sweetalert2';
+import '../../Admin/styles/BrandsAdmin.css';
 
 
 interface Brand {
-    id: number;        
+    id: number;
     name: string;
     logo: string;
     verified: number;
 }
-const BrandAdmin = () => {
-    const router=useRouter()
-    const [brands, setBrands] = useState<Brand[]>([]);
 
-   const handledelete  = (id: number) => {
-    axios.delete(`http://localhost:3001/brands/delete/${id}`)
-        .then(() => {
+const BrandAdmin: React.FC = () => {
+    const router = useRouter();
+    const [brands, setBrands] = useState<Brand[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+
+    const handleDelete = async (id: number): Promise<void> => {
+        try {
+            await axios.delete(`http://localhost:3000/brands/delete/${id}`);
+
             Swal.fire({
                 title: 'Success!',
                 text: 'Brand successfully deleted',
                 icon: 'success',
                 confirmButtonText: 'OK'
             });
-            window.location.reload();
-        })
-        .catch((err) => console.error("Error deleting brand:", err));
-};
-    // Fixed typing and logic
-    const handleverify = (brand: Brand) => {
-        const checkverify = brand.verified === 1 ? 0 : 1;
-        axios.put(`http://localhost:3001/brands/update/${brand.id}`, { verified: checkverify })
-            .then(() => {
-                Swal.fire({
-                    title: 'Success!',
-                    text: `Brand verification status updated to ${checkverify === 1 ? 'verified' : 'unverified'}.`,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-                router.push("/Admin");
-            })
-            .catch((err) => {
-                console.error("Error updating brand verification status:", err);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to update brand verification status.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+            // Refresh brands instead of page reload
+            fetchBrands();
+        } catch (error) {
+            console.error("Error deleting brand:", error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to delete brand',
+                icon: 'error',
+                confirmButtonText: 'OK'
             });
+        }
     };
-           
+
+    const handleVerify = async (brand: Brand): Promise<void> => {
+        const checkVerify = brand.verified === 1 ? 0 : 1;
+        try {
+            await axios.put(`http://localhost:3000/brands/update/${brand.id}`, { 
+                verified: checkVerify 
+            });
+            
+            Swal.fire({
+                title: 'Success!',
+                text: `Brand verification status updated to ${checkVerify === 1 ? 'verified' : 'unverified'}.`,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            
+            router.push("/Admin/hooks/Admin");
+        } catch (error) {
+            console.error("Error updating brand verification status:", error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to update brand verification status.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
+    const fetchBrands = async (): Promise<void> => {
+        try {
+            setLoading(true);
+            const response = await axios.get<Brand[]>("http://localhost:3000/brands/allbrands");
+            setBrands(response.data);
+        } catch (error) {
+            console.error("Error fetching brands:", error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to fetch brands',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchBrands = async () => {
-            try {
-                const response = await axios.get<Brand[]>("http://localhost:3001/brands/allbrands");
-                setBrands(response.data);
-            } catch (error) {
-                console.error("Error fetching brands:", error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to fetch brands',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        };
-
         fetchBrands();
     }, []);
 
+    const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+        const target = e.target as HTMLImageElement;
+        target.onerror = null; // Prevent infinite loop
+        target.src = '/images/default-brand-logo.png'; // Path to your default brand logo
+    };
+
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+            </div>
+        );
+    }
+
     return (
-        <div>
-        <div className="admin-brand-grid-container">
-            {brands.map((brand) => (
+        <div className="admin-brand-container">
+            <div className="admin-brand-grid-container">
+                {brands.map((brand) => (
                     <div className="admin-brand-card" key={brand.id}>
-                    
                         <div className="admin-logo-container">
-                        <Image 
-                                src={brand.logo}
-                                alt={`${brand.name} logo`}
-                                width={100} 
-                                height={100}
+
+                            <img 
+                                src={brand.logo || '/images/default-brand-logo.png'}
+                                alt={`${brand.name} logo`} 
+
                                 className="admin-brand-logo"
+                                onError={handleImageError}
                                 onClick={() => router.push({
-                                    pathname: "/adminbrandproducts",
+                                    pathname: "/Admin/hooks/Brandproducts",
                                     query: { brandId: brand.id }
                                 })}
-                                priority
-                            />
-                       
+
+/>
                         </div>
-                    <h3 className="admin-brand-name">{brand.name}</h3>
-                    
-                    <div className="admin-button-container">
-                        <button className="admin-brand-button admin-green-button"onClick={()=>handleverify(brand)} >Verify</button>
-                        <button className="admin-brand-button admin-red-button" onClick={()=>handledelete(brand.id)}>Remove</button>
+                        <h3 className="admin-brand-name">{brand.name}</h3>
+                        <div className="admin-button-container">
+                            <button 
+                                className={`admin-brand-button ${brand.verified === 1 ? 'admin-red-button' : 'admin-green-button'}`}
+                                onClick={() => handleVerify(brand)}
+                            >
+                                {brand.verified === 1 ? 'Unverify' : 'Verify'}
+                            </button>
+                            <button 
+                                className="admin-brand-button admin-red-button"
+                                onClick={() => handleDelete(brand.id)}
+                            >
+                                Remove
+                            </button>
+                        </div>
                     </div>
-                </div>
-            ))}
-             <button className="Users" onClick={() => router.push ("/Admin")}> Back </button>
-        </div>
+                ))}
+            </div>
+            <button 
+                className="back-button" 
+                onClick={() => router.push("/Admin/hooks/Admin")}
+            >
+                Back
+            </button>
         </div>
     );
 };
