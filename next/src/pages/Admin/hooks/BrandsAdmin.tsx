@@ -16,6 +16,7 @@ const BrandAdmin: React.FC = () => {
     const [brands, setBrands] = useState<Brand[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
+
     const handleDelete = async (id: number): Promise<void> => {
         try {
             await axios.delete(`http://localhost:3000/brands/delete/${id}`);
