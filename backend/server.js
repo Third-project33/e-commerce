@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 require("./database/index.js")
-const PORT = 3001;
+const PORT = 3000;
 const brandsroute = require("./routes/brands.js")
 const userRoute = require("./routes/user.js");
 const productsRoute = require("./routes/AllProducts.js")
