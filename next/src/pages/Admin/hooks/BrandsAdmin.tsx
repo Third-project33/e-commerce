@@ -18,7 +18,7 @@ const BrandAdmin = () => {
 
    // Fixed TypeScript typing
    const handledelete  = (id: number) => {
-    axios.delete(`http://localhost:3000/brands/delete/${id}`)
+    axios.delete(`http://localhost:3001/brands/delete/${id}`)
         .then(() => {
             Swal.fire({
                 title: 'Success!',
@@ -33,7 +33,7 @@ const BrandAdmin = () => {
     // Fixed typing and logic
     const handleverify = (brand: Brand) => {
         const checkverify = brand.verified === 1 ? 0 : 1;
-        axios.put(`http://localhost:3000/brands/update/${brand.id}`, { verified: checkverify })
+        axios.put(`http://localhost:3001/brands/update/${brand.id}`, { verified: checkverify })
             .then(() => {
                 Swal.fire({
                     title: 'Success!',
@@ -58,7 +58,7 @@ const BrandAdmin = () => {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const response = await axios.get<Brand[]>("http://localhost:3000/brands/allbrands");
+                const response = await axios.get<Brand[]>("http://localhost:3001/brands/allbrands");
                 setBrands(response.data);
             } catch (error) {
                 console.error("Error fetching brands:", error);

@@ -25,7 +25,7 @@ const AdminBrandProducts = () => {
         const fetchProducts = async (): Promise<void> => {
             if (!brandId) return;
             try {
-                const response = await axios.get<typeof products>(`http://localhost:3000/api/products/${brandId}`);
+                const response = await axios.get<typeof products>(`http://localhost:3001/api/products/${brandId}`);
                 setProducts(response.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -37,7 +37,7 @@ const AdminBrandProducts = () => {
 
     const handlePriceUpdate = async (productId: number): Promise<void> => {
         try {
-            await axios.put(`http://localhost:3000/api/products/${productId}`, { 
+            await axios.put(`http://localhost:3001/api/products/${productId}`, { 
                 price: parseFloat(newPrice) 
             });
             
