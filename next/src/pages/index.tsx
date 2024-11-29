@@ -29,13 +29,13 @@ const Login = () => {
             localStorage.setItem('userAvatar', response.data.user.avatar);
             localStorage.setItem('userType', user.type);
 
-            if (user.type === 'admin') {
-              router.push('/Admin');
-              window.location.reload();
-            } else {
-              router.push('/Home/home');
-              window.location.reload();
-            }
+            // if (user.type === 'admin') {
+              router.push('Products/Productlist');
+              // window.location.reload();
+            // } else {
+            //   router.push('/Home/home');
+            //   window.location.reload();
+            // }
           }
         })
         .catch((err) => {

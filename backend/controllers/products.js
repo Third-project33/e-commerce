@@ -23,28 +23,23 @@ const getProductbybrand = async (req, res) => {
         console.error("Error fetching products by brand ID:", error);
         res.status(500).send("Failed to fetch products");
     }
-};  
-
-
+};
+// safsaf
 const getFilteredProducts = (req, res) => {
-    const { category, priceRange, rarity, status, onSale, chains, sort } = req.query
+    const { category, priceRange, rarity, status, onSale, sort } = req.query
     const whereClause = {}
     const orderClause = []
 
     if (category) {
         whereClause.collection = category
     }
- 
+
     if (rarity) {
         whereClause.rarity = rarity
     }
 
     if (status) {
         whereClause.status = status
-    }
-
-    if (chains) {
-        whereClause.chains = { [Op.like]: `%${chains}%` }
     }
 
     if (onSale === 'true') {
@@ -76,7 +71,6 @@ const getFilteredProducts = (req, res) => {
         }
     }
 
-
     products.findAll({ where: whereClause, order: orderClause })
         .then(filteredProducts => {
             console.log("Filtered products:", filteredProducts)
@@ -92,7 +86,6 @@ const incrementownercount = async (req, res) => {
     const { productId } = req.params; 
 
     try {
-        
         const product = await db.products.findByPk(productId);
         if (!product) {
             return res.status(404).json({ message: "Product not found." });
@@ -100,7 +93,6 @@ const incrementownercount = async (req, res) => {
 
         const brandId = product.brandId; 
 
-        
         await db.brands.increment('owner', { where: { id: brandId } });
 
         res.status(200).json({ message: "Owner count incremented successfully." });
@@ -111,18 +103,16 @@ const incrementownercount = async (req, res) => {
 };
 
 const decrementownercount = async (req, res) => {
-    const { productId } = req.params; // Get the product ID from the request parameters
+    const { productId } = req.params; 
 
     try {
-        // Find the product by ID to get the associated brand ID
         const product = await db.products.findByPk(productId);
         if (!product) {
             return res.status(404).json({ message: "Product not found." });
         }
 
-        const brandId = product.brandId; // Get the brand ID from the product
+        const brandId = product.brandId; 
 
-        // Decrement the owner count in the brands table
         await db.brands.decrement('owner', { where: { id: brandId } });
 
         res.status(200).json({ message: "Owner count decremented successfully." });
@@ -133,13 +123,13 @@ const decrementownercount = async (req, res) => {
 };
 
 const updateproductbyId = async (req, res) => {
-    const productId = req.params.productId; // Get the product ID from the request parameters
-    const { price } = req.body; // Destructure the request body for the attributes you want to update
+    const productId = req.params.productId; 
+    const { price } = req.body;
 
     try {
         const [updated] = await db.products.update(
-            { price }, // Attributes to update
-            { where: { id: productId } } // Condition to find the product by ID
+            { price },
+            { where: { id: productId } }
         );
 
         if (!updated) {
@@ -155,22 +145,19 @@ const updateproductbyId = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    // Log the incoming request body
-
     const { 
       title, 
       price, 
       image,
       status,
       rarity,
-      chains,
       collection,
       stock = 0,
       onSale = false
     } = req.body;
 
     // Validate required fields
-    if (!title || !price || !image || !rarity || !chains || !collection) {
+    if (!title || !price || !image || !rarity || !collection) {
       return res.status(400).json({
         success: false,
         message: 'Missing required fields',
@@ -185,7 +172,6 @@ const createProduct = async (req, res) => {
       image: image.trim(),
       status: status || 'Available',
       rarity: rarity.trim(),
-      chains: chains.trim(),
       collection: collection.trim(),
       stock: parseInt(stock),
       onSale: Boolean(onSale)
@@ -203,11 +189,11 @@ const createProduct = async (req, res) => {
       success: false,
       message: 'Error creating product',
       error: error.message,
-      receivedData: req.body  // Include the received data in error response
+      receivedData: req.body  
     });
   }
 };
 
 module.exports = {
-    getFilteredProducts,getProductbybrand,incrementownercount,decrementownercount,updateproductbyId,createProduct
+    getFilteredProducts, getProductbybrand, incrementownercount, decrementownercount, updateproductbyId, createProduct
 };
