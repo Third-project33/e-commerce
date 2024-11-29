@@ -1,4 +1,4 @@
-.profile-container {
+/* .profile-container {
     position: relative;
     max-width: 1000px;
     margin: 40px auto;
@@ -225,6 +225,7 @@
     border-radius: 15px;
     cursor: pointer;
     font-weight: 600;
+
     display: flex;
     align-items: center;
     gap: 10px;
@@ -255,3 +256,32 @@
         height: 150px;
     }
 }
+=======
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .Users:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  
+  .Users i {
+    font-size: 18px;
+  }
+  
+.post-image-container {
+    width: 150px; 
+    height: 150px; 
+    overflow: hidden; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto; 
+}
+
+.post-image {
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: cover; 
+} */
+

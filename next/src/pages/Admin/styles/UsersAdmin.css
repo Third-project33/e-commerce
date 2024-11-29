@@ -1,3 +1,4 @@
+
 /* UsersAdmin.css */
 .users-container {
     min-height: 100vh;
@@ -52,6 +53,26 @@
         transparent
     );
     transition: 0.5s;
+
+/* UsersAdmin.css
+.user-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px; 
+    padding: 20px; 
+}
+
+.user-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px; 
+    text-align: center;
+}
+
+.user-name {
+    font-size: 16px; 
+    margin: 10px 0; 
+
 }
 
 .user-card:hover::before {
@@ -142,6 +163,7 @@
     border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
+
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -256,3 +278,4 @@
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
 }
+

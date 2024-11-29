@@ -1,7 +1,7 @@
 const { Sequelize  } = require('sequelize');
 
 
-const sequelize = new Sequelize('e-commerce', 'root', '23707560eya', {
+const sequelize = new Sequelize('e-commerce', 'root', 'saf12@sql', {
   host: 'localhost',
   dialect: 'mysql' 
 });
@@ -57,7 +57,7 @@ db.products.belongsToMany(db.Favourites ,{through: db.user_favorites})
 
 
 
-// sequelize.sync({alter : true}).then(() => {
+// sequelize.sync({alter : false}).then(() => {
 //    console.log(' table created successfully!');
 //    }).catch((error) => {
 //     console.error('Unable to create table : ', error);

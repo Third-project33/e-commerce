@@ -23,10 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 'Available'
         },
-        chains: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+     
         onSale: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

@@ -1,3 +1,4 @@
+
 .min-h-screen {
     min-height: 100vh;
     background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
@@ -350,6 +351,7 @@ img.rounded-full:hover {
     border-radius: 8px;
     padding: 12px 24px;
     color: white;
+
     font-weight: bold;
     transform-style: preserve-3d;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -445,3 +447,4 @@ img.rounded-full:hover {
 @keyframes rainbow {
     to { background-position: 200% center; }
 }
+
