@@ -1,0 +1,32 @@
+/* Brandproducts.css */
+.admin-product-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between items */
+    padding: 20px; /* Padding around the grid */
+}
+
+.admin-product-card {
+    background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding inside each card */
+    text-align: center; /* Center text */
+}
+.admin-brand-card:hover {
+    transform: scale(1.05); 
+}
+
+.admin-product-image {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.admin-product-name {
+    font-size: 16px; /* Font size for product name */
+    margin: 10px 0; /* Space above and below the name */
+}
+
+.admin-product-price {
+    font-size: 14px; /* Font size for product price */
+    color: #28a745; /* Green color for price */
+}

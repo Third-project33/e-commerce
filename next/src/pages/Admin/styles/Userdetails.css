@@ -1,0 +1,174 @@
+.profile-container {
+    position: relative;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .profile-avatar {
+    margin-bottom: 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+    background: #f0f0f0;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid #4a90e2;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .profile-header h1 {
+    margin: 10px 0;
+    color: #333;
+    font-size: 2em;
+    font-weight: 600;
+  }
+  
+  .email {
+    color: #777;
+    font-size: 1.1em;
+  }
+  
+  .profile-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .stat-card {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stat-card i {
+    font-size: 30px;
+    color: #4a90e2;
+    margin-bottom: 10px;
+  }
+  
+  .stat-card h3 {
+    margin: 10px 0;
+    color: #555;
+    font-size: 1.2em;
+  }
+  
+  .stat-card p {
+    color: #333;
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  
+  .User-posts {
+    margin-top: 40px;
+  }
+ 
+  .User-posts h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: 600;
+    border-bottom: 3px solid #4a90e2;
+    padding-bottom: 10px;
+  }
+  
+  .posts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .posts-data {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    width: 250px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .posts-data:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .posts-data h4 {
+    margin: 10px 0;
+    color: #333;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+  
+  
+  .Users {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 12px 25px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .Users:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  
+  .Users i {
+    font-size: 18px;
+  }
+  /* Add this to Userdetails.css */
+.post-image-container {
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height */
+    overflow: hidden; /* Hide overflow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto; /* Center the container */
+}
+
+.post-image {
+    max-width: 100%; /* Ensure the image fits within the container */
+    max-height: 100%; /* Ensure the image fits within the container */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
