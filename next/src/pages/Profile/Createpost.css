@@ -1,0 +1,176 @@
+.CreatedPostBackground {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 100%;
+  }
+  
+  .CreatedPostWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 8px;
+    width: 600px;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .CreatedPostForm {
+    width: 100%;
+  }
+  
+  .CreatedPostForm h2 {
+    margin-top: 0;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  
+  .CreatedPostArea {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    border-radius: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(0px);
+    resize: vertical;
+    margin-bottom: 20px;
+  }
+  
+  .CreatedPostArea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .CreatedImageSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+  }
+  
+  .CreatedImageAdd,
+  .CreatedImageUpload {
+    width: 200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .CreatedImageAdd {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+  
+  .CreatedImageAdd:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .CreatedImagePreview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+    margin: 10px auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .CreatedPostSubmit {
+    padding: 10px 30px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background: linear-gradient(to left, #a64efa, 60%, #6222cf);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(138, 74, 243, 0.4);
+    transition: transform 0.3s ease;
+    align-self: flex-end;
+    display: inline-block;
+    margin-left: auto;
+    margin-top: 20px;
+    float: right;
+  }
+  
+  .CreatedPostSubmit:hover {
+    transform: scale(1.1);
+  }
+  
+  .CreatedImageSelector {
+    display: none;
+  }
+  
+  .CreatedPostForm form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .CreatedPostArea:focus {
+    border-bottom: 2px solid rgba(138, 74, 243, 0.8);
+  }
+  
+  .CreatedImageUpload {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    margin-top: 10px;
+  }
+  
+  .CreatedImageUpload:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .CreatedImageUpload i {
+    margin-right: 8px;
+  }
+  .CreatedImageUpload span {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .CreatedImageUpload span::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+  
+  
