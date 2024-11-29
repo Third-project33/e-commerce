@@ -1,0 +1,65 @@
+.sidebar {
+  width: 250px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 20px;
+}
+
+.filtersHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.filterIcon {
+  font-size: 20px;
+}
+
+.filterItem {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.filterTitle {
+  color: #fff;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chevron {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.filterOptions {
+  padding-left: 20px;
+  margin-top: 12px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.filterOptions.show {
+  max-height: 500px;
+}
+
+.filterOption {
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: background 0.3s;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.filterOption:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

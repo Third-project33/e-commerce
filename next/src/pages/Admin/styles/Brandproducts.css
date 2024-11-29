@@ -1,5 +1,5 @@
-/* Brandproducts.css */
-.admin-product-grid-container {
+
+ .admin-product-grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
@@ -10,7 +10,7 @@
     animation: gradientFlow 15s ease infinite;
     position: relative;
     overflow: hidden;
-}
+} 
 
 /* Animated background pattern */
 .admin-product-grid-container::before {
@@ -41,6 +41,8 @@
     position: relative;
     overflow: hidden;
     z-index: 2;
+    height: 65%;
+
 }
 
 .admin-product-card:hover {

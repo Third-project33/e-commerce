@@ -1,3 +1,5 @@
+
+
 .min-h-screen {
     min-height: 100vh;
     background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
@@ -350,98 +352,8 @@ img.rounded-full:hover {
     border-radius: 8px;
     padding: 12px 24px;
     color: white;
-    font-weight: bold;
-    transform-style: preserve-3d;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 0 #4a0072;
-}
-
-.button-3d:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #4a0072;
-}
-
-.button-3d:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #4a0072;
-}
-
-/* Shimmering text effect */
-.shimmer-text {
-    background: linear-gradient(90deg, 
-        transparent 0%,
-        rgba(255, 255, 255, 0.2) 15%,
-        transparent 30%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-@keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* Floating animation */
-.floating {
-    animation: floating 3s ease-in-out infinite;
-}
-
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-/* Ripple effect on click */
-.ripple {
-    position: relative;
-    overflow: hidden;
-}
-
-.ripple::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    transform: scale(0);
-    opacity: 0;
-    transition: transform 0.5s, opacity 0.5s;
-}
-
-.ripple:active::after {
-    transform: scale(2);
-    opacity: 0;
-    transition: 0s;
-}
-
-/* Rainbow text on hover */
-.rainbow-text-hover:hover {
-    background: linear-gradient(
-        90deg,
-        #ff0000,
-        #ff7f00,
-        #ffff00,
-        #00ff00,
-        #0000ff,
-        #4b0082,
-        #8b00ff
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbow 2s linear infinite;
-}
-
-@keyframes rainbow {
-    to { background-position: 200% center; }
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
 }
