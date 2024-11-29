@@ -18,6 +18,7 @@ import flechet from "../../app/images/fleshet.png";
 import logolacoste from "../../app/images/lacoste-logo.png";
 import nft from "../../app/images/nft.png";
 import tag from "../../app/images/tag.png";
+import Navbar from "../navbar/navbar";
 
 const Home = () => {
   interface Product {
@@ -89,7 +90,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="content-wrapper">
         <div className="tabs">
           <button className="tab active">Main Collection</button>
