@@ -65,7 +65,7 @@ const AdminBrandProducts = () => {
                     <button onClick={() => setShowDropdown((prev) => ({ ...prev, [product.id]: !prev[product.id] }))}>
                         Update Price
                     </button>
-                    {showDropdown[product.id] && ( // Conditional rendering of the dropdown
+                    {showDropdown[product.id] && ( 
                         <div className="price-update-dropdown">
                             <input 
                                 type="number" 

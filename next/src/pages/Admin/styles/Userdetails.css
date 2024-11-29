@@ -1,4 +1,4 @@
-.profile-container {
+/* .profile-container {
     position: relative;
     max-width: 900px;
     margin: 40px auto;
@@ -156,19 +156,19 @@
   .Users i {
     font-size: 18px;
   }
-  /* Add this to Userdetails.css */
+  
 .post-image-container {
-    width: 150px; /* Set a fixed width */
-    height: 150px; /* Set a fixed height */
-    overflow: hidden; /* Hide overflow */
+    width: 150px; 
+    height: 150px; 
+    overflow: hidden; 
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px auto; /* Center the container */
+    margin: 10px auto; 
 }
 
 .post-image {
-    max-width: 100%; /* Ensure the image fits within the container */
-    max-height: 100%; /* Ensure the image fits within the container */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
-}
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: cover; 
+} */

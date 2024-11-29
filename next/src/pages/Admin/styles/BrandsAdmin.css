@@ -1,4 +1,4 @@
-.admin-brand-grid-container {
+/* .admin-brand-grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
     gap: 30px; 
@@ -67,9 +67,9 @@
 }
 
 .admin-logo-container {
-    width: 100px; /* Set a fixed width */
-    height: 100px; /* Set a fixed height */
-    overflow: hidden; /* Hide overflow */
+    width: 100px; 
+    height: 100px; 
+    overflow: hidden; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,6 +77,6 @@
 }
 
 .admin-brand-logo {
-    max-width: 100%; /* Ensure the logo fits within the container */
-    max-height: 100%; /* Ensure the logo fits within the container */
-}
+    max-width: 100%; 
+    max-height: 100%; 
+} */
