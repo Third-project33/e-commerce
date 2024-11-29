@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react';
 import axios from 'axios'
-import '../styles/admin.css';
+import '../../Admin/styles/admin.css';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,7 @@ const Admin = () => {
 //=>    to fetch and set items count for each brand
     const handleItems = async (brandId: number) : Promise<void> => {
         try {
-            const productResponse = await axios.get(`http://localhost:3001/api/products/${brandId}`);
+            const productResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
             setItems(prevCounts => ({
                 ...prevCounts,
                 [brandId]: productResponse.data.length 
@@ -41,7 +41,7 @@ const Admin = () => {
 //=> to fetch and set floor price for each brand
     const handlePrice = async (brandId: number) : Promise<void> => {
         try {
-            const priceResponse = await axios.get(`http://localhost:3001/api/products/${brandId}`);
+            const priceResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
             const lowestPrice = Math.min(...priceResponse.data.map((item: { price: number })=> item.price)); 
             setfloorPrice(prev => ({
                 ...prev,
@@ -56,7 +56,7 @@ const Admin = () => {
     useEffect(() => {
         const fetchData = async () : Promise<void> => {
             try {
-                const res = await axios.get("http://localhost:3001/brands/allbrands");
+                const res = await axios.get("http://localhost:3000/brands/allbrands");
                 setData(res.data);
                 res.data.forEach((brand: { id: number })=> {
                     handleItems(brand.id);
@@ -87,10 +87,10 @@ const Admin = () => {
                     Marketplace Performance
                     </button>
                     <div className="flex items-center space-x-4 ml-4 justify-end"> 
-                 <button className="brands-button ml-4"  onClick={() => router.push("/UsersAdmin")}>
+                 <button className="brands-button ml-4"  onClick={() => router.push("/Admin/hooks/UsersAdmin")}>
                    Users
                         </button>
-                   <button className="brands-button ml-4"onClick={() => router.push("/brandsAdmin")}>
+                   <button className="brands-button ml-4"onClick={() => router.push("/Admin/hooks/BrandsAdmin")}>
                     Brands
                   </button> 
                     </div>
@@ -120,7 +120,6 @@ const Admin = () => {
                     <span className="text-purple-500">{element.id}</span>
 
                     <img src={element.logo} alt={`${element.name} logo`} className="w-10 h-10 rounded-full" />
-
                     <span>{element.name}</span>
 
                     {element.verified === 1 && (
