@@ -1,0 +1,209 @@
+
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.p-8 {
+    padding: 2rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.hover\:text-gray-400:hover {
+    color: #cbd5e1;
+}
+
+.bg-gray-800 {
+    background-color: #2d3748;
+}
+
+.bg-purple-600 {
+    background-color: #6b46c1;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.w-10 {
+    width: 2.5rem;
+}
+
+.h-10 {
+    height: 2.5rem;
+}
+
+.text-gray-400 {
+    color: #cbd5e1;
+}
+
+.text-green-500 {
+    color: #48bb78;
+}
+
+.text-red-500 {
+    color: #f56565;
+}
+
+.border-b {
+    border-bottom: 1px solid;
+}
+
+.border-gray-700 {
+    border-color: #4a5568;
+}
+
+.space-x-4 > :not(:last-child) {
+    margin-left: 60rem;
+}
+
+.space-y-1 > :not(:last-child) {
+    margin-bottom: 0.25rem;
+}
+
+.ml-4 {
+    margin-left: 1rem;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.text-gray-500 {
+    color: #a0aec0;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: transparent; 
+}
+
+
+.header .logo {
+    font-size: 1.5rem; 
+    font-weight: bold;
+}
+
+.header .search-bar {
+    position: relative;
+    margin-right: 1rem; 
+}
+
+.header .search-bar input {
+    padding: 0.5rem 2rem; 
+    border-radius: 9999px; 
+    background-color: #2d3748; 
+    color: white; 
+}
+
+
+.header nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; 
+}
+
+.header nav a {
+    color: white; 
+    transition: color 0.3s; 
+}
+
+.header nav a:hover {
+    color: #cbd5e1; 
+}
+
+.header .icon {
+    margin-left: 1rem; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px; 
+    border-bottom: 1px solid #4a5568; 
+}
+td {
+    align-items: center; 
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.text-gray-400 {
+    color: #cbd5e1; 
+}
+
+.marketplace-button {
+    background: linear-gradient(90deg, #a445f7, #6a00ff);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+.brands-button {
+    background: linear-gradient(90deg, #a445f7, #6a00ff);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
