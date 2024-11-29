@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { auth } from '../firebaseConfig'; 
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; 
+import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'; 
 import axios from 'axios';
 import '../pages/Signup/Login.css';
 
@@ -62,8 +62,36 @@ const Login = () => {
     }
   };
 
+  async function handleFacebookSignIn() {
+    const facebookProvider = new FacebookAuthProvider();
 
-  
+    facebookProvider.addScope('email'); 
+    facebookProvider.setCustomParameters({
+      'display': 'popup'
+    });
+
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+
+      const token = await user.getIdToken()
+
+      localStorage.setItem("token", token)
+
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      }));
+
+      router.push("/Home/home");
+      //window.location.reload()
+    } catch (err: any) {
+      console.error(err);
+      setError("Facebook sign-in failed. Please try again.");
+    }
+  }
+
 
   return (
     <div className="login-container">
@@ -134,7 +162,7 @@ const Login = () => {
           <button className="social-button google-button" type="button" onClick={handleGoogleLogin}>
             <FaGoogle style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Google
           </button>
-          <button className="social-button facebook-button" type="button">
+          <button className="social-button facebook-button" type="button" onClick={handleFacebookSignIn}>
             <FaFacebook style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Facebook
           </button>
         </div>
