@@ -1,21 +1,21 @@
-/* UsersAdmin.css */
+/* UsersAdmin.css
 .user-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Space between items */
-    padding: 20px; /* Padding around the grid */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px; 
+    padding: 20px; 
 }
 
 .user-card {
-    background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
-    border-radius: 8px; /* Rounded corners */
-    padding: 10px; /* Padding inside each card */
-    text-align: center; /* Center text */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px; 
+    text-align: center;
 }
 
 .user-name {
-    font-size: 16px; /* Font size for user name */
-    margin: 10px 0; /* Space above and below the name */
+    font-size: 16px; 
+    margin: 10px 0; 
 }
 
 .user-button {
@@ -27,20 +27,20 @@
     font-size: 14px;
     font-family: Arial, sans-serif;
     cursor: pointer;
-    margin: 5px; /* Space between buttons */
+    margin: 5px; 
 }
 .green-button {
-    background-color: #28a745; /* Green background for Action 1 */
+    background-color: #28a745;
 }
 
 .green-button:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #218838; 
 }
 
 .red-button {
-    background-color: #dc3545; /* Red background for Action 2 */
+    background-color: #dc3545; 
 }
 
 .red-button:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
+    background-color: #c82333; 
+} */

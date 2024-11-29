@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2'
 import Image from 'next/image'
-import '../styles/BrandsAdmin.css'; // Import the CSS file for styling
+import '../styles/BrandsAdmin.css'; 
 
 
 interface Brand {
@@ -16,7 +16,6 @@ const BrandAdmin = () => {
     const router=useRouter()
     const [brands, setBrands] = useState<Brand[]>([]);
 
-   // Fixed TypeScript typing
    const handledelete  = (id: number) => {
     axios.delete(`http://localhost:3001/brands/delete/${id}`)
         .then(() => {
@@ -84,14 +83,14 @@ const BrandAdmin = () => {
                         <Image 
                                 src={brand.logo}
                                 alt={`${brand.name} logo`}
-                                width={100} // Adjust these values based on your needs
+                                width={100} 
                                 height={100}
                                 className="admin-brand-logo"
                                 onClick={() => router.push({
                                     pathname: "/adminbrandproducts",
                                     query: { brandId: brand.id }
                                 })}
-                                priority // If this image is above the fold
+                                priority
                             />
                        
                         </div>
