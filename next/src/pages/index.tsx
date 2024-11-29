@@ -34,7 +34,7 @@ const Login = () => {
               window.location.reload();
             } else {
               router.push('/Home/home');
-              window.location.reload();
+              // window.location.reload();
             }
           }
         })

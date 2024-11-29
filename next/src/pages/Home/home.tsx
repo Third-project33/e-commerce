@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-// import Navbar from './navbar';
-// import Footer from './footer';
 import "./Home.css";
 import Image from "next/image";
 import image1 from "../../app/images/1.png";
@@ -15,12 +13,9 @@ import image5 from "../../app/images/5.png";
 import image6 from "../../app/images/6.png";
 import image7 from "../../app/images/7.png";
 import adidas from "../../app/images/Adidas_logo.png";
-import adidasbg from "../../app/images/adidasbg.png";
 import puma from "../../app/images/Puma-logo-PNG.png";
-import lacoste from "../../app/images/laacoste.jpg";
 import flechet from "../../app/images/fleshet.png";
 import logolacoste from "../../app/images/lacoste-logo.png";
-import nike from "../../app/images/nike.jpg";
 import nft from "../../app/images/nft.png";
 import tag from "../../app/images/tag.png";
 
@@ -47,6 +42,9 @@ const Home = () => {
   const [creators, setCreators] = useState<any[]>([]);
   const [likedProducts, setLikedProducts] = useState<number[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
+  const [showMore, setShowMore] = useState(false); 
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null); 
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,7 +114,7 @@ const Home = () => {
               </button>
               <button
                 className="create-btn"
-                onClick={() => router.push("/create-product")}
+                onClick={() => router.push("/create/create")} 
               >
                 Create
               </button>
@@ -214,8 +212,8 @@ const Home = () => {
           />
           <Image
             src={logolacoste}
-            width={100} // 
-            height={50} // 
+            width={100}  
+            height={50} 
             alt="Lacoste"
             className="brand-logo"
           />
@@ -238,10 +236,16 @@ const Home = () => {
             <p>
               Explore our diverse collection that caters to every taste and
               occasion. Join us in celebrating the art of fashion and the
-              stories behind each piece. Stay updated with the latest news and
-              insights from the fashion world.
+              stories behind each piece. 
+              {showMore && ( 
+                <span>
+                  Stay updated with the latest news and insights from the fashion world.
+                </span>
+              )}
             </p>
-            <button className="show-more-btn">Show more</button>
+            <button className="show-more-btn" onClick={() => setShowMore(!showMore)}> 
+              {showMore ? "Show Less" : "Show More"}
+            </button>
           </div>
         </div>
 
@@ -423,21 +427,40 @@ const Home = () => {
         </div>
 
         <div className="faq-section">
-          <h2>Frequently Asked Question</h2>
-          <p className="faq-subtitle">Wanna Ask Something?</p>
-          <div className="faq-grid">
-            {Array(6)
-              .fill(null)
-              .map((_, index) => (
-                <div key={index} className="faq-item">
-                  <div className="faq-question">
-                    <span>Lorem ipsum ipsum ?</span>
-                    <button className="expand-btn">+</button>
-                  </div>
-                </div>
-              ))}
+  <h2>Frequently Asked Question</h2>
+  <p className="faq-subtitle">Wanna Ask Something?</p>
+  <div className="faq-grid">
+    {Array(6)
+      .fill(null)
+      .map((_, index) => (
+        <div key={index} className="faq-item">
+          <div className="faq-question">
+            <span>
+              {index === 0 && "What is your return policy?"}
+              {index === 1 && "How do I track my order?"}
+              {index === 2 && "What payment methods do you accept?"}
+              {index === 3 && "Can I change my order after it's been placed?"}
+              {index === 4 && "Do you ship internationally?"}
+              {index === 5 && "How can I contact customer support?"}
+            </span>
+            <button className="expand-btn" onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}>
+              {expandedIndex === index ? "-" : "+"}
+            </button>
           </div>
+          {expandedIndex === index && (
+            <div className="faq-response">
+              {index === 0 && <p>Our return policy allows returns within 30 days of purchase.</p>}
+              {index === 1 && <p>You can track your order using the tracking link sent to your email.</p>}
+              {index === 2 && <p>We accept credit cards, PayPal, and other major payment methods.</p>}
+              {index === 3 && <p>Yes, you can change your order within 1 hour of placing it.</p>}
+              {index === 4 && <p>Yes, we ship to most countries worldwide.</p>}
+              {index === 5 && <p>You can contact customer support via email or our contact form.</p>}
+            </div>
+          )}
         </div>
+      ))}
+  </div>
+</div>
 
         <div className="quality-banner">
           <div className="banner-content">
