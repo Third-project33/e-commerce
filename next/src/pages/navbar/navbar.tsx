@@ -53,19 +53,11 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  const handleNotificationClick = () => {
-    // Redirect to notifications page
-    router.push("/notifications/notification"); // Redirect to notifications page
-  };
-
-  const handleMessageClick = () => {
-    // Redirect to chat page
-    router.push("/chat"); // Redirect to chat page
-  };
+ 
 
   return (
     <div className="nav-container">
-      <a href="/home" className="logo">
+      <a href="/Home/home" className="logo">
         Logo
       </a>
       <div className="nav-center">
@@ -78,11 +70,11 @@ const Navbar = () => {
           />
         </div>
         <nav className="nav-links">
-          <a onClick={() => router.push("/home")} style={{ cursor: "pointer" }}>
+          <a onClick={() => router.push("/Home/home")} style={{ cursor: "pointer" }}>
             Home
           </a>
           <a
-            onClick={() => router.push("/products")}
+            onClick={() => router.push("/Products/Productlist")}
             style={{ cursor: "pointer" }}
           >
             Explore <FiChevronDown />
@@ -99,10 +91,10 @@ const Navbar = () => {
         </nav>
       </div>
       <div className="nav-right">
-        <button className="icon-button" onClick={handleNotificationClick}>
+        <button className="icon-button" >
           <FiBell size={20} />
         </button>
-        <button className="icon-button" onClick={handleMessageClick}>
+        <button className="icon-button" >
           <FiMessageSquare size={20} />
         </button>
         <button className="wallet-btn" onClick={() => router.push("/cart")}>

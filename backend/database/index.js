@@ -57,7 +57,7 @@ db.products.belongsToMany(db.Favourites ,{through: db.user_favorites})
 
 
 
-// sequelize.sync({alter : true}).then(() => {
+// sequelize.sync({alter : false}).then(() => {
 //    console.log(' table created successfully!');
 //    }).catch((error) => {
 //     console.error('Unable to create table : ', error);

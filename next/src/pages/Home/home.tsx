@@ -94,7 +94,7 @@ const Home = () => {
       <div className="content-wrapper">
         <div className="tabs">
           <button className="tab active">Main Collection</button>
-          <button className="tab" onClick={() => router.push("/products")}>
+          <button className="tab" onClick={() => router.push("/Products/Productlist")}>
             Creators Market
           </button>
         </div>
@@ -109,7 +109,7 @@ const Home = () => {
             <div className="hero-buttons">
               <button
                 className="explore-btn"
-                onClick={() => router.push("/products")}
+                onClick={() => router.push("/Products/Productlist")}
               >
                 Explore Now
               </button>
@@ -307,7 +307,7 @@ const Home = () => {
                     </button>
                     <button
                       className="buy-button"
-                      onClick={() => router.push("/products")}
+                      onClick={() => router.push("/Products/Productlist")}
                     >
                       Buy Now
                     </button>
@@ -359,7 +359,7 @@ const Home = () => {
                     </button>
                     <button
                       className="buy-button"
-                      onClick={() => router.push("/products")}
+                      onClick={() => router.push("/Products/Productlist")}
                     >
                       Buy Now
                     </button>
