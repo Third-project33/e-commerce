@@ -93,9 +93,9 @@
     right: -5px;
     bottom: -5px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #a445f7, #6a00ff);
     z-index: -1;
     animation: rotateBorder 3s linear infinite;
+    background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
 }
 
 @keyframes rotateBorder {
@@ -225,4 +225,60 @@
         width: 120px;
         height: 120px;
     }
+}
+
+.back-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #a445f7, #6a00ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(106, 0, 255, 0.3);
+}
+
+.admin-title {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(164, 69, 247, 0.5);
+}
+
+/* Additional Styles for Improved Layout */
+.admin-brand-container {
+    padding: 20px; /* Add padding around the container */
+    background: rgba(255, 255, 255, 0.05); /* Slightly lighter background for contrast */
+    border-radius: 16px; /* Rounded corners for the container */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height for loading spinner */
+}
+
+.loading-spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #a445f7; /* Color for the spinner */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite; /* Spinner animation */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

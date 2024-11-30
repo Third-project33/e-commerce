@@ -159,6 +159,14 @@ const UsersAdmin = () => {
                     ↑
                 </div>
             )}
+            <div className="actions">
+                                    <button 
+                                        className="action-button button"
+                                        onClick={() => router.push('/Admin/hooks/Admin')}
+                                    >
+                                        Back
+                                    </button>
+                            </div>
         </div>
     );
 };

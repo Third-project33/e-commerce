@@ -103,6 +103,7 @@ const BrandAdmin: React.FC = () => {
 
     return (
         <div className="admin-brand-container">
+            <h1 className="admin-title">Manage Brands</h1>
             <div className="admin-brand-grid-container">
                 {brands.map((brand) => (
                     <div className="admin-brand-card" key={brand.id}>
