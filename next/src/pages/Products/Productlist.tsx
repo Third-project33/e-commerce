@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
-import Swal from "sweetalert2";
-import { useRouter } from "next/router";
+import Swal from "sweetalert2"; // A library for showing pop-up alerts.
+import { useRouter } from "next/router"; //  A hook from Next.js for navigation.
+
 import "./Productslist.css";
 
+// Product Interface: Defines the structure of a product object, specifying the types of its properties
 interface Product {
   id: number;
   title: string;
@@ -15,27 +17,31 @@ interface Product {
 }
 
 const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [filters, setFilters] = useState<Record<string, any>>({});
-  const [likedProducts, setLikedProducts] = useState<number[]>([]);
+  const [products, setProducts] = useState<Product[]>([]); // Stores the list of products.
+  const [error, setError] = useState<string | null>(null); // Stores any error messages.
+  const [filters, setFilters] = useState<Record<string, any>>({}); // Stores the current filter criteria
+  const [likedProducts, setLikedProducts] = useState<number[]>([]); // Stores the IDs of liked products.
   const navigate = useRouter();
 
   const fetchProducts = async () => {
     try {
+      // Fetches products from the server using the current filters
       const { data } = await axios.get("http://localhost:3000/products", {
         params: filters,
       });
+      //Updates the products state with the fetched data
       setProducts(data);
     } catch {
       setError("Failed to load products");
     }
   };
-
+  //useEffect Hook: Runs fetchProducts whenever
+  //the filters change, ensuring the product list is updated.
   useEffect(() => {
     fetchProducts();
   }, [filters]); // Re-fetch products when filters change
 
+  // Updates the filters based on user input.
   const handleFilterChange = (newFilters: Record<string, any>) => {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters, ...newFilters };
@@ -43,6 +49,7 @@ const ProductList: React.FC = () => {
     });
   };
 
+  // Toggles the liked status of a product.
   const handleLike = (productId: number) => {
     setLikedProducts((prev) =>
       prev.includes(productId)
@@ -51,6 +58,7 @@ const ProductList: React.FC = () => {
     );
   };
 
+  //  Sends a request to increment the owner count of a product.
   const handleOwner = async (id: number) => {
     try {
       const response = await axios.post(
@@ -61,6 +69,8 @@ const ProductList: React.FC = () => {
       console.error("Error incrementing owner count:", error);
     }
   };
+
+  // Adds a product to the cart. If the user is not logged in, it prompts them to log in.
 
   const handleAddToCart = async (productId: number) => {
     const token = localStorage.getItem("token");
@@ -102,10 +112,11 @@ const ProductList: React.FC = () => {
       });
     }
   };
-
+  //  Updates the filter based on the selected rarity.
   const handleRarityChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     handleFilterChange({ rarity: e.target.value });
 
+  // Updates the filter based on the selected sort option.
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     handleFilterChange({ sort: e.target.value });
 
@@ -114,10 +125,12 @@ const ProductList: React.FC = () => {
   return (
     <>
       <div className="product-list-container">
+        {/* Sidebar: Contains filters for the product list. */}
         <div className="sidebar-container">
           <Sidebar onFilterChange={handleFilterChange} />
         </div>
         <div className="content-section">
+          {/* Header Bar: Displays the total number of items and filter options. */}
           <div className="header-bar">
             <div className="header-left">
               <div className="total-items">{products.length} items</div>
@@ -159,6 +172,8 @@ const ProductList: React.FC = () => {
               </select>
             </div>
           </div>
+          {/* Product Grid: Displays each product in a card format
+           with an image, title, price, and buttons to like or buy the product. */}
           <div className="product-grid">
             {products.map((product) => (
               <div key={product.id} className="product-card">
