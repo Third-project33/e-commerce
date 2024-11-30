@@ -6,8 +6,8 @@ import './navbar.css';
 const Navbar = () => {
   const router = useRouter();
   const [avatar, setAvatar] = useState<string>('');
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [isUser, setIsUser] = useState<boolean>(false); 
+  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  // const [isUser, setIsUser] = useState<boolean>(false); 
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
@@ -17,12 +17,12 @@ const Navbar = () => {
     } else {
       setAvatar('https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png');
     }
-    if (userData.type === 'admin') {
-      setIsAdmin(true);
-    }
-    if (userData.type === 'user') {
-      setIsUser(true);
-    }
+    // if (userData.type === 'admin') {
+    //   setIsAdmin(true);
+    // }
+    // if (userData.type === 'user') {
+    //   setIsUser(true);
+    // }
   }, []);
 
   const handleLogout = () => {
@@ -49,9 +49,9 @@ const Navbar = () => {
           <a href="#collection">Personal Collection</a>
           <a href="#drops">Drops</a>
           <a onClick={() => router.push('/about')} className="more-link" style={{ cursor: 'pointer' }}>More <FiChevronDown /></a> 
-          {isAdmin && (
-            <a onClick={() => router.push('/admin')} style={{ cursor: 'pointer' }}>Admin</a>
-          )}
+          {/* {isAdmin && ( */}
+            {/* <a onClick={() => router.push('/admin')} style={{ cursor: 'pointer' }}>Admin</a> */}
+          {/* )} */}
         </nav>
       </div>
       <div className="nav-right">
@@ -64,14 +64,14 @@ const Navbar = () => {
         <button className="wallet-btn" onClick={() => router.push('/cart')}>
           <FiShoppingCart size={18} />
         </button>
-        {isUser && (
+        {/* {isUser && ( */}
           <img 
-            onClick={() => router.push("/profile")}
+            onClick={() => router.push("/Profile/Profile")}
             src={avatar}
             alt="Profile" 
             className="profile-img"
           />
-        )}
+        {/* )} */}
         <button className="icon-button" onClick={handleLogout}>
           <FiLogOut size={20} />
         </button>

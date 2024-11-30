@@ -108,7 +108,7 @@ const Admin = () => {
             <th className="py-2">24H%</th>
             <th className="py-2">Floor Price</th>
             <th className="py-2">Owners</th>
-            <th className="py-2">Items</th>
+            <th className="py-2">Items</th> 
         </tr>
         </thead>
           {/* Table Body */}

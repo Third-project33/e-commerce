@@ -144,7 +144,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
               />
-              <button className="saveEditProfile" onClick={() => { handleNameUpdate() , window.location.reload() }}>Save Change</button>
+              <button className="saveEditProfile" onClick={() => { handleNameUpdate()}}>Save Change</button>
             </div>
           ) : (
             <>
