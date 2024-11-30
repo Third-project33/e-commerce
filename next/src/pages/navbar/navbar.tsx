@@ -9,9 +9,9 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import "./navbar.css";
-import io from "socket.io-client"; // Import socket.io client
+import io from "socket.io-client"; 
 
-const socket = io("http://localhost:3000"); // Connect to the server
+const socket = io("http://localhost:3000");
 
 const Navbar = () => {
   const router = useRouter();
@@ -82,7 +82,7 @@ const Navbar = () => {
           <a href="#collection">Personal Collection</a>
           <a href="#drops">Drops</a>
           <a
-            onClick={() => router.push("/about")}
+            onClick={() => router.push("/about/about")}
             className="more-link"
             style={{ cursor: "pointer" }}
           >
