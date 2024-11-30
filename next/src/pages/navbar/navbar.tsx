@@ -28,7 +28,6 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');  
     router.push('/');
-    window.location.reload();
   };
 
   return (

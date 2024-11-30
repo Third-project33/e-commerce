@@ -73,9 +73,7 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, facebookProvider);
       const user = result.user;
-
       const token = await user.getIdToken()
-
       localStorage.setItem("token", token)
 
       localStorage.setItem("user", JSON.stringify({
