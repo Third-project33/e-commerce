@@ -27,3 +27,25 @@ exports.getUserPosts = async (req, res) => {
     res.status(500).json({ message: 'Error fetching posts' });
   }
 };
+
+exports.deletePost = async (req, res) => {
+  try {
+      const { id } = req.params
+      const result = await db.posts.destroy({
+          where: { id: id },
+      })
+
+      if (result === 0) {
+
+          return res.status(404).send('Post not found')
+      }
+      res.status(200).send('deleted')
+  } catch (error) {
+
+      console.error(error)
+      res.status(500).send(error)
+  }
+}
+
+
+
