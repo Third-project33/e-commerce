@@ -75,6 +75,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ENUM('user', 'admin'),
             allowNull: false,
             defaultValue: 'user',
+        },
+        banned: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false, // Default to not banned
         }
     }, {
         timestamps: false  // Tracks createdAt and updatedAt

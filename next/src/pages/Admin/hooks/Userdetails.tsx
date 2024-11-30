@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-
 import '../../Admin/styles/Userdetails.css'
 
 interface User {
