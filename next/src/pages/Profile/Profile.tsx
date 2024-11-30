@@ -4,7 +4,8 @@ import {jwtDecode} from 'jwt-decode';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faPlus, faEdit  , faTrash} from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 import "../Profile/Profile.css"
 
 const Profile = () => {
@@ -107,11 +108,53 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
     if (user) {
       fetchPosts();
     }
-  }, [user]);
+  }, [user ]);
 
   if (!user) {
     return <div className="loading">Loading profile...</div>;
   }
+  const handleDeletePost = (postId: number) => {
+    Swal.fire({
+      icon: 'warning',
+      title: '<span style="color: red;">Are you sure?</span>', 
+      html: "<span style='color: red;'>You won't be able to revert this!</span>", 
+      background: 'rgba(255, 255, 258, 1)',  
+      color: 'white',  
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      showCancelButton: true,
+      confirmButtonColor: 'red',  
+      cancelButtonColor: '#3085d6',  
+  
+      customClass: {
+        title: 'swal-title-error',
+        confirmButton: 'swalpostConfirm',
+        cancelButton: 'swalpostDelete'
+      }
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:3000/posts/deletePost/${postId}`)
+          .then(() => {
+            setPosts(posts.filter(post => post.id !== postId));
+            Swal.fire(
+              'Deleted!',
+              'Your post has been deleted.',
+              'success'
+            );
+          })
+          .catch((error) => {
+            console.error('Error deleting post:', error);
+            Swal.fire(
+              'Error!',
+              'Something went wrong while deleting the post.',
+              'error'
+            );
+          });
+      }
+    });
+  };
+  
 
   return (
     <div className="pageWrapper">
@@ -144,14 +187,15 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
               />
-              <button className="saveEditProfile" onClick={() => { handleNameUpdate() , window.location.reload() }}>Save Change</button>
+              <button className="saveEditProfile" onClick={() => { handleNameUpdate()}}>Save Change</button>
             </div>
           ) : (
             <>
               <h1 style={{ color: "#ffffff" }}>{user.name}</h1>
               <p style={{ color: "#625c70" }}>@{user.username}</p>
               <p style={{ color: "#ffffff" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Torro, consectetur adipiscing elit. Ut urna placerat morbi cursus pulvinar nunc adipiscing.
+                  "Exploring the intersection of fashion and technology, always looking for the next big trend."
+
               </p>
             </>
           )}
@@ -216,8 +260,15 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
                       <div className="postInfo">
                         <h3 style={{ color: "#ffffff" }}>{user.name}</h3>
                       </div>
+                      
                     </div>
+                    <div className="postContentWrapper">
                     <p style={{ color: "#ffffff" }}>{post.content}</p>
+                    <div className="PosttrashIcon" style={{ cursor: 'pointer' }} onClick={()=>handleDeletePost(post.id)}>
+                      <FontAwesomeIcon icon={faTrash} size="lg" color="red" />
+                    </div>
+                    </div>
+
                     {post.image && (
                       <img
                         src={post.image}
@@ -245,3 +296,6 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
 };
 
 export default Profile;
+
+
+

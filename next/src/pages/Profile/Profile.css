@@ -411,3 +411,39 @@
 .saveEditProfile:hover {
     transform: scale(1.1);
 }
+
+.postContentWrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative; 
+  }
+  
+  .postContentWrapper p {
+    flex: 1;
+    margin: 0;
+  }
+  
+  .postContentWrapper .postHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .PosttrashIcon {
+    position: absolute; 
+    right: 5% ; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .PosttrashIcon svg {
+    transition: transform 0.3s ease;
+  }
+  
+  .PosttrashIcon:hover svg {
+    transform: scale(1.1);
+  }
+  
+  
