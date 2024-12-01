@@ -1,106 +1,66 @@
+.admin-brand-container {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to right, #5c373c, 35%, #181e41);
+}
+
+.admin-title {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(164, 69, 247, 0.5);
+}
+
+.brand-search-input {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    transition: border 0.3s;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.brand-search-input:focus {
+    border-color: #a445f7;
+    outline: none;
+}
+
 .admin-brand-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
     min-height: 100vh;
-    background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
-    background-size: 200% 200%;
-    animation: gradientBG 15s ease infinite;
-    position: relative;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
-}
-
-.admin-brand-grid-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 30px 30px;
-    animation: floatingParticles 20s linear infinite;
-    pointer-events: none;
-}
-
-@keyframes floatingParticles {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-30px); }
 }
 
 .admin-brand-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    padding: 25px;
+    padding: 15px;
     text-align: center;
-    height: 300px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.1),
-        inset 0 0 32px rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.admin-brand-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.admin-brand-card:hover::before {
-    left: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-brand-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 
-        0 15px 45px rgba(164, 69, 247, 0.2),
-        inset 0 0 32px rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(164, 69, 247, 0.3);
 }
 
 .admin-logo-container {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 20px;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 10px;
     position: relative;
     cursor: pointer;
-}
-
-.admin-logo-container::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border-radius: 50%;
-    z-index: -1;
-    animation: rotateBorder 3s linear infinite;
-    background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
-}
-
-@keyframes rotateBorder {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 
 .admin-brand-logo {
@@ -108,136 +68,68 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    padding: 5px;
     background: rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    box-shadow: 
-        0 0 15px rgba(164, 69, 247, 0.5),
-        inset 0 0 15px rgba(164, 69, 247, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.admin-logo-container:hover .admin-brand-logo {
+    transform: scale(1.05);
 }
 
 .admin-brand-name {
-    margin: 15px 0;
-    font-size: 20px;
+    margin: 10px 0;
+    font-size: 18px;
     font-weight: bold;
     color: white;
-    text-shadow: 0 0 10px rgba(164, 69, 247, 0.5);
-    position: relative;
+    text-shadow: 0 0 5px rgba(164, 69, 247, 0.5);
 }
 
 .admin-button-container {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .admin-brand-button {
-    padding: 10px 20px;
+    padding: 8px 15px;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    transition: background 0.3s ease, transform 0.3s ease;
     color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 14px;
 }
 
-.admin-brand-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.admin-brand-button:hover::before {
-    left: 100%;
-}
-
 .admin-green-button {
     background: linear-gradient(45deg, #28a745, #20c997);
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
 }
 
 .admin-red-button {
     background: linear-gradient(45deg, #dc3545, #ff4757);
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
-.Users {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    padding: 15px 30px;
-    background: linear-gradient(45deg, #a445f7, #6a00ff);
-    border: none;
-    border-radius: 15px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    box-shadow: 
-        0 5px 15px rgba(164, 69, 247, 0.3),
-        0 0 20px rgba(164, 69, 247, 0.2),
-        0 0 40px rgba(164, 69, 247, 0.1);
-}
-
-.Users:hover {
-    transform: translateY(-3px);
-    box-shadow: 
-        0 8px 25px rgba(164, 69, 247, 0.4),
-        0 0 30px rgba(164, 69, 247, 0.3),
-        0 0 50px rgba(164, 69, 247, 0.2);
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-@media (max-width: 768px) {
-    .admin-brand-grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        padding: 15px;
-    }
-
-    .admin-brand-card {
-        height: 280px;
-    }
-
-    .admin-logo-container {
-        width: 120px;
-        height: 120px;
-    }
+.admin-brand-button:hover {
+    transform: scale(1.05);
 }
 
 .back-button {
     position: fixed;
     bottom: 30px;
-    left: 30px;
-    padding: 10px 20px;
+    right: 30px;
+    padding: 8px 15px;
     background: linear-gradient(90deg, #a445f7, #6a00ff);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .back-button:hover {
@@ -245,40 +137,39 @@
     box-shadow: 0 4px 15px rgba(106, 0, 255, 0.3);
 }
 
-.admin-title {
-    text-align: center;
-    font-size: 2.5em;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(164, 69, 247, 0.5);
-}
-
-/* Additional Styles for Improved Layout */
-.admin-brand-container {
-    padding: 20px; /* Add padding around the container */
-    background: rgba(255, 255, 255, 0.05); /* Slightly lighter background for contrast */
-    border-radius: 16px; /* Rounded corners for the container */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-}
-
 .loading-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full height for loading spinner */
+    height: 100vh;
 }
 
 .loading-spinner {
     border: 8px solid rgba(255, 255, 255, 0.3);
-    border-top: 8px solid #a445f7; /* Color for the spinner */
+    border-top: 8px solid #a445f7;
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    animation: spin 1s linear infinite; /* Spinner animation */
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .admin-brand-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        padding: 10px;
+    }
+
+    .admin-brand-card {
+        height: auto;
+    }
+
+    .admin-logo-container {
+        width: 80px;
+        height: 80px;
+    }
 }
