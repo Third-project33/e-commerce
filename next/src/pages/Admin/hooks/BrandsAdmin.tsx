@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-
 import Swal from 'sweetalert2';
 import '../../Admin/styles/BrandsAdmin.css';
-
 
 interface Brand {
     id: number;
@@ -22,7 +20,6 @@ const BrandAdmin: React.FC = () => {
     const handleDelete = async (id: number): Promise<void> => {
         try {
             await axios.delete(`http://localhost:3000/brands/delete/${id}`);
-
             Swal.fire({
                 title: 'Success!',
                 text: 'Brand successfully deleted',
@@ -110,19 +107,16 @@ const BrandAdmin: React.FC = () => {
                 {brands.map((brand) => (
                     <div className="admin-brand-card" key={brand.id}>
                         <div className="admin-logo-container">
-
                             <img 
                                 src={brand.logo || '/images/default-brand-logo.png'}
                                 alt={`${brand.name} logo`} 
-
                                 className="admin-brand-logo"
                                 onError={handleImageError}
                                 onClick={() => router.push({
                                     pathname: "/Admin/hooks/Brandproducts",
                                     query: { brandId: brand.id }
                                 })}
-
-/>
+                            />
                         </div>
                         <h3 className="admin-brand-name">{brand.name}</h3>
                         <div className="admin-button-container">
