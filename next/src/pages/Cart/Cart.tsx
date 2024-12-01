@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import "./Cart.css";
+import styles from "./Cart.module.css";
 
 interface Product {
   id: number;
@@ -26,11 +26,14 @@ const Cart: React.FC = () => {
   const fetchCart = async () => {
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
       const response = await axios.get("http://localhost:3000/cart/itemcart", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCart(response.data);
     } catch (err: any) {
+      console.error("Error fetching cart:", err);
       setError(err.response?.data?.message || "Unable to load the cart");
     }
   };
@@ -55,9 +58,7 @@ const Cart: React.FC = () => {
         await axios.post(
           "http://localhost:3000/cart/confirm-order",
           {},
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         Swal.fire({
@@ -69,7 +70,6 @@ const Cart: React.FC = () => {
         });
 
         setCart({
-          ...cart!,
           Products: [],
           totalItems: 0,
           totalAmount: 0,
@@ -141,47 +141,45 @@ const Cart: React.FC = () => {
     }
   };
 
-  const handleowner = async (id: number) => {
+  const handleOwner = async (id: number) => {
     try {
-      const response = await axios.post(
-        `http://localhost:3000/products/decrement/${id}`
-      );
-      console.log(response.data.message);
+      await axios.post(`http://localhost:3000/products/decrement/${id}`);
     } catch (error) {
-      console.error("Error incrementing owner count:", error);
+      console.error("Error decrementing owner count:", error);
     }
   };
 
-  if (error) return <div className="cart-error">{error}</div>;
-  if (!cart) return <div className="cart-loading">Loading...</div>;
+  if (error) return <div className={styles.cartError}>{error}</div>;
+  if (!cart) return <div className={styles.cartLoading}>Loading...</div>;
 
   return (
-    <div className="cart-container">
+    <div className={styles.cartContainer}>
       <h2>My Cart</h2>
-      <div className="cart-items">
+      <div className={styles.cartItems}>
         {cart.Products.length === 0 ? (
-          <div className="cart-empty">Your cart is empty</div>
+          <div className={styles.cartEmpty}>Your cart is empty</div>
         ) : (
           cart.Products.map((product) => (
-            <div key={product.id} className="cart-item">
+            <div key={product.id} className={styles.cartItem}>
               <img
                 src={product.image}
                 alt={product.title}
-                className="cart-item-image"
+                className={styles.cartItemImage}
               />
-              <div className="cart-item-details">
+              <div className={styles.cartItemDetails}>
                 <h3>{product.title}</h3>
-                <p className="cart-item-price">
+                <p className={styles.cartItemPrice}>
                   {product.CartProducts.priceAtPurchase} ETH
                 </p>
-                <p className="cart-item-quantity">
+                <p className={styles.cartItemQuantity}>
                   Quantity: {product.CartProducts.quantity}
                 </p>
               </div>
               <button
-                className="remove-item-button"
+                className={styles.removeItemButton}
                 onClick={() => {
-                  handleRemoveItem(product.id), handleowner(product.id);
+                  handleRemoveItem(product.id);
+                  handleOwner(product.id);
                 }}
               >
                 ❌
@@ -190,12 +188,12 @@ const Cart: React.FC = () => {
           ))
         )}
       </div>
-      <div className="cart-summary">
+      <div className={styles.cartSummary}>
         <p>Total Items: {cart.totalItems || 0}</p>
         <p>Total Amount: {cart.totalAmount || 0} ETH</p>
         <button
-          className="confirm-order-button"
-          onClick={() => handleConfirmOrder()}
+          className={styles.confirmOrderButton}
+          onClick={handleConfirmOrder}
           disabled={!cart.Products || cart.Products.length === 0}
         >
           Confirm Order
