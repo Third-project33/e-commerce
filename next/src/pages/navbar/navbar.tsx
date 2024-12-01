@@ -12,17 +12,7 @@ const Navbar = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
     const savedAvatar = userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
-    if (savedAvatar) {
-      setAvatar(savedAvatar);
-    } else {
-      setAvatar('https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png');
-    }
-    // if (userData.type === 'admin') {
-    //   setIsAdmin(true);
-    // }
-    // if (userData.type === 'user') {
-    //   setIsUser(true);
-    // }
+    setAvatar(savedAvatar || 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png');
   }, []);
 
   const handleLogout = () => {
@@ -36,11 +26,7 @@ const Navbar = () => {
       <div className="nav-center">
         <div className="search-container">
           <FiSearch className="search-icon" />
-          <input
-            type="search"
-            className="search-bar"
-            placeholder="Search Items, Fashion, Collection and Users"
-          />
+          <input type="search" className="search-bar" placeholder="Search Items, Fashion, Collection and Users" />
         </div>
         <nav className="nav-links">
           <a onClick={() => router.push('/home')} style={{ cursor: 'pointer' }}>Home</a>

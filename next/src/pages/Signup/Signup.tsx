@@ -201,7 +201,7 @@ const Signup = () => {
             autoComplete="off"
           />
           <FontAwesomeIcon
-            icon={passwordVisible ? faEyeSlash : faEye}
+            icon={passwordVisible ?    faEye :  faEyeSlash}
             onClick={() => setPasswordVisible(!passwordVisible)}
             className="passwordSwitch"
           />
