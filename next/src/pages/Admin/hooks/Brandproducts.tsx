@@ -21,6 +21,7 @@ const AdminBrandProducts = () => {
     const [newPrice, setNewPrice] = useState<string>('');
     const [refresh, setRefresh] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     useEffect(() => {
         const fetchProducts = async (): Promise<void> => {
@@ -93,70 +94,90 @@ const AdminBrandProducts = () => {
         );
     }
 
+    // Filter products based on the search term
+    const filteredProducts = products.filter(product =>
+        (product.title && product.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+
     return (
         <div className="admin-product-grid-container">
-            {products.length > 0 ? (
-                products.map((product) => (
-                    <div className="admin-product-card" key={product.id}>
-                        <h3 className="admin-product-name">{product.title}</h3>
-                        <div className="admin-image-container">
-                            <img 
-                                src={product.image} 
-                                alt={product.name} 
-                                className="admin-product-image"
-                                onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.src = '/default-product.png';
-                                }}
-                            />
-                        </div>
-                        <p className="admin-product-price">
-                            ${Number(product.price).toFixed(2)}
-                        </p>
-                        <button 
-                            className="update-price-button"
-                            onClick={() => setShowDropdown((prev) => ({ 
-                                ...prev, 
-                                [product.id]: !prev[product.id] 
-                            }))}
-                        >
-                            Update Price
-                        </button>
-                        {showDropdown[product.id] && (
-                            <div className="price-update-dropdown">
-                                <input 
-                                    type="number"
-                                    min="0"
-                                    step="0.01"
-                                    value={newPrice}
-                                    onChange={(e) => setNewPrice(e.target.value)}
-                                    placeholder="Enter new price"
-                                    className="price-input"
+            <h1 className="page-title">Manage Products for Brand</h1>
+            <div className="search-wrapper">
+                <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                />
+            </div>
+            
+            <div className="products-wrapper">
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                        <div className="admin-product-card" key={product.id}>
+                            <h3 className="admin-product-name">{product.title}</h3>
+                            <div className="admin-image-container">
+                                <img 
+                                    src={product.image} 
+                                    alt={product.name} 
+                                    className="admin-product-image"
+                                    onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = '/default-product.png';
+                                    }}
                                 />
-                                <button 
-                                    className="submit-button"
-                                    onClick={() => handlePriceUpdate(product.id)}
-                                >
-                                    Submit
-                                </button>
                             </div>
-                        )}
+                            <p className="admin-product-price">
+                                ${Number(product.price).toFixed(2)}
+                            </p>
+                            <button 
+                                className="update-price-button"
+                                onClick={() => setShowDropdown((prev) => ({ 
+                                    ...prev, 
+                                    [product.id]: !prev[product.id] 
+                                }))}
+                            >
+                                Update Price
+                            </button>
+                            {showDropdown[product.id] && (
+                                <div className="price-update-dropdown">
+                                    <input 
+                                        type="number"
+                                        min="0"
+                                        step="0.01"
+                                        value={newPrice}
+                                        onChange={(e) => setNewPrice(e.target.value)}
+                                        placeholder="Enter new price"
+                                        className="price-input"
+                                    />
+                                    <button 
+                                        className="submit-button"
+                                        onClick={() => handlePriceUpdate(product.id)}
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <div className="no-products">
+                        <h2>No products found for this brand</h2>
                     </div>
-                ))
-            ) : (
-                <div className="no-products">
-                    <h2>No products found for this brand</h2>
-                </div>
-            )}
+                )}
+            </div>
             
             <button 
                 className="back-button" 
-                onClick={() => router.push("/Admin/hooks/Admin")}
+                onClick={() => router.push("/Admin/hooks/BrandsAdmin")}
             >
                 Back
             </button>
         </div>
     );
 };
+
 
 export default AdminBrandProducts;
