@@ -19,6 +19,7 @@ import logolacoste from "../../app/images/lacoste-logo.png";
 import nft from "../../app/images/nft.png";
 import tag from "../../app/images/tag.png";
 import Navbar from "../navbar/navbar";
+import Footer from "../footer/footer";
 
 const Home = () => {
   interface Product {
@@ -43,9 +44,8 @@ const Home = () => {
   const [creators, setCreators] = useState<any[]>([]);
   const [likedProducts, setLikedProducts] = useState<number[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
-  const [showMore, setShowMore] = useState(false); 
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null); 
-
+  const [showMore, setShowMore] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,17 +54,17 @@ const Home = () => {
           "http://localhost:3000/products"
         );
         setProducts(productsResponse.data.slice(0, 9));
-
+    
         const newProducts = productsResponse.data
           .filter((product: Product) => product.status === "New")
           .slice(0, 3);
         setTrendingProducts(newProducts);
-
+    
         const creatorsResponse = await axios.get(
           "http://localhost:3000/user/all"
         );
         setCreators(creatorsResponse.data.slice(0, 3));
-
+    
         const brandsResponse = await axios.get(
           "http://localhost:3000/brands/allbrands"
         );
@@ -72,8 +72,8 @@ const Home = () => {
           .filter((brand: Brand) => brand.verified === 1)
           .slice(-3);
         setBrands(verifiedBrands);
-      } catch (error) {
-        console.error("Failed to load data:", error);
+      } catch (error: any) { // Type assertion added here
+        console.error("Failed to load data:", error.response ? error.response.data : error.message);
       }
     };
 
@@ -94,7 +94,7 @@ const Home = () => {
       <div className="content-wrapper">
         <div className="tabs">
           <button className="tab active">Main Collection</button>
-          <button className="tab" onClick={() => router.push("/products")}>
+          <button className="tab" onClick={() => router.push("/Products/Productlist")}>
             Creators Market
           </button>
         </div>
@@ -109,13 +109,13 @@ const Home = () => {
             <div className="hero-buttons">
               <button
                 className="explore-btn"
-                onClick={() => router.push("/products")}
+                onClick={() => router.push("/Products/Productlist")}
               >
                 Explore Now
               </button>
               <button
                 className="create-btn"
-                onClick={() => router.push("/create/create")} 
+                onClick={() => router.push("/create/create")}
               >
                 Create
               </button>
@@ -138,60 +138,30 @@ const Home = () => {
 
           <div className="gallery">
             <div className="gallery-item small">
-              <Image
-                src={image5}
-                width={300}
-                height={300} 
-                alt="Purple Shoes"
-              />
+              <Image src={image5} width={300} height={300} alt="Purple Shoes" />
             </div>
             <div className="gallery-item small">
-              <Image
-                src={image6}
-                width={300} 
-                height={300} 
-                alt="Yellow Shoes"
-              />
+              <Image src={image6} width={300} height={300} alt="Yellow Shoes" />
             </div>
             <div className="gallery-item tall">
-              <Image
-                src={image7}
-                width={300} 
-                height={600} 
-                alt="Gold Dress"
-              />
+              <Image src={image7} width={300} height={600} alt="Gold Dress" />
             </div>
             <div className="gallery-item medium">
-              <Image
-                src={image3}
-                width={400} 
-                height={300} 
-                alt="Blue Jacket"
-              />
+              <Image src={image3} width={400} height={300} alt="Blue Jacket" />
             </div>
             <div className="gallery-item medium">
               <Image
                 src={image4}
-                width={400} 
-                height={300} 
+                width={400}
+                height={300}
                 alt="Shoes Display"
               />
             </div>
             <div className="gallery-item small">
-              <Image
-                src={image2}
-                width={300} 
-                height={300} 
-                alt="Green Shoes"
-              />
+              <Image src={image2} width={300} height={300} alt="Green Shoes" />
             </div>
             <div className="gallery-item small">
-              <Image
-                src={image1}
-                width={300} 
-                height={300} 
-                alt="Character"
-              />
+              <Image src={image1} width={300} height={300} alt="Character" />
             </div>
           </div>
         </div>
@@ -199,22 +169,22 @@ const Home = () => {
         <div className="brands">
           <Image
             src={adidas}
-            width={100} 
-            height={50} 
+            width={100}
+            height={50}
             alt="Adidas"
             className="brand-logo"
           />
           <Image
             src={puma}
-            width={100} 
-            height={50} 
+            width={100}
+            height={50}
             alt="Puma"
             className="brand-logo"
           />
           <Image
             src={logolacoste}
-            width={100}  
-            height={50} 
+            width={100}
+            height={50}
             alt="Lacoste"
             className="brand-logo"
           />
@@ -237,14 +207,18 @@ const Home = () => {
             <p>
               Explore our diverse collection that caters to every taste and
               occasion. Join us in celebrating the art of fashion and the
-              stories behind each piece. 
-              {showMore && ( 
+              stories behind each piece.
+              {showMore && (
                 <span>
-                  Stay updated with the latest news and insights from the fashion world.
+                  Stay updated with the latest news and insights from the
+                  fashion world.
                 </span>
               )}
             </p>
-            <button className="show-more-btn" onClick={() => setShowMore(!showMore)}> 
+            <button
+              className="show-more-btn"
+              onClick={() => setShowMore(!showMore)}
+            >
               {showMore ? "Show Less" : "Show More"}
             </button>
           </div>
@@ -333,7 +307,7 @@ const Home = () => {
                     </button>
                     <button
                       className="buy-button"
-                      onClick={() => router.push("/products")}
+                      onClick={() => router.push("/Products/Productlist")}
                     >
                       Buy Now
                     </button>
@@ -385,7 +359,7 @@ const Home = () => {
                     </button>
                     <button
                       className="buy-button"
-                      onClick={() => router.push("/products")}
+                      onClick={() => router.push("/Products/Productlist")}
                     >
                       Buy Now
                     </button>
@@ -428,40 +402,73 @@ const Home = () => {
         </div>
 
         <div className="faq-section">
-  <h2>Frequently Asked Question</h2>
-  <p className="faq-subtitle">Wanna Ask Something?</p>
-  <div className="faq-grid">
-    {Array(6)
-      .fill(null)
-      .map((_, index) => (
-        <div key={index} className="faq-item">
-          <div className="faq-question">
-            <span>
-              {index === 0 && "What is your return policy?"}
-              {index === 1 && "How do I track my order?"}
-              {index === 2 && "What payment methods do you accept?"}
-              {index === 3 && "Can I change my order after it's been placed?"}
-              {index === 4 && "Do you ship internationally?"}
-              {index === 5 && "How can I contact customer support?"}
-            </span>
-            <button className="expand-btn" onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}>
-              {expandedIndex === index ? "-" : "+"}
-            </button>
+          <h2>Frequently Asked Question</h2>
+          <p className="faq-subtitle">Wanna Ask Something?</p>
+          <div className="faq-grid">
+            {Array(6)
+              .fill(null)
+              .map((_, index) => (
+                <div key={index} className="faq-item">
+                  <div className="faq-question">
+                    <span>
+                      {index === 0 && "What is your return policy?"}
+                      {index === 1 && "How do I track my order?"}
+                      {index === 2 && "What payment methods do you accept?"}
+                      {index === 3 &&
+                        "Can I change my order after it's been placed?"}
+                      {index === 4 && "Do you ship internationally?"}
+                      {index === 5 && "How can I contact customer support?"}
+                    </span>
+                    <button
+                      className="expand-btn"
+                      onClick={() =>
+                        setExpandedIndex(expandedIndex === index ? null : index)
+                      }
+                    >
+                      {expandedIndex === index ? "-" : "+"}
+                    </button>
+                  </div>
+                  {expandedIndex === index && (
+                    <div className="faq-response">
+                      {index === 0 && (
+                        <p>
+                          Our return policy allows returns within 30 days of
+                          purchase.
+                        </p>
+                      )}
+                      {index === 1 && (
+                        <p>
+                          You can track your order using the tracking link sent
+                          to your email.
+                        </p>
+                      )}
+                      {index === 2 && (
+                        <p>
+                          We accept credit cards, PayPal, and other major
+                          payment methods.
+                        </p>
+                      )}
+                      {index === 3 && (
+                        <p>
+                          Yes, you can change your order within 1 hour of
+                          placing it.
+                        </p>
+                      )}
+                      {index === 4 && (
+                        <p>Yes, we ship to most countries worldwide.</p>
+                      )}
+                      {index === 5 && (
+                        <p>
+                          You can contact customer support via email or our
+                          contact form.
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
           </div>
-          {expandedIndex === index && (
-            <div className="faq-response">
-              {index === 0 && <p>Our return policy allows returns within 30 days of purchase.</p>}
-              {index === 1 && <p>You can track your order using the tracking link sent to your email.</p>}
-              {index === 2 && <p>We accept credit cards, PayPal, and other major payment methods.</p>}
-              {index === 3 && <p>Yes, you can change your order within 1 hour of placing it.</p>}
-              {index === 4 && <p>Yes, we ship to most countries worldwide.</p>}
-              {index === 5 && <p>You can contact customer support via email or our contact form.</p>}
-            </div>
-          )}
         </div>
-      ))}
-  </div>
-</div>
 
         <div className="quality-banner">
           <div className="banner-content">
@@ -471,7 +478,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
