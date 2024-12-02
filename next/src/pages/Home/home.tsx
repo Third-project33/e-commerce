@@ -54,17 +54,17 @@ const Home = () => {
           "http://localhost:3000/products"
         );
         setProducts(productsResponse.data.slice(0, 9));
-    
+
         const newProducts = productsResponse.data
           .filter((product: Product) => product.status === "New")
           .slice(0, 3);
         setTrendingProducts(newProducts);
-    
+
         const creatorsResponse = await axios.get(
           "http://localhost:3000/user/all"
         );
         setCreators(creatorsResponse.data.slice(0, 3));
-    
+
         const brandsResponse = await axios.get(
           "http://localhost:3000/brands/allbrands"
         );
@@ -72,8 +72,12 @@ const Home = () => {
           .filter((brand: Brand) => brand.verified === 1)
           .slice(-3);
         setBrands(verifiedBrands);
-      } catch (error: any) { // Type assertion added here
-        console.error("Failed to load data:", error.response ? error.response.data : error.message);
+      } catch (error: any) {
+        // Type assertion added here
+        console.error(
+          "Failed to load data:",
+          error.response ? error.response.data : error.message
+        );
       }
     };
 
@@ -94,7 +98,10 @@ const Home = () => {
       <div className="content-wrapper">
         <div className="tabs">
           <button className="tab active">Main Collection</button>
-          <button className="tab" onClick={() => router.push("/Products/Productlist")}>
+          <button
+            className="tab"
+            onClick={() => router.push("/Products/Productlist")}
+          >
             Creators Market
           </button>
         </div>

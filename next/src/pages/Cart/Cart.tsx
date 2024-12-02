@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "../Cart/Cart.css";
+import Navbar from "../navbar/navbar";
 
 interface Product {
   id: number;
@@ -153,50 +154,53 @@ const Cart: React.FC = () => {
   if (!cart) return <div className="cart-loading">Loading...</div>;
   console.log("cart", cart);
   return (
-    <div className="cart-container">
-      <h2>My Cart</h2>
-      <div className="cart-items">
-        {cart.Products.length === 0 ? (
-          <div className="cart-empty">Your cart is empty</div>
-        ) : (
-          cart.Products.map((product) => (
-            <div key={product.id} className="cart-item">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="cart-item-image"
-              />
-              <div className="cart-item-details">
-                <h3>{product.title}</h3>
-                <p className="cart-item-price">
-                  {product.CartProducts.priceAtPurchase} ETH
-                </p>
-                <p className="cart-item-quantity">
-                  Quantity: {product.CartProducts.quantity}
-                </p>
+    <div>
+      <Navbar />
+      <div className="cart-container">
+        <h2>My Cart</h2>
+        <div className="cart-items">
+          {cart.Products.length === 0 ? (
+            <div className="cart-empty">Your cart is empty</div>
+          ) : (
+            cart.Products.map((product) => (
+              <div key={product.id} className="cart-item">
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="cart-item-image"
+                />
+                <div className="cart-item-details">
+                  <h3>{product.title}</h3>
+                  <p className="cart-item-price">
+                    {product.CartProducts.priceAtPurchase} ETH
+                  </p>
+                  <p className="cart-item-quantity">
+                    Quantity: {product.CartProducts.quantity}
+                  </p>
+                </div>
+                <button
+                  className="remove-item-button"
+                  onClick={() => {
+                    handleRemoveItem(product.id);
+                  }}
+                >
+                  ❌
+                </button>
               </div>
-              <button
-                className="remove-item-button"
-                onClick={() => {
-                  handleRemoveItem(product.id);
-                }}
-              >
-                ❌
-              </button>
-            </div>
-          ))
-        )}
-      </div>
-      <div className="cart-summary">
-        <p>Total Items: {cart.totalItems || 0}</p>
-        <p>Total Amount: {cart.totalAmount || 0} ETH</p>
-        <button
-          className="confirm-order-button"
-          onClick={() => handleConfirmOrder()}
-          disabled={!cart.Products || cart.Products.length === 0}
-        >
-          Confirm Order
-        </button>
+            ))
+          )}
+        </div>
+        <div className="cart-summary">
+          <p>Total Items: {cart.totalItems || 0}</p>
+          <p>Total Amount: {cart.totalAmount || 0} ETH</p>
+          <button
+            className="confirm-order-button"
+            onClick={() => handleConfirmOrder()}
+            disabled={!cart.Products || cart.Products.length === 0}
+          >
+            Confirm Order
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ const Navbar = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
     const savedAvatar =
@@ -48,66 +47,72 @@ const Navbar = () => {
 
   return (
     <>
-    <div className="nav-container">
-      <a href="/Home/home" className="logo">
-        Logo
-      </a>
-      <div className="nav-center">
-        <div className="search-container">
-          <FiSearch className="search-icon" />
-          <input
-            type="search"
-            className="search-bar"
-            placeholder="Search Items, Fashion, Collection and Users"
-          />
+      <div className="nav-container">
+        <a href="/Home/home" className="logo">
+          Logo
+        </a>
+        <div className="nav-center">
+          <div className="search-container">
+            <FiSearch className="search-icon" />
+            <input
+              type="search"
+              className="search-bar"
+              placeholder="Search Items, Fashion, Collection and Users"
+            />
+          </div>
+          <nav className="nav-links">
+            <a
+              onClick={() => router.push("/Home/home")}
+              style={{ cursor: "pointer" }}
+            >
+              Home
+            </a>
+            <a
+              onClick={() => router.push("/Products/Productlist")}
+              style={{ cursor: "pointer" }}
+            >
+              Explore <FiChevronDown />
+            </a>
+            <a href="#collection">Personal Collection</a>
+            <a href="#drops">Drops</a>
+            <a
+              onClick={() => router.push("/about/about")}
+              className="more-link"
+              style={{ cursor: "pointer" }}
+            >
+              More <FiChevronDown />
+            </a>
+          </nav>
         </div>
-        <nav className="nav-links">
-          <a onClick={() => router.push("/Home/home")} style={{ cursor: "pointer" }}>
-            Home
-          </a>
-          <a
-            onClick={() => router.push("/Products/Productlist")}
-            style={{ cursor: "pointer" }}
+        <div className="nav-right">
+          <button className="icon-button">
+            <FiBell size={20} />
+          </button>
+          <button
+            className="icon-button"
+            onClick={() => setIsChatOpen(!isChatOpen)}
           >
-            Explore <FiChevronDown />
-          </a>
-          <a href="#collection">Personal Collection</a>
-          <a href="#drops">Drops</a>
-          <a
-            onClick={() => router.push("/about/about")}
-            className="more-link"
-            style={{ cursor: "pointer" }}
+            <FiMessageSquare size={20} />
+          </button>
+          <button
+            className="wallet-btn"
+            onClick={() => router.push("/Cart/Cart")}
           >
-            More <FiChevronDown />
-          </a>
-        </nav>
+            <FiShoppingCart size={18} />
+          </button>
+          <img
+            onClick={() => router.push("/Profile/Profile")}
+            src={avatar}
+            alt="Profile"
+            className="profile-img"
+          />
+          <button className="icon-button" onClick={handleLogout}>
+            <FiLogOut size={20} />
+          </button>
+        </div>
       </div>
-      <div className="nav-right">
-        <button className="icon-button" >
-          <FiBell size={20} />
-        </button>
-        <button
-          className="icon-button"
-          onClick={() => setIsChatOpen(!isChatOpen)}
-          >
-          <FiMessageSquare size={20} />
-        </button>
-        <button className="wallet-btn" onClick={() => router.push("/cart")}>
-          <FiShoppingCart size={18} />
-        </button>
-        <img
-          onClick={() => router.push("/Profile/Profile")}
-          src={avatar}
-          alt="Profile"
-          className="profile-img"
-        />
-        <button className="icon-button" onClick={handleLogout}>
-          <FiLogOut size={20} />
-        </button>
-      </div>
-    </div>
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-</>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@
   width: 100%;
   box-sizing: border-box;
   backdrop-filter: blur(10px);
+  background: linear-gradient(to right, #5c373c, 35%, #181e41);
 }
 
 .logo {
