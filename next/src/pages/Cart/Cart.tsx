@@ -28,7 +28,7 @@ const Cart: React.FC = () => {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const response = await axios.get("http://localhost:3000/cart/itemcart", {
+      const response = await axios.get("http://localhost:3001/cart/itemcart", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCart(response.data);
@@ -56,7 +56,7 @@ const Cart: React.FC = () => {
       try {
         const token = localStorage.getItem("token");
         await axios.post(
-          "http://localhost:3000/cart/confirm-order",
+          "http://localhost:3001/cart/confirm-order",
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -97,7 +97,7 @@ const Cart: React.FC = () => {
     if (confirm.isConfirmed) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:3000/cart/remove/${productId}`, {
+        await axios.delete(`http://localhost:3001/cart/remove/${productId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -143,7 +143,7 @@ const Cart: React.FC = () => {
 
   const handleOwner = async (id: number) => {
     try {
-      await axios.post(`http://localhost:3000/products/decrement/${id}`);
+      await axios.post(`http://localhost:3001/products/decrement/${id}`);
     } catch (error) {
       console.error("Error decrementing owner count:", error);
     }
@@ -151,7 +151,7 @@ const Cart: React.FC = () => {
 
   if (error) return <div className="cart-error">{error}</div>;
   if (!cart) return <div className="cart-loading">Loading...</div>;
-
+  console.log("cart", cart);
   return (
     <div className="cart-container">
       <h2>My Cart</h2>

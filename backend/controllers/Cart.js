@@ -39,7 +39,7 @@ const getCart = (req, res) => {
         return res.status(200).json({
           totalItems: 0,
           totalAmount: 0,
-          products: [],
+          Products: [],
         });
       }
       res.status(200).json(cart);

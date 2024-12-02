@@ -150,8 +150,10 @@ const updateAvatar = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
+    console.log("Fetching all users...");
     try {
         const users = await db.user.findAll(); 
+        console.log("Users fetched successfully:", users);
         return res.status(200).json(users); 
     } catch (error) {
         console.error("Error fetching users:", error);

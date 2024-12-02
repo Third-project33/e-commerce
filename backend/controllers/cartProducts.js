@@ -30,6 +30,8 @@ exports.addToCart = (req, res) => {
   db.products // Product Lookup: Searches for the product in the database using the productId.
     .findOne({ where: { id: productId } })
     .then((product) => {
+      // console.log(product);
+
       if (!product)
         return res.status(404).json({ message: "Product not found" });
 
@@ -40,8 +42,10 @@ exports.addToCart = (req, res) => {
           defaults: { totalItems: 0, totalAmount: 0 },
         })
         .then(([cart]) => {
+          console.log(cart.id, "cart");
+
           db.CartProducts.findOrCreate({
-            where: { CartId: cart.id, ProductId: productId },
+            where: { cartId: cart.id, ProductId: productId },
             defaults: { quantity: 1, priceAtPurchase: product.price },
           }).then(([cartProduct, created]) => {
             /*Update Quantities: If the product is already in the cart, 
@@ -58,8 +62,10 @@ exports.addToCart = (req, res) => {
           });
         });
     })
-    .catch(() =>
-      res.status(500).json({ message: "Error adding product to cart" })
+    .catch(
+      (error) => console.log(error)
+
+      // res.status(500).json({ message: "Error adding product to cart", error })
     );
 };
 

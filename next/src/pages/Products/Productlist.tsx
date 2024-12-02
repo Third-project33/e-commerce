@@ -26,7 +26,7 @@ const ProductList: React.FC = () => {
   const fetchProducts = async () => {
     try {
       // Fetches products from the server using the current filters
-      const { data } = await axios.get("http://localhost:3000/products", {
+      const { data } = await axios.get("http://localhost:3001/products", {
         params: filters,
       });
       //Updates the products state with the fetched data
@@ -62,7 +62,7 @@ const ProductList: React.FC = () => {
   const handleOwner = async (id: number) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/products/increment/${id}`
+        `http://localhost:3001/products/increment/${id}`
       );
       console.log(response.data.message);
     } catch (error) {
@@ -89,7 +89,7 @@ const ProductList: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/cart/add",
+        "http://localhost:3001/cart/add",
         { productId },
         {
           headers: { Authorization: `Bearer ${token}` },
