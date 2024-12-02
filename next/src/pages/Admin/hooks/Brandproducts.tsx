@@ -19,9 +19,11 @@ const AdminBrandProducts = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [showDropdown, setShowDropdown] = useState<{[key: number]: boolean}>({});
     const [newPrice, setNewPrice] = useState<string>('');
+    const [newProduct, setNewProduct] = useState<{ title: string; image: string; price: number }>({ title: '', image: '', price: 0 });
     const [refresh, setRefresh] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [showAddProductForm, setShowAddProductForm] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchProducts = async (): Promise<void> => {
@@ -29,7 +31,7 @@ const AdminBrandProducts = () => {
             
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(`http://localhost:3000/api/products/${brandId}`);
+                const response = await axios.get<Product[]>(`http://localhost:3001/products/${brandId}`);
                 console.log('Fetched products:', response.data);
                 setProducts(response.data);
             } catch (error) {
@@ -48,6 +50,10 @@ const AdminBrandProducts = () => {
         fetchProducts();
     }, [brandId, refresh]);
 
+
+
+    //=>  price update 
+
     const handlePriceUpdate = async (productId: number): Promise<void> => {
         if (!newPrice || isNaN(Number(newPrice)) || Number(newPrice) <= 0) {
             Swal.fire({
@@ -61,7 +67,7 @@ const AdminBrandProducts = () => {
 
         try {
             console.log('Updating price for product:', productId, 'New price:', newPrice);
-            await axios.put(`http://localhost:3000/api/products/${productId}`, { 
+            await axios.put(`http://localhost:3001/products/${productId}`, { 
                 price: Number(newPrice) 
             });
             
@@ -85,6 +91,72 @@ const AdminBrandProducts = () => {
             });
         }
     };
+    //=> img update 
+    const handleImageUpdate = async (productId: number): Promise<void> => {
+        const { value: newImage } = await Swal.fire({
+            title: 'Update Product Image',
+            input: 'text',
+            inputLabel: 'Enter the new image URL',
+            inputPlaceholder: 'Image URL',
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            cancelButtonText: 'Cancel',
+        });
+
+        if (newImage) {
+            try {
+                await axios.put(`http://localhost:3001/products/${productId}`, { 
+                    image: newImage 
+                });
+                Swal.fire('Success!', 'Image updated successfully', 'success');
+                setRefresh(prev => !prev);
+            } catch (error) {
+                console.error("Error updating image:", error);
+                Swal.fire('Error!', 'Failed to update image. Please try again.', 'error');
+            }
+        }
+    };
+
+    
+   //=> add product too the brand 
+    const handleAddProduct = async () => {
+        if (!newProduct.title || !newProduct.image || newProduct.price <= 0) {
+            Swal.fire({
+                title: 'Invalid Input',
+                text: 'Please fill in all fields correctly.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            await axios.post(`http://localhost:3001/products/create`, { 
+                ...newProduct, 
+                brandId 
+            });
+            Swal.fire('Success!', 'Product added successfully', 'success');
+            setNewProduct({ title: '', image: '', price: 0 });
+            setRefresh(!refresh);
+            setShowAddProductForm(false);
+        } catch (error) {
+            console.error("Error adding product:", error);
+            Swal.fire('Error!', 'Failed to add product', 'error');
+        }
+    };
+ 
+
+
+     
+    
+    const handleBackButtonClick = () => {
+        const currentUrl = router.asPath; // Get the current URL
+        const targetUrl = "/Admin/hooks/BrandsAdmin"; // Define your target URL
+
+        if (currentUrl !== targetUrl) {
+            router.push(targetUrl); // Only navigate if the URLs are different
+        }
+    };
 
     if (loading) {
         return (
@@ -93,8 +165,10 @@ const AdminBrandProducts = () => {
             </div>
         );
     }
+   
 
-    // Filter products based on the search term
+
+
     const filteredProducts = products.filter(product =>
         (product.title && product.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -112,7 +186,37 @@ const AdminBrandProducts = () => {
                     className="search-input"
                 />
             </div>
-            
+
+            <button 
+                className="add-product-button" 
+                onClick={() => setShowAddProductForm(prev => !prev)}
+            >
+                +
+            </button>
+
+            <div className={`add-product-form ${showAddProductForm ? 'show' : ''}`}>
+                <h2>Add New Product</h2>
+                <input
+                    type="text"
+                    placeholder="Product Title"
+                    value={newProduct.title}
+                    onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Image URL"
+                    value={newProduct.image}
+                    onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
+                />
+                <input
+                    type="number"
+                    placeholder="Price"
+                    value={newProduct.price}
+                    onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
+                />
+                <button onClick={handleAddProduct}>Add Product</button>
+            </div>
+
             <div className="products-wrapper">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
@@ -140,6 +244,12 @@ const AdminBrandProducts = () => {
                                 }))}
                             >
                                 Update Price
+                            </button>
+                            <button 
+                                className="update-image-button"
+                                onClick={() => handleImageUpdate(product.id)}
+                            >
+                                Update Image
                             </button>
                             {showDropdown[product.id] && (
                                 <div className="price-update-dropdown">
@@ -171,13 +281,12 @@ const AdminBrandProducts = () => {
             
             <button 
                 className="back-button" 
-                onClick={() => router.push("/Admin/hooks/BrandsAdmin")}
+                onClick={handleBackButtonClick}
             >
                 Back
             </button>
         </div>
     );
 };
-
 
 export default AdminBrandProducts;

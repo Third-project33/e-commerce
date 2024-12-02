@@ -23,7 +23,7 @@ const UsersAdmin = () => {
     const fetchUsers = async (): Promise<void> => {
         try {
             setLoading(true);
-            const response = await axios.get<User[]>("http://localhost:3000/user/all");
+            const response = await axios.get<User[]>("http://localhost:3001/user/all");
             setUsers(response.data);
         } catch (error) {
             console.error("Error fetching users:", error);
@@ -49,7 +49,7 @@ const UsersAdmin = () => {
             confirmButtonText: 'Yes, ban it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(`http://localhost:3000/user/ban/${id}`)
+                axios.post(`http://localhost:3001/user/ban/${id}`)
                     .then(() => {
                         Swal.fire('Banned!', 'User has been banned.', 'success');
                         fetchUsers();

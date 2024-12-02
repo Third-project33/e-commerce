@@ -124,11 +124,19 @@ const decrementownercount = async (req, res) => {
 
 const updateproductbyId = async (req, res) => {
     const productId = req.params.productId; 
-    const { price } = req.body;
+    const { price, image } = req.body;
 
     try {
+        const updateData = {};
+        if (price !== undefined) {
+            updateData.price = price;
+        }
+        if (image) {
+            updateData.image = image;
+        }
+
         const [updated] = await db.products.update(
-            { price },
+            updateData,
             { where: { id: productId } }
         );
 
@@ -144,54 +152,54 @@ const updateproductbyId = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  try {
-    const { 
-      title, 
-      price, 
-      image,
-      status,
-      rarity,
-      collection,
-      stock = 0,
-      onSale = false
-    } = req.body;
+    try {
+        const { 
+            title, 
+            price, 
+            image,
+            status,
+            rarity,
+            collection,
+            stock = 0,
+            onSale = false
+        } = req.body;
 
-    // Validate required fields
-    if (!title || !price || !image || !rarity || !collection) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields',
-        receivedData: req.body
-      });
+        // Validate required fields
+        if (!title || !price || !image || !rarity || !collection) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing required fields',
+                receivedData: req.body
+            });
+        }
+
+        // Create product with explicit values
+        const product = await db.products.create({
+            title: title.trim(),
+            price: parseFloat(price),
+            image: image.trim(),
+            status: status || 'Available',
+            rarity: rarity.trim(),
+            collection: collection.trim(),
+            stock: parseInt(stock),
+            onSale: Boolean(onSale)
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Product created successfully",
+            product
+        });
+
+    } catch (error) {
+        console.error('Error creating product:', error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Error creating product',
+            error: error.message,
+            receivedData: req.body  
+        });
     }
-
-    // Create product with explicit values
-    const product = await db.products.create({
-      title: title.trim(),
-      price: parseFloat(price),
-      image: image.trim(),
-      status: status || 'Available',
-      rarity: rarity.trim(),
-      collection: collection.trim(),
-      stock: parseInt(stock),
-      onSale: Boolean(onSale)
-    });
-
-    res.status(201).json({
-      success: true,
-      message: "Product created successfully",
-      product
-    });
-
-  } catch (error) {
-    console.error('Error creating product:', error);
-    res.status(500).json({ 
-      success: false,
-      message: 'Error creating product',
-      error: error.message,
-      receivedData: req.body  
-    });
-  }
 };
 
 module.exports = {

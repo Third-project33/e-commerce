@@ -9,11 +9,9 @@
     animation: gradientFlow 15s ease infinite;
     position: relative;
     overflow: hidden;
-    padding: 20px;
-    /* background: rgba(255, 255, 255, 0.1); */
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-} 
+}
 
 /* Animated background pattern */
 .admin-product-grid-container::before {
@@ -44,10 +42,8 @@
     position: relative;
     overflow: hidden;
     z-index: 2;
-    height: auto;
-
-
 }
+
 .admin-product-card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 
@@ -83,8 +79,6 @@
     color: white;
     margin: 10px 0;
     text-shadow: 0 0 8px rgba(164, 69, 247, 0.5);
-    position: relative;
-    overflow: hidden;
 }
 
 .admin-product-price {
@@ -96,11 +90,14 @@
     animation: pricePulse 2s infinite;
 }
 
-.update-price-button {
+.update-price-button,
+.update-image-button,
+.submit-button,
+.back-button {
     background: linear-gradient(45deg, #a445f7, #6a00ff);
     border: none;
     border-radius: 8px;
-    padding: 8px 15px;
+    padding: 10px 15px;
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -109,98 +106,73 @@
     letter-spacing: 0.5px;
     margin: 5px 0;
     width: 100%;
-    position: relative;
-    overflow: hidden;
 }
 
-.update-price-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
-    transition: 0.5s;
+.update-price-button:hover,
+.update-image-button:hover,
+.submit-button:hover,
+.back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(164, 69, 247, 0.3);
 }
 
-.update-price-button:hover::before {
-    left: 100%;
-}
-
-.price-update-dropdown {
+.add-product-form {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-    animation: dropdownAppear 0.3s ease-out;
+    padding: 20px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* Start hidden */
+    transform: translateY(-20px); /* Start slightly above */
 }
 
-.price-input {
+.add-product-form.show {
+    opacity: 1; /* Show when active */
+    transform: translateY(0); /* Move to original position */
+}
+
+.add-product-form input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
+    margin: 10px 0;
     border: 2px solid rgba(164, 69, 247, 0.3);
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.9);
-    font-size: 0.9rem;
     transition: all 0.3s ease;
-    margin-bottom: 8px;
 }
 
-.price-input:focus {
+.add-product-form input:focus {
     outline: none;
     border-color: #a445f7;
     box-shadow: 0 0 15px rgba(164, 69, 247, 0.3);
 }
 
-.submit-button {
+.add-product-button {
+    position: fixed; /* Fixed position */
+    right: 20px; /* Align to the right */
+    bottom: 20px; /* Align to the bottom */
     background: linear-gradient(45deg, #28a745, #20c997);
     border: none;
-    border-radius: 6px;
-    padding: 8px 15px;
+    border-radius: 50%;
+    width: 60px; /* Size of the button */
+    height: 60px; /* Size of the button */
     color: white;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Icon size */
 }
 
-.submit-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-}
-
-.back-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background: linear-gradient(45deg, #a445f7, #6a00ff);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    z-index: 100;
-    box-shadow: 
-        0 5px 15px rgba(164, 69, 247, 0.3),
-        0 0 20px rgba(164, 69, 247, 0.2);
-}
-
-.back-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 
-        0 15px 30px rgba(164, 69, 247, 0.4),
-        0 0 40px rgba(164, 69, 247, 0.3);
+.add-product-button:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .loading-container {
@@ -355,9 +327,4 @@
     width: 60px;
     height: 60px;
     animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }

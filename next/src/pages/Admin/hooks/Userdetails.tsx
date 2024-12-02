@@ -35,10 +35,10 @@ const Userdetails = () => {
 
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/user/${userId}`);
+                const response = await axios.get(`http://localhost:3001/user/${userId}`);
                 console.log("User details response:", response.data);
                 setUser(response.data);
-                const response2 = await axios.get(`http://localhost:3000/posts/user/${userId}`);
+                const response2 = await axios.get(`http://localhost:3001/posts/user/${userId}`);
                 setUserposts(response2.data);
             } catch (error) {
                 console.error("Error fetching user details:", error);

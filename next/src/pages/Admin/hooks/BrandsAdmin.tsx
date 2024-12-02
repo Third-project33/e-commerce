@@ -19,7 +19,7 @@ const BrandAdmin: React.FC = () => {
 
     const handleDelete = async (id: number): Promise<void> => {
         try {
-            await axios.delete(`http://localhost:3000/brands/delete/${id}`);
+            await axios.delete(`http://localhost:3001/brands/delete/${id}`);
             Swal.fire({
                 title: 'Success!',
                 text: 'Brand successfully deleted',
@@ -42,7 +42,7 @@ const BrandAdmin: React.FC = () => {
     const handleVerify = async (brand: Brand): Promise<void> => {
         const checkVerify = brand.verified === 1 ? 0 : 1;
         try {
-            await axios.put(`http://localhost:3000/brands/update/${brand.id}`, { 
+            await axios.put(`http://localhost:3001/brands/update/${brand.id}`, { 
                 verified: checkVerify 
             });
             
@@ -68,7 +68,7 @@ const BrandAdmin: React.FC = () => {
     const fetchBrands = async (): Promise<void> => {
         try {
             setLoading(true);
-            const response = await axios.get<Brand[]>("http://localhost:3000/brands/allbrands");
+            const response = await axios.get<Brand[]>("http://localhost:3001/brands/allbrands");
             setBrands(response.data);
         } catch (error) {
             console.error("Error fetching brands:", error);
