@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         banned: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false, // Default to not banned
+            defaultValue: false,
         }
     }, {
         timestamps: false  // Tracks createdAt and updatedAt
