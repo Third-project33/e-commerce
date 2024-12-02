@@ -17,7 +17,6 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
     setSocket(newSocket);
 
     newSocket.on('chat message', (msg) => {
-      // Vérifie si le message existe déjà pour éviter les doublons
       setMessages(prev => {
         if (!prev.some(m => m.text === msg)) {
           return [...prev, { text: msg, sent: false, id: Date.now().toString() }];
@@ -34,9 +33,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputMessage.trim() && socket) {
-      socket.emit('chat message', inputMessage); //envoi msg 
+      socket.emit('chat message', inputMessage);  
       
-      // Ajouter le message envoyé à l'état local avec un ID unique
       setMessages(prev => [...prev, { text: inputMessage, sent: true, id: Date.now().toString() }]);
       setInputMessage('');
     }

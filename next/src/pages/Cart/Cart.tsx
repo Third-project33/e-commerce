@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "../Cart/Cart.css";
+import Navbar from "../navbar/navbar";
 
 interface Product {
   id: number;
@@ -153,6 +154,8 @@ const Cart: React.FC = () => {
   if (!cart) return <div className="cart-loading">Loading...</div>;
   console.log("cart", cart);
   return (
+    <>
+    <Navbar/>
     <div className="cart-container">
       <h2>My Cart</h2>
       <div className="cart-items">
@@ -199,6 +202,7 @@ const Cart: React.FC = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

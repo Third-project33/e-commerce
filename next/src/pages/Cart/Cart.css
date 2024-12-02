@@ -1,8 +1,12 @@
-.cart-container {
-  background-color: #6366f1;
+body{
+  background: linear-gradient(to right, #5c373c, 35%, #181e41);
+
+}
+.container {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  background: linear-gradient(to right, #5c373c, 35%, #181e41);
 }
 
 .cart-loading,
