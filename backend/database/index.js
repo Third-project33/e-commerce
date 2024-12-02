@@ -7,14 +7,13 @@ const sequelize = new Sequelize('e-commerce', 'root', 'saif', {
 });
 
 sequelize
- .authenticate()
- .then(() => {
-  console.log("DATABASE CONNECTED");
- })
- .catch((err) => {
-  console.log(err);
- });
-
+.authenticate()
+.then(() => {
+    console.log("DATABASE CONNECTED");
+})
+.catch((err) => {
+    console.error("Database connection error:", err);
+});
 
 const db ={}
 db.sequelize = sequelize 

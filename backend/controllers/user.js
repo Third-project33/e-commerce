@@ -93,6 +93,10 @@ const login = async (req, res) => {
         if (!user) {//if the email address is not in our database, an error message will be shown indicaing that we do not have this user
             return res.status(404).json({ message: 'User not found' });
         }
+         // Check if the user is banned
+         if (user.banned) {
+            return res.status(403).json({ message: 'User is banned' }); // Forbidden
+        }
 
         const isMatch = await bcrypt.compare(password, user.password);//this to compare if the given password is the same as the hashed one in our database
 
@@ -146,8 +150,10 @@ const updateAvatar = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
+    console.log("Fetching all users...");
     try {
         const users = await db.user.findAll(); 
+        console.log("Users fetched successfully:", users);
         return res.status(200).json(users); 
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -201,4 +207,23 @@ const updateName = async (req, res) => {
     }
 };
 
-module.exports = { signup, login, updateAvatar, getAllUsers ,getuserbyid, deleteuserbyid , updateName};
+const banUser = async (req, res) => {
+    try {
+        const { id } = req.params; // Get user ID from request parameters
+        const user = await db.user.findByPk(id); // Find user by ID
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update the banned status
+        await user.update({ banned: true });
+
+        return res.status(200).json({ message: 'User has been banned successfully' });
+    } catch (error) {
+        console.error("Error banning user:", error);
+        res.status(500).send('Server error');
+    }
+};
+
+module.exports = { signup, login, updateAvatar, getAllUsers ,getuserbyid, deleteuserbyid , updateName, banUser};

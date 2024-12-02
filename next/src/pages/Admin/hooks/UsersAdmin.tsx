@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import '../../Admin/styles/UsersAdmin.css';
-import DefaultAvatar from '../hooks/DefaultAvatar';
+
 
 // Define interfaces for type safety
 interface User {
@@ -27,7 +27,6 @@ const UsersAdmin = () => {
             setLoading(true);
             const response = await axios.get<User[]>("http://localhost:3000/user/all");
             setUsers(response.data);
-            console.log(response.data); 
         } catch (error) {
             console.error("Error fetching users:", error);
             Swal.fire({
@@ -41,7 +40,7 @@ const UsersAdmin = () => {
         }
     };
 
-    const handleDelete = (id: number): void => {
+    const handleBan = (id: number): void => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -49,25 +48,17 @@ const UsersAdmin = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yes, ban it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/user/${id}`)
+                axios.post(`http://localhost:3000/user/ban/${id}`)
                     .then(() => {
-                        Swal.fire(
-                            'Deleted!',
-                            'User has been deleted.',
-                            'success'
-                        );
+                        Swal.fire('Banned!', 'User has been banned.', 'success');
                         fetchUsers();
                     })
                     .catch((err) => {
                         console.error(err);
-                        Swal.fire(
-                            'Error!',
-                            'Failed to delete user.',
-                            'error'
-                        );
+                        Swal.fire('Error!', 'Failed to ban user.', 'error');
                     });
             }
         });
@@ -84,10 +75,7 @@ const UsersAdmin = () => {
     );
 
     const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Handle scroll event to show/hide scroll to top button
@@ -104,11 +92,11 @@ const UsersAdmin = () => {
         fetchUsers(); 
     }, []);
 
-    // Add this function to handle image errors
+    // Handle image errors
     const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const target = e.target as HTMLImageElement;
         target.onerror = null; // Prevent infinite loop
-        target.src = '/images/default-avatar.png'; // Path to your default avatar
+        target.src = '/images/default-avatar.png'; // Ensure this path is correct
     };
 
     return (
@@ -131,16 +119,12 @@ const UsersAdmin = () => {
                         filteredUsers.map((user) => (
                             <div key={user.id} className="user-card">
                                 <div className="user-avatar-container">
-                                    {user.avatar ? (
-                                        <img 
-                                            src={user.avatar}
-                                            alt={`${user.firstName}'s avatar`}
-                                            className="user-avatar"
-                                            onError={handleImageError}
-                                        />
-                                    ) : (
-                                        <DefaultAvatar name={`${user.firstName} ${user.lastName}`} />
-                                    )}
+                                    <img 
+                                        src={user.avatar || '/images/default-avatar.png'} // Use default if avatar is empty
+                                        alt={`${user.firstName}'s avatar`} 
+                                        className="user-avatar" 
+                                        onError={handleImageError} 
+                                    />
                                 </div>
                                 
                                 <div className="user-info">
@@ -156,10 +140,10 @@ const UsersAdmin = () => {
                                         View Details
                                     </button>
                                     <button 
-                                        className="action-button delete-button"
-                                        onClick={() => handleDelete(user.id)}
+                                        className="action-button ban-button"
+                                        onClick={() => handleBan(user.id)}
                                     >
-                                        Delete
+                                        Ban
                                     </button>
                                 </div>
                             </div>

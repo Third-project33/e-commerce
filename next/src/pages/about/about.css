@@ -1,7 +1,7 @@
 .about-container {
-  width: 100%; /* Change from 72% to 100% */
+  width: 100%;
   background: linear-gradient(to right, #5c373c, #181e41);
-  margin: 0; /* Remove margin */
+  margin: 0; 
   min-height: 100vh;
   color: white;
   padding: 60px 0;

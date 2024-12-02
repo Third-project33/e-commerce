@@ -1,7 +1,6 @@
-/* Brandproducts.css
-.admin-product-grid-container {
-    display: grid;
 
+ .admin-product-grid-container {
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
     padding: 40px;
@@ -11,7 +10,7 @@
     animation: gradientFlow 15s ease infinite;
     position: relative;
     overflow: hidden;
-}
+} 
 
 /* Animated background pattern */
 .admin-product-grid-container::before {
@@ -42,12 +41,7 @@
     position: relative;
     overflow: hidden;
     z-index: 2;
-
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-    gap: 20px; 
-    padding: 20px; 
-}
-
+    height: 65%;
 
 
 
@@ -70,7 +64,6 @@
 }
 
 .admin-product-image {
-
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -303,4 +296,3 @@
         padding: 12px 24px;
     }
 }
-

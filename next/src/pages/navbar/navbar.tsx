@@ -9,15 +9,17 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import "./navbar.css";
-import io from "socket.io-client"; 
-
-const socket = io("http://localhost:3000");
+import ChatWidget from "../ChatWidget";
+// Removed Socket.IO import
+// const socket = io("http://localhost:3000");
 
 const Navbar = () => {
   const router = useRouter();
   const [avatar, setAvatar] = useState<string>("");
   const [notifications, setNotifications] = useState<string[]>([]);
   const [messages, setMessages] = useState<string[]>([]);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
@@ -31,20 +33,11 @@ const Navbar = () => {
       );
     }
 
-    // Listen for notifications
-    socket.on("receiveNotification", (notification) => {
-      setNotifications((prev) => [...prev, notification]);
-    });
-
-    // Listen for messages
-    socket.on("receiveMessage", (message) => {
-      setMessages((prev) => [...prev, message]);
-    });
-
-    return () => {
-      socket.off("receiveNotification");
-      socket.off("receiveMessage");
-    };
+    // Removed Socket.IO listeners
+    // return () => {
+    //   socket.off("receiveNotification");
+    //   socket.off("receiveMessage");
+    // };
   }, []);
 
   const handleLogout = () => {
@@ -53,9 +46,8 @@ const Navbar = () => {
     window.location.reload();
   };
 
- 
-
   return (
+    <>
     <div className="nav-container">
       <a href="/Home/home" className="logo">
         Logo
@@ -94,7 +86,10 @@ const Navbar = () => {
         <button className="icon-button" >
           <FiBell size={20} />
         </button>
-        <button className="icon-button" >
+        <button
+          className="icon-button"
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          >
           <FiMessageSquare size={20} />
         </button>
         <button className="wallet-btn" onClick={() => router.push("/cart")}>
@@ -111,6 +106,8 @@ const Navbar = () => {
         </button>
       </div>
     </div>
+      <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+</>
   );
 };
 

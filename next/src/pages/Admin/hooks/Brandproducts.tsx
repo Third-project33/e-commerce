@@ -95,7 +95,6 @@ const AdminBrandProducts = () => {
 
     return (
         <div className="admin-product-grid-container">
-
             {products.length > 0 ? (
                 products.map((product) => (
                     <div className="admin-product-card" key={product.id}>
@@ -109,8 +108,6 @@ const AdminBrandProducts = () => {
                                     const target = e.target as HTMLImageElement;
                                     target.src = '/default-product.png';
                                 }}
-
-     
                             />
                         </div>
                         <p className="admin-product-price">

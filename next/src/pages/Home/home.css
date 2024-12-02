@@ -547,7 +547,6 @@
   opacity: 0.9;
 }
 
-/* Upcoming Creators Section */
 .upcoming-creators {
   margin: 6rem 0;
   text-align: center;
@@ -714,7 +713,6 @@
   }
 }
 
-/* Keep all existing CSS up to the collection section, then update these parts: */
 
 .collection-tabs {
   display: flex;
@@ -738,7 +736,6 @@
   background: #6c5ce7;
 }
 
-/* Updated Product Grid Styles */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -834,7 +831,6 @@
   opacity: 0.9;
 }
 
-/* Keep existing media queries but update the product grid ones */
 @media (max-width: 1024px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -991,7 +987,6 @@
   overflow: visible;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .faq-grid {
     grid-template-columns: 1fr;
