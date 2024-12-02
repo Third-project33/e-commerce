@@ -4,7 +4,6 @@ import Sidebar from "./Sidebar";
 import Swal from "sweetalert2"; // A library for showing pop-up alerts.
 import { useRouter } from "next/router"; //  A hook from Next.js for navigation.
 import Navbar from "../navbar/navbar";
-
 import "./Productslist.css";
 
 // Product Interface: Defines the structure of a product object, specifying the types of its properties
@@ -200,7 +199,7 @@ const ProductList: React.FC = () => {
                   <div className="product-title-price">
                     <h2 className="product-title">{product.title}</h2>
                     <span className="product-price">
-                      {product.price.toLocaleString()} ETH
+                      {product.price.toLocaleString()} DT
                     </span>
                   </div>
                   <div className="product-footer">

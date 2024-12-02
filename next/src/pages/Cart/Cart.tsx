@@ -154,7 +154,7 @@ const Cart: React.FC = () => {
   if (!cart) return <div className="cart-loading">Loading...</div>;
   console.log("cart", cart);
   return (
-    <div>
+    <>
       <Navbar />
       <div className="cart-container">
         <h2>My Cart</h2>
@@ -172,7 +172,7 @@ const Cart: React.FC = () => {
                 <div className="cart-item-details">
                   <h3>{product.title}</h3>
                   <p className="cart-item-price">
-                    {product.CartProducts.priceAtPurchase} ETH
+                    {product.CartProducts.priceAtPurchase} DT
                   </p>
                   <p className="cart-item-quantity">
                     Quantity: {product.CartProducts.quantity}
@@ -192,7 +192,7 @@ const Cart: React.FC = () => {
         </div>
         <div className="cart-summary">
           <p>Total Items: {cart.totalItems || 0}</p>
-          <p>Total Amount: {cart.totalAmount || 0} ETH</p>
+          <p>Total Amount: {cart.totalAmount || 0} DT</p>
           <button
             className="confirm-order-button"
             onClick={() => handleConfirmOrder()}
@@ -202,7 +202,7 @@ const Cart: React.FC = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
