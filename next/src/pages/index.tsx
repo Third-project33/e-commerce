@@ -19,7 +19,7 @@ const Login = () => {
     if (isEmailStep) {
       setIsEmailStep(false);
     } else {
-      axios.post('http://localhost:3000/user/login', {
+      axios.post('http://localhost:3001/user/login', {
           email,
           password,
         })

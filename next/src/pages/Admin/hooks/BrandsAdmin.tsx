@@ -153,7 +153,7 @@ const BrandAdmin: React.FC = () => {
                 className="back-button" 
                 onClick={() => router.push("/Admin/hooks/Admin")}
             >
-                Back
+                ←
             </button>
         </div>
     );

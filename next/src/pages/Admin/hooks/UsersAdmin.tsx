@@ -160,10 +160,10 @@ const UsersAdmin = () => {
             )}
             <div className="actions">
                 <button 
-                    className="action-button button"
+                    className="action-button left-button"
                     onClick={() => router.push('/Admin/hooks/Admin')}
                 >
-                    Back
+                    →
                 </button>
             </div>
         </div>

@@ -10,6 +10,8 @@ interface Product {
     image: string;
     name: string;
     price: number;
+    rarity: string;
+    collection: string;
 }
 
 const AdminBrandProducts = () => {
@@ -19,11 +21,9 @@ const AdminBrandProducts = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [showDropdown, setShowDropdown] = useState<{[key: number]: boolean}>({});
     const [newPrice, setNewPrice] = useState<string>('');
-    const [newProduct, setNewProduct] = useState<{ title: string; image: string; price: number }>({ title: '', image: '', price: 0 });
     const [refresh, setRefresh] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [showAddProductForm, setShowAddProductForm] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchProducts = async (): Promise<void> => {
@@ -50,10 +50,68 @@ const AdminBrandProducts = () => {
         fetchProducts();
     }, [brandId, refresh]);
 
+    //=> Add product using SweetAlert modal
+    const handleAddProduct = async () => {
+        const { value: formValues } = await Swal.fire({
+            title: 'Add New Product',
+            html: `
+                <input id="title" class="swal2-input" placeholder="Product Title">
+                <input id="image" class="swal2-input" placeholder="Image URL">
+                <input id="price" type="number" class="swal2-input" placeholder="Price">
+                <input id="rarity" class="swal2-input" placeholder="Rarity">
+                <input id="collection" class="swal2-input" placeholder="Collection">
+            `,
+            focusConfirm: false,
+            preConfirm: () => {
+                return {
+                    title: (document.getElementById('title') as HTMLInputElement).value,
+                    image: (document.getElementById('image') as HTMLInputElement).value,
+                    price: Number((document.getElementById('price') as HTMLInputElement).value),
+                    rarity: (document.getElementById('rarity') as HTMLInputElement).value,
+                    collection: (document.getElementById('collection') as HTMLInputElement).value,
+                };
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Add Product',
+            cancelButtonText: 'Cancel',
+        });
 
+        if (formValues) {
+            const { title, image, price, rarity, collection } = formValues;
 
-    //=>  price update 
+            if (!title || !image || price <= 0 || !rarity || !collection || !brandId) {
+                Swal.fire({
+                    title: 'Invalid Input',
+                    text: 'Please fill in all fields correctly.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
 
+            try {
+                console.log('Adding product with payload:', { title, image, price, rarity, collection, brandId });
+                const response = await axios.post(`http://localhost:3001/products/create`, { 
+                    title, 
+                    image, 
+                    price, 
+                    rarity, 
+                    collection, 
+                    brandId 
+                });
+
+                if (response.status === 201) {
+                    Swal.fire('Success!', 'Product added successfully', 'success');
+                    setRefresh(!refresh); // Refresh the product list
+                }
+            } catch (error) {
+                console.error("Error adding product:", error.response ? error.response.data : error.message);
+                Swal.fire('Error!', 'Failed to add product: ' + (error.response ? error.response.data.message : error.message), 'error');
+            }
+        }
+    };
+
+    //=> Price update
     const handlePriceUpdate = async (productId: number): Promise<void> => {
         if (!newPrice || isNaN(Number(newPrice)) || Number(newPrice) <= 0) {
             Swal.fire({
@@ -91,7 +149,8 @@ const AdminBrandProducts = () => {
             });
         }
     };
-    //=> img update 
+
+    //=> Image update
     const handleImageUpdate = async (productId: number): Promise<void> => {
         const { value: newImage } = await Swal.fire({
             title: 'Update Product Image',
@@ -102,14 +161,16 @@ const AdminBrandProducts = () => {
             confirmButtonText: 'Update',
             cancelButtonText: 'Cancel',
         });
-
+    
         if (newImage) {
             try {
-                await axios.put(`http://localhost:3001/products/${productId}`, { 
+                const response = await axios.put(`http://localhost:3001/products/${productId}`, { 
                     image: newImage 
                 });
-                Swal.fire('Success!', 'Image updated successfully', 'success');
-                setRefresh(prev => !prev);
+                if (response.status === 200) {
+                    Swal.fire('Success!', 'Image updated successfully', 'success');
+                    setRefresh(prev => !prev); // Refresh the product list
+                }
             } catch (error) {
                 console.error("Error updating image:", error);
                 Swal.fire('Error!', 'Failed to update image. Please try again.', 'error');
@@ -117,38 +178,6 @@ const AdminBrandProducts = () => {
         }
     };
 
-    
-   //=> add product too the brand 
-    const handleAddProduct = async () => {
-        if (!newProduct.title || !newProduct.image || newProduct.price <= 0) {
-            Swal.fire({
-                title: 'Invalid Input',
-                text: 'Please fill in all fields correctly.',
-                icon: 'warning',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-
-        try {
-            await axios.post(`http://localhost:3001/products/create`, { 
-                ...newProduct, 
-                brandId 
-            });
-            Swal.fire('Success!', 'Product added successfully', 'success');
-            setNewProduct({ title: '', image: '', price: 0 });
-            setRefresh(!refresh);
-            setShowAddProductForm(false);
-        } catch (error) {
-            console.error("Error adding product:", error);
-            Swal.fire('Error!', 'Failed to add product', 'error');
-        }
-    };
- 
-
-
-     
-    
     const handleBackButtonClick = () => {
         const currentUrl = router.asPath; // Get the current URL
         const targetUrl = "/Admin/hooks/BrandsAdmin"; // Define your target URL
@@ -165,9 +194,6 @@ const AdminBrandProducts = () => {
             </div>
         );
     }
-   
-
-
 
     const filteredProducts = products.filter(product =>
         (product.title && product.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -189,33 +215,18 @@ const AdminBrandProducts = () => {
 
             <button 
                 className="add-product-button" 
-                onClick={() => setShowAddProductForm(prev => !prev)}
+                onClick={handleAddProduct} // Call the SweetAlert function here
             >
                 +
             </button>
 
-            <div className={`add-product-form ${showAddProductForm ? 'show' : ''}`}>
-                <h2>Add New Product</h2>
-                <input
-                    type="text"
-                    placeholder="Product Title"
-                    value={newProduct.title}
-                    onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
-                />
-                <input
-                    type="text"
-                    placeholder="Image URL"
-                    value={newProduct.image}
-                    onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
-                />
-                <input
-                    type="number"
-                    placeholder="Price"
-                    value={newProduct.price}
-                    onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
-                />
-                <button onClick={handleAddProduct}>Add Product</button>
-            </div>
+
+            <button 
+            className="back-button" 
+            onClick={handleBackButtonClick}
+        >
+           ←
+        </button>
 
             <div className="products-wrapper">
                 {filteredProducts.length > 0 ? (
@@ -279,12 +290,7 @@ const AdminBrandProducts = () => {
                 )}
             </div>
             
-            <button 
-                className="back-button" 
-                onClick={handleBackButtonClick}
-            >
-                Back
-            </button>
+           
         </div>
     );
 };

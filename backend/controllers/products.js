@@ -1,22 +1,26 @@
 const db = require("../database/index");
-const { Op } = require('sequelize');
-const { products } = require('../database/index');
+const { Op } = require("sequelize");
+const { products } = require("../database/index");
 
 const getProductbybrand = async (req, res) => {
     const brandId = req.params.brandId; // Get the brand ID from the request parameters
 
-    try {
-        const products = await db.products.findAll({
-            where: { brandId }, // Filter products by the specified brand ID
-            include: [{
-                model: db.brands,
-                attributes: ['id', 'name'] // Include brand details if needed
-            }]
-        });
+  try {
+    const products = await db.products.findAll({
+      where: { brandId }, // Filter products by the specified brand ID
+      include: [
+        {
+          model: db.brands,
+          attributes: ["id", "name"], // Include brand details if needed
+        },
+      ],
+    });
 
-        if (products.length === 0) {
-            return res.status(404).json({ message: "No products found for this brand." });
-        }
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found for this brand." });
+    }
 
         res.json(products); // Send the products as a JSON response
     } catch (error) {
@@ -93,7 +97,7 @@ const incrementownercount = async (req, res) => {
 
         const brandId = product.brandId; 
 
-        await db.brands.increment('owner', { where: { id: brandId } });
+    await db.brands.increment("owner", { where: { id: brandId } });
 
         res.status(200).json({ message: "Owner count incremented successfully." });
     } catch (error) {
@@ -113,7 +117,7 @@ const decrementownercount = async (req, res) => {
 
         const brandId = product.brandId; 
 
-        await db.brands.decrement('owner', { where: { id: brandId } });
+    await db.brands.decrement("owner", { where: { id: brandId } });
 
         res.status(200).json({ message: "Owner count decremented successfully." });
     } catch (error) {
@@ -140,15 +144,15 @@ const updateproductbyId = async (req, res) => {
             { where: { id: productId } }
         );
 
-        if (!updated) {
-            return res.status(404).json({ message: "Product not found." });
-        }
-
-        res.status(200).json({ message: "Product updated successfully." });
-    } catch (error) {
-        console.error("Error updating product:", error);
-        res.status(500).send("Failed to update product");
+    if (!updated) {
+      return res.status(404).json({ message: "Product not found." });
     }
+
+    res.status(200).json({ message: "Product updated successfully." });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).send("Failed to update product");
+  }
 };
 
 const createProduct = async (req, res) => {
@@ -161,11 +165,12 @@ const createProduct = async (req, res) => {
             rarity,
             collection,
             stock = 0,
-            onSale = false
+            onSale = false,
+            brandId
         } = req.body;
 
         // Validate required fields
-        if (!title || !price || !image || !rarity || !collection) {
+        if (!title || !price || !image || !rarity || !collection || !brandId) {
             return res.status(400).json({
                 success: false,
                 message: 'Missing required fields',
@@ -182,7 +187,8 @@ const createProduct = async (req, res) => {
             rarity: rarity.trim(),
             collection: collection.trim(),
             stock: parseInt(stock),
-            onSale: Boolean(onSale)
+            onSale: Boolean(onSale),
+            brandId: brandId
         });
 
         res.status(201).json({
@@ -203,5 +209,10 @@ const createProduct = async (req, res) => {
 };
 
 module.exports = {
-    getFilteredProducts, getProductbybrand, incrementownercount, decrementownercount, updateproductbyId, createProduct
+  getFilteredProducts,
+  getProductbybrand,
+  incrementownercount,
+  decrementownercount,
+  updateproductbyId,
+  createProduct,
 };

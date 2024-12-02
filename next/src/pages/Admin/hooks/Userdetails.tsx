@@ -91,7 +91,7 @@ const Userdetails = () => {
                 </div>
             </div>
             <button className="Users" onClick={() => router.push ("/Admin/hooks/UsersAdmin")}>
-                Back
+            →
             </button>
         </div>
 
