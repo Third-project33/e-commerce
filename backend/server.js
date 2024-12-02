@@ -1,13 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const http = require("http"); 
+const http = require("http");
 
 const app = express();
-const server = http.createServer(app); 
+const server = http.createServer(app);
 const corsOptions = {
-  origin: 'http://localhost:3001',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -32,5 +32,5 @@ app.use("/cart", cartRoute);
 app.use("/posts", postsRoute);
 
 server.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`);
 });

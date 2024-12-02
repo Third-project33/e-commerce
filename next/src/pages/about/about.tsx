@@ -27,8 +27,8 @@ const AboutUs: React.FC = () => {
   return (
     <>
 
-    <div className="about-container">
     <Navbar />
+    <div className="about-container">
       <section className="about-section center">
         <h2 className="about-subtitle">About Us</h2>
         <h1 className="about-title">Who we are.</h1>

@@ -92,7 +92,7 @@ const Navbar = () => {
           >
           <FiMessageSquare size={20} />
         </button>
-        <button className="wallet-btn" onClick={() => router.push("/cart")}>
+        <button className="wallet-btn" onClick={() => router.push("/Cart/Cart")}>
           <FiShoppingCart size={18} />
         </button>
         <img
