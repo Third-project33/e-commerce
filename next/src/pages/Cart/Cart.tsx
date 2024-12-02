@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import styles from "./Cart.module.css";
+import "../Cart/Cart.css";
 
 interface Product {
   id: number;
@@ -149,37 +149,36 @@ const Cart: React.FC = () => {
     }
   };
 
-  if (error) return <div className={styles.cartError}>{error}</div>;
-  if (!cart) return <div className={styles.cartLoading}>Loading...</div>;
+  if (error) return <div className="cart-error">{error}</div>;
+  if (!cart) return <div className="cart-loading">Loading...</div>;
 
   return (
-    <div className={styles.cartContainer}>
+    <div className="cart-container">
       <h2>My Cart</h2>
-      <div className={styles.cartItems}>
+      <div className="cart-items">
         {cart.Products.length === 0 ? (
-          <div className={styles.cartEmpty}>Your cart is empty</div>
+          <div className="cart-empty">Your cart is empty</div>
         ) : (
           cart.Products.map((product) => (
-            <div key={product.id} className={styles.cartItem}>
+            <div key={product.id} className="cart-item">
               <img
                 src={product.image}
                 alt={product.title}
-                className={styles.cartItemImage}
+                className="cart-item-image"
               />
-              <div className={styles.cartItemDetails}>
+              <div className="cart-item-details">
                 <h3>{product.title}</h3>
-                <p className={styles.cartItemPrice}>
+                <p className="cart-item-price">
                   {product.CartProducts.priceAtPurchase} ETH
                 </p>
-                <p className={styles.cartItemQuantity}>
+                <p className="cart-item-quantity">
                   Quantity: {product.CartProducts.quantity}
                 </p>
               </div>
               <button
-                className={styles.removeItemButton}
+                className="remove-item-button"
                 onClick={() => {
                   handleRemoveItem(product.id);
-                  handleOwner(product.id);
                 }}
               >
                 ❌
@@ -188,12 +187,12 @@ const Cart: React.FC = () => {
           ))
         )}
       </div>
-      <div className={styles.cartSummary}>
+      <div className="cart-summary">
         <p>Total Items: {cart.totalItems || 0}</p>
         <p>Total Amount: {cart.totalAmount || 0} ETH</p>
         <button
-          className={styles.confirmOrderButton}
-          onClick={handleConfirmOrder}
+          className="confirm-order-button"
+          onClick={() => handleConfirmOrder()}
           disabled={!cart.Products || cart.Products.length === 0}
         >
           Confirm Order
