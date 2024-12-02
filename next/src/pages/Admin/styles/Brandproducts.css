@@ -46,8 +46,8 @@
     z-index: 2;
     height: auto;
 
-}
 
+}
 .admin-product-card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 

@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isEmailStep, setIsEmailStep] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -58,7 +58,9 @@ const Login = () => {
       router.push('/Home/home');
     } catch (error) {
       console.error("Error during Google login:", error);
-      setError('An error occurred during Google login. Please try again later.');
+      setError(
+        "An error occurred during Google login. Please try again later."
+      );
     }
   };
 
@@ -99,12 +101,15 @@ const Login = () => {
           alt="Login illustration"
           className="login-image"
         />
-        <h4 className="Logingretting" style={{ marginRight: '160px' }}>
+        <h4 className="Logingretting" style={{ marginRight: "160px" }}>
           Explore the world of meta fashion
         </h4>
       </div>
       <form className="login-form" onSubmit={handleLogin}>
-        <h3 className="loginMessage" style={{ marginBottom: '0px', position: 'relative', right: '20px' }}>
+        <h3
+          className="loginMessage"
+          style={{ marginBottom: "0px", position: "relative", right: "20px" }}
+        >
           Login
         </h3>
         <div className="login-link">
@@ -149,11 +154,11 @@ const Login = () => {
         )}
 
         <button type="submit" className="login-button">
-          {isEmailStep ? 'Continue' : 'Login'}
+          {isEmailStep ? "Continue" : "Login"}
         </button>
 
         <div className="or-container">
-          <p style={{ marginBottom: '-2px' }}>Or</p>
+          <p style={{ marginBottom: "-2px" }}>Or</p>
         </div>
 
         <div className="social-buttons">
