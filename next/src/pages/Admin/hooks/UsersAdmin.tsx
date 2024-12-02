@@ -1,10 +1,8 @@
-// client/src/components/Admin/UsersAdmin.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import '../../Admin/styles/UsersAdmin.css';
-
 
 // Define interfaces for type safety
 interface User {
@@ -101,6 +99,7 @@ const UsersAdmin = () => {
 
     return (
         <div className="users-container">
+            <h1 className="page-title">User Management</h1>
             <div className="search-container">
                 <input 
                     type="text"
@@ -159,6 +158,14 @@ const UsersAdmin = () => {
                     ↑
                 </div>
             )}
+            <div className="actions">
+                <button 
+                    className="action-button button"
+                    onClick={() => router.push('/Admin/hooks/Admin')}
+                >
+                    Back
+                </button>
+            </div>
         </div>
     );
 };

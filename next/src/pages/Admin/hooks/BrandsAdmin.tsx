@@ -15,7 +15,7 @@ const BrandAdmin: React.FC = () => {
     const router = useRouter();
     const [brands, setBrands] = useState<Brand[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-
+    const [searchTerm, setSearchTerm] = useState<string>(''); // State for search term
 
     const handleDelete = async (id: number): Promise<void> => {
         try {
@@ -93,6 +93,11 @@ const BrandAdmin: React.FC = () => {
         target.src = '/images/default-brand-logo.png'; // Path to your default brand logo
     };
 
+    // Filter brands based on the search term
+    const filteredBrands = brands.filter(brand =>
+        brand.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     if (loading) {
         return (
             <div className="loading-container">
@@ -103,8 +108,16 @@ const BrandAdmin: React.FC = () => {
 
     return (
         <div className="admin-brand-container">
+            <h1 className="admin-title">Manage Brands</h1>
+            <input
+                type="text"
+                placeholder="Search brands by name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="brand-search-input" // Updated class name
+            />
             <div className="admin-brand-grid-container">
-                {brands.map((brand) => (
+                {filteredBrands.map((brand) => (
                     <div className="admin-brand-card" key={brand.id}>
                         <div className="admin-logo-container">
                             <img 
@@ -147,7 +160,3 @@ const BrandAdmin: React.FC = () => {
 };
 
 export default BrandAdmin;
-
-
-
-;

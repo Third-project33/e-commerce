@@ -50,10 +50,11 @@ const Userdetails = () => {
     }, [userId, router]);
 
     return (
+        
         <div className='Userdetails'>
-        <div className="Userdetails profile-container">
-            <div className="Userdetails profile-header">
-                <div className="Userdetails profile-avatar">
+        <div className="profile-container">
+            <div className=" profile-header">
+                <div className=" profile-avatar">
                     {user && user.avatar ? (
                       <img 
                       src={user.avatar} 
@@ -93,6 +94,7 @@ const Userdetails = () => {
                 Back
             </button>
         </div>
+
         </div>
     );
 };

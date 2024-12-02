@@ -3,15 +3,20 @@
     max-width: 1000px;
     margin: 40px auto;
     padding: 40px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
     box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.1),
-        inset 0 -10px 20px rgba(74, 144, 226, 0.1);
+        0 10px 40px rgba(226, 183, 183, 0.1),
+        inset 0 -10px 20px rgba(46, 58, 71, 0.1);
     font-family: 'Roboto', sans-serif;
     animation: containerFadeIn 0.6s ease-out;
 }
 
+.Userdetails{
+  
+    background: linear-gradient(to right, #5c373c , 35% ,  #181e41);
+}
 @keyframes containerFadeIn {
     from { 
         opacity: 0;
@@ -84,14 +89,14 @@
 
 .profile-header h1 {
     margin: 15px 0;
-    color: #2d3748;
+    color: #fff;
     font-size: 2.5em;
     font-weight: 700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .email {
-    color: #718096;
+    color: #cbd5e1;
     font-size: 1.2em;
     position: relative;
     display: inline-block;
@@ -119,7 +124,7 @@
 }
 
 .User-posts h2 {
-    color: #2d3748;
+    color: #fff;
     margin-bottom: 30px;
     font-size: 1.8em;
     font-weight: 700;
@@ -147,7 +152,7 @@
 }
 
 .posts-data {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 25px;
     border-radius: 20px;
     box-shadow: 
@@ -219,8 +224,8 @@
     bottom: 30px;
     right: 30px;
     padding: 15px 30px;
-    background: linear-gradient(45deg, #4a90e2, #63b3ed);
-    color: white;
+    background: linear-gradient(90deg, #a445f7, #6a00ff);
+    color: rgb(223, 215, 215);
     border: none;
     border-radius: 15px;
     cursor: pointer;
@@ -255,3 +260,4 @@
         height: 150px;
     }
 }
+
