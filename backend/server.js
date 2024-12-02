@@ -1,42 +1,36 @@
 const express = require("express");
 const cors = require("cors");
+const http = require("http");
 
-const app = express()
+const app = express();
+const server = http.createServer(app);
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
 
+app.use(cors(corsOptions));
 app.use(cors());
 app.use(express.json());
 
-require("./database/index.js")
-const PORT = 3000;
-const brandsroute = require("./routes/brands.js")
-const userRoute = require("./routes/user.js");
-const productsRoute = require("./routes/AllProducts.js")
- 
-const cartRoute = require("./routes/cart.js");
 
+require("./database/index.js");
+const PORT = 3001;
+const brandsroute = require("./routes/brands.js");
+const userRoute = require("./routes/user.js");
+const productsRoute = require("./routes/AllProducts.js");
+const cartRoute = require("./routes/cart.js");
 const postsRoute = require("./routes/posts.js");
 
- 
 
 
-
-
-app.use("/brands" , brandsroute)
-app.use("/user", userRoute); 
- 
+app.use("/brands", brandsroute);
+app.use("/user", userRoute);
 app.use("/products", productsRoute);
 app.use("/cart", cartRoute);
-
-app.use("/api/products", productsRoute);
 app.use("/posts", postsRoute);
- 
 
- 
-
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
-
-

@@ -1,6 +1,7 @@
 .pageWrapper {
     background: linear-gradient(to right, #5c373c 0%, #181e41);
     font-family: Arial, sans-serif;
+    
 }
 
 .profilePage {
@@ -137,7 +138,7 @@
     padding: 40px;
     border-radius: 10px;
     margin-bottom: 20px;
-    height: 36vh;
+    height: 50vh;
 }
 
 .collection h2 {
@@ -176,7 +177,7 @@
     background: rgba(255, 255, 255, 0.1);
     padding: 30px;
     border-radius: 10px;
-    height: 45vh;
+    height: 50vh;
     text-align: left;
 }
 

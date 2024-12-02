@@ -28,7 +28,7 @@ const Admin = () => {
 //=>    to fetch and set items count for each brand
     const handleItems = async (brandId: number) : Promise<void> => {
         try {
-            const productResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
+            const productResponse = await axios.get(`http://localhost:3001/products/${brandId}`);
             setItems(prevCounts => ({
                 ...prevCounts,
                 [brandId]: productResponse.data.length 
@@ -41,7 +41,7 @@ const Admin = () => {
 //=> to fetch and set floor price for each brand
     const handlePrice = async (brandId: number) : Promise<void> => {
         try {
-            const priceResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
+            const priceResponse = await axios.get(`http://localhost:3001/products/${brandId}`);
             const lowestPrice = Math.min(...priceResponse.data.map((item: { price: number })=> item.price)); 
             setfloorPrice(prev => ({
                 ...prev,
@@ -56,7 +56,7 @@ const Admin = () => {
     useEffect(() => {
         const fetchData = async () : Promise<void> => {
             try {
-                const res = await axios.get("http://localhost:3000/brands/allbrands");
+                const res = await axios.get("http://localhost:3001/brands/allbrands");
                 setData(res.data);
                 res.data.forEach((brand: { id: number })=> {
                     handleItems(brand.id);
@@ -78,8 +78,8 @@ const Admin = () => {
         <div className="min-h-screen flex flex-col">
             <main className="flex-grow p-8">
                  {/* Page Header */}
-                <h1 className="text-4xl font-bold text-center mb-4">Top Market Statistics</h1>
-                <p className="text-center mb-8">The top NFTs on ______, ranked by volume, floor price and other statistics.</p>
+                 <h1 className="text-4xl font-bold text-center mb-4">Market Overview of Top NFTs</h1>
+                 <p className="text-center mb-8">Explore the leading NFTs ranked by trading volume, floor price, and other key metrics to help you make informed decisions.</p>
                     {/* Navigation Buttons */}
                 <div className="flex justify-center mb-8">
                     <div className="flex justify-between items-center mb-8">

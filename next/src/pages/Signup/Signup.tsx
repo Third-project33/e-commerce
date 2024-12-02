@@ -64,7 +64,7 @@ const Signup = () => {
     };
 
     axios
-      .post('http://localhost:3000/user/signup', userData, { headers: { 'Content-Type': 'application/json' } })
+      .post('http://localhost:3001/user/signup', userData, { headers: { 'Content-Type': 'application/json' } })
       .then(() => {
         Swal.fire({
           icon: 'success',

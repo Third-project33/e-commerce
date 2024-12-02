@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import { FaGoogle, FaFacebook , FaGithub} from 'react-icons/fa';
 import { auth } from '../firebaseConfig'; 
-import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'; 
+import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider  , GithubAuthProvider } from 'firebase/auth'; 
 import axios from 'axios';
 import '../pages/Signup/Login.css';
+import '../app/globals.css'
 
 const Login = () => { 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isEmailStep, setIsEmailStep] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -19,7 +20,7 @@ const Login = () => {
     if (isEmailStep) {
       setIsEmailStep(false);
     } else {
-      axios.post('http://localhost:3000/user/login', {
+      axios.post('http://localhost:3001/user/login', {
           email,
           password,
         })
@@ -58,12 +59,14 @@ const Login = () => {
       router.push('/Home/home');
     } catch (error) {
       console.error("Error during Google login:", error);
-      setError('An error occurred during Google login. Please try again later.');
+      setError(
+        "An error occurred during Google login. Please try again later."
+      );
     }
   };
 
   async function handleFacebookSignIn() {
-    const facebookProvider = new FacebookAuthProvider();
+    const facebookProvider = new FacebookAuthProvider()
 
     facebookProvider.addScope('email'); 
     facebookProvider.setCustomParameters({
@@ -89,6 +92,36 @@ const Login = () => {
       setError("Facebook sign-in failed. Please try again.");
     }
   }
+  const handleGitHubLogin = async () => {
+    const githubProvider = new GithubAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+
+      const user = result.user;
+      console.log('Logged in user:', user);
+      const token = await user.getIdToken();
+
+      localStorage.setItem('token', token);
+
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      })
+    );
+
+      router.push('/Home/home');
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('GitHub Login Error:', errorCode, errorMessage);
+
+    }
+  };
+
+  
 
 
   return (
@@ -99,12 +132,15 @@ const Login = () => {
           alt="Login illustration"
           className="login-image"
         />
-        <h4 className="Logingretting" style={{ marginRight: '160px' }}>
+        <h4 className="Logingretting" style={{ marginRight: "160px" }}>
           Explore the world of meta fashion
         </h4>
       </div>
       <form className="login-form" onSubmit={handleLogin}>
-        <h3 className="loginMessage" style={{ marginBottom: '0px', position: 'relative', right: '20px' }}>
+        <h3
+          className="loginMessage"
+          style={{ marginBottom: "0px", position: "relative", right: "20px" }}
+        >
           Login
         </h3>
         <div className="login-link">
@@ -149,21 +185,24 @@ const Login = () => {
         )}
 
         <button type="submit" className="login-button">
-          {isEmailStep ? 'Continue' : 'Login'}
+          {isEmailStep ? "Continue" : "Login"}
         </button>
 
         <div className="or-container">
-          <p style={{ marginBottom: '-2px' }}>Or</p>
+          <p style={{ marginBottom: "-2px" }}>Or</p>
         </div>
 
         <div className="social-buttons">
-          <button className="social-button google-button" type="button" onClick={handleGoogleLogin}>
-            <FaGoogle style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Google
-          </button>
-          <button className="social-button facebook-button" type="button" onClick={handleFacebookSignIn}>
-            <FaFacebook style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Facebook
-          </button>
-        </div>
+  <button className="social-button google-button" type="button" onClick={handleGoogleLogin}>
+    <FaGoogle style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Google
+  </button>
+  <button className="social-button facebook-button" type="button" onClick={handleFacebookSignIn}>
+    <FaFacebook style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Facebook
+  </button>
+  <button className="social-button github-button" type="button" onClick={handleGitHubLogin}>
+    <FaGithub style={{ marginRight: '10px', width: '20px', height: '20px' }} /> Continue with GitHub
+  </button>
+</div>
       </form>
     </div>
   );

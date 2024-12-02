@@ -3,13 +3,20 @@
     max-width: 1000px;
     margin: 40px auto;
     padding: 40px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.05); /* Slightly darker for better contrast */
+    backdrop-filter: blur(15px); /* Increased blur for a more modern look */
+    border-radius: 20px; /* Slightly larger border radius */
     box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.1),
-        inset 0 -10px 20px rgba(74, 144, 226, 0.1);
+        0 15px 50px rgba(0, 0, 0, 0.1), /* Softer shadow */
+        inset 0 -10px 20px rgba(46, 58, 71, 0.1);
     font-family: 'Roboto', sans-serif;
     animation: containerFadeIn 0.6s ease-out;
+}
+
+.Userdetails {
+    background: linear-gradient(to right, #5c373c, #181e41); /* Adjusted gradient for better color harmony */
+    border-radius: 20px; /* Match the profile container */
+    padding: 20px; /* Add padding for better spacing */
 }
 
 @keyframes containerFadeIn {
@@ -25,8 +32,7 @@
 
 .profile-header {
     text-align: center;
-    margin-bottom: 60px;
-    position: relative;
+    margin-bottom: 40px; /* Reduced margin for better spacing */
 }
 
 .profile-header::after {
@@ -84,14 +90,14 @@
 
 .profile-header h1 {
     margin: 15px 0;
-    color: #2d3748;
+    color: #fff;
     font-size: 2.5em;
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Softer shadow */
 }
 
 .email {
-    color: #718096;
+    color: #cbd5e1;
     font-size: 1.2em;
     position: relative;
     display: inline-block;
@@ -119,7 +125,7 @@
 }
 
 .User-posts h2 {
-    color: #2d3748;
+    color: #fff;
     margin-bottom: 30px;
     font-size: 1.8em;
     font-weight: 700;
@@ -147,11 +153,11 @@
 }
 
 .posts-data {
-    background: white;
+    background: rgba(255, 255, 255, 0.1); /* Darker background for contrast */
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 20px; /* Match the profile container */
     box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.05),
+        0 5px 15px rgba(0, 0, 0, 0.1), /* Softer shadow */
         0 15px 25px rgba(0, 0, 0, 0.03);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -179,7 +185,7 @@
 }
 
 .posts-data:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px); /* Slightly less movement on hover */
     box-shadow: 
         0 15px 30px rgba(0, 0, 0, 0.1),
         0 5px 15px rgba(74, 144, 226, 0.1);
@@ -194,8 +200,8 @@
 }
 
 .post-image-container {
-    width: 200px;
-    height: 200px;
+    width: 100%; /* Full width for responsiveness */
+    height: 200px; /* Fixed height */
     margin: 15px auto;
     border-radius: 15px;
     overflow: hidden;
@@ -215,22 +221,24 @@
 }
 
 .Users {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    padding: 15px 30px;
-    background: linear-gradient(45deg, #4a90e2, #63b3ed);
-    color: white;
+    position: fixed; /* Keep it fixed */
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+    background: linear-gradient(45deg, #28a745, #20c997);
     border: none;
-    border-radius: 15px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    font-weight: 600;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
 }
 
 .Users:hover {
@@ -247,7 +255,7 @@
     }
 
     .posts-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column on small screens */
     }
 
     .profile-avatar {

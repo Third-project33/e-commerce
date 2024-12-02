@@ -15,11 +15,11 @@ const BrandAdmin: React.FC = () => {
     const router = useRouter();
     const [brands, setBrands] = useState<Brand[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-
+    const [searchTerm, setSearchTerm] = useState<string>(''); // State for search term
 
     const handleDelete = async (id: number): Promise<void> => {
         try {
-            await axios.delete(`http://localhost:3000/brands/delete/${id}`);
+            await axios.delete(`http://localhost:3001/brands/delete/${id}`);
             Swal.fire({
                 title: 'Success!',
                 text: 'Brand successfully deleted',
@@ -42,7 +42,7 @@ const BrandAdmin: React.FC = () => {
     const handleVerify = async (brand: Brand): Promise<void> => {
         const checkVerify = brand.verified === 1 ? 0 : 1;
         try {
-            await axios.put(`http://localhost:3000/brands/update/${brand.id}`, { 
+            await axios.put(`http://localhost:3001/brands/update/${brand.id}`, { 
                 verified: checkVerify 
             });
             
@@ -68,7 +68,7 @@ const BrandAdmin: React.FC = () => {
     const fetchBrands = async (): Promise<void> => {
         try {
             setLoading(true);
-            const response = await axios.get<Brand[]>("http://localhost:3000/brands/allbrands");
+            const response = await axios.get<Brand[]>("http://localhost:3001/brands/allbrands");
             setBrands(response.data);
         } catch (error) {
             console.error("Error fetching brands:", error);
@@ -93,6 +93,11 @@ const BrandAdmin: React.FC = () => {
         target.src = '/images/default-brand-logo.png'; // Path to your default brand logo
     };
 
+    // Filter brands based on the search term
+    const filteredBrands = brands.filter(brand =>
+        brand.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     if (loading) {
         return (
             <div className="loading-container">
@@ -103,8 +108,16 @@ const BrandAdmin: React.FC = () => {
 
     return (
         <div className="admin-brand-container">
+            <h1 className="admin-title">Manage Brands</h1>
+            <input
+                type="text"
+                placeholder="Search brands by name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="brand-search-input" // Updated class name
+            />
             <div className="admin-brand-grid-container">
-                {brands.map((brand) => (
+                {filteredBrands.map((brand) => (
                     <div className="admin-brand-card" key={brand.id}>
                         <div className="admin-logo-container">
                             <img 
@@ -140,14 +153,10 @@ const BrandAdmin: React.FC = () => {
                 className="back-button" 
                 onClick={() => router.push("/Admin/hooks/Admin")}
             >
-                Back
+                ←
             </button>
         </div>
     );
 };
 
 export default BrandAdmin;
-
-
-
-;

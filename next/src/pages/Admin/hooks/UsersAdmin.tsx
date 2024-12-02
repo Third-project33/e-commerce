@@ -1,10 +1,8 @@
-// client/src/components/Admin/UsersAdmin.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import '../../Admin/styles/UsersAdmin.css';
-
 
 // Define interfaces for type safety
 interface User {
@@ -25,7 +23,7 @@ const UsersAdmin = () => {
     const fetchUsers = async (): Promise<void> => {
         try {
             setLoading(true);
-            const response = await axios.get<User[]>("http://localhost:3000/user/all");
+            const response = await axios.get<User[]>("http://localhost:3001/user/all");
             setUsers(response.data);
         } catch (error) {
             console.error("Error fetching users:", error);
@@ -51,7 +49,7 @@ const UsersAdmin = () => {
             confirmButtonText: 'Yes, ban it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(`http://localhost:3000/user/ban/${id}`)
+                axios.post(`http://localhost:3001/user/ban/${id}`)
                     .then(() => {
                         Swal.fire('Banned!', 'User has been banned.', 'success');
                         fetchUsers();
@@ -101,6 +99,7 @@ const UsersAdmin = () => {
 
     return (
         <div className="users-container">
+            <h1 className="page-title">User Management</h1>
             <div className="search-container">
                 <input 
                     type="text"
@@ -159,6 +158,14 @@ const UsersAdmin = () => {
                     ↑
                 </div>
             )}
+            <div className="actions">
+                <button 
+                    className="action-button left-button"
+                    onClick={() => router.push('/Admin/hooks/Admin')}
+                >
+                    →
+                </button>
+            </div>
         </div>
     );
 };
