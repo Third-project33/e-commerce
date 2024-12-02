@@ -124,7 +124,7 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-    <Navbar /> 
+      <Navbar />
       <div className="product-list-container">
         {/* Sidebar: Contains filters for the product list. */}
         <div className="sidebar-container">
@@ -199,7 +199,7 @@ const ProductList: React.FC = () => {
                   <div className="product-title-price">
                     <h2 className="product-title">{product.title}</h2>
                     <span className="product-price">
-                      {product.price.toLocaleString()} ETH
+                      {product.price.toLocaleString()} DT
                     </span>
                   </div>
                   <div className="product-footer">
