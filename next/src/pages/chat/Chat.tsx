@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import styles from './ChatWidget.module.css';
+import styles from './Chat.module.css';
 
 interface ChatWidgetProps {
   isOpen: boolean;
@@ -13,10 +13,10 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
   const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3002');
-    setSocket(newSocket);
+    const sock = io('http://localhost:3002');
+    setSocket(sock);
 
-    newSocket.on('chat message', (msg) => {
+    sock.on('chat message', (msg) => {
       setMessages(prev => {
         if (!prev.some(m => m.text === msg)) {
           return [...prev, { text: msg, sent: false, id: Date.now().toString() }];
@@ -26,11 +26,11 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
     });
 
     return () => {
-      newSocket.disconnect();
+      sock.disconnect();
     };
   }, []);
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handelmessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputMessage.trim() && socket) {
       socket.emit('chat message', inputMessage);  
@@ -58,7 +58,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
         ))}
       </div>
       
-      <form onSubmit={handleSendMessage} className={styles.homeInputContainer}>
+      <form onSubmit={handelmessage} className={styles.homeInputContainer}>
         <input
           type="text"
           value={inputMessage}

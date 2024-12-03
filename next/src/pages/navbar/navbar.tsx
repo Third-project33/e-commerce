@@ -9,7 +9,7 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import "./navbar.css";
-import ChatWidget from "../chat/ChatWidget";
+import ChatWidget from "../chat/Chat";
 
 
 const Navbar = () => {
