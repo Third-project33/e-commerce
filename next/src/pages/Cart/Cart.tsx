@@ -56,6 +56,7 @@ const Cart: React.FC = () => {
     if (result.isConfirmed) {
       try {
         const token = localStorage.getItem("token");
+
         await axios.post(
           "http://localhost:3001/cart/confirm-order",
           {},
@@ -70,11 +71,7 @@ const Cart: React.FC = () => {
           showConfirmButton: false,
         });
 
-        setCart({
-          Products: [],
-          totalItems: 0,
-          totalAmount: 0,
-        });
+        setCart({ Products: [], totalItems: 0, totalAmount: 0 });
       } catch (err: any) {
         Swal.fire({
           icon: "error",
@@ -117,7 +114,6 @@ const Cart: React.FC = () => {
               elm.CartProducts.priceAtPurchase * elm.CartProducts.quantity,
             0
           );
-
           return {
             ...prevCart,
             Products: updatedProducts,
@@ -152,7 +148,7 @@ const Cart: React.FC = () => {
 
   if (error) return <div className="cart-error">{error}</div>;
   if (!cart) return <div className="cart-loading">Loading...</div>;
-  console.log("cart", cart);
+
   return (
     <>
       <Navbar />
