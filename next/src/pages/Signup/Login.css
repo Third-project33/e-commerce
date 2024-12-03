@@ -160,10 +160,9 @@
     transition: transform 0.3s ease;
 }
 
-/* New GitHub button style */
 .login-form .github-button {
-    background-color: #24292f; /* GitHub's background color */
-    border: #24292f; /* A slightly darker border */
+    background-color: #24292f; 
+    border: #24292f;
     padding: 22px;
     transition: transform 0.3s ease;
 }
@@ -204,3 +203,11 @@
     transform: scale(1.05);
     transition: background-color 0.3s ease, transform 0.3s ease; 
 }
+
+.swal2-confirm.login-custom-button {
+    border-radius: 20px;
+    padding: 15px 30px;
+    background-color: #ff1900; 
+    color: white;
+    border: none;
+  }
