@@ -56,6 +56,7 @@ const Navbar = () => {
               placeholder="Search Items, Fashion, Collection and Users"
             />
           </div>
+
           <nav className="nav-links">
             <a
               onClick={() => router.push("/Home/home")}
@@ -69,7 +70,7 @@ const Navbar = () => {
             >
               Explore <FiChevronDown />
             </a>
-            <a href="#collection">Personal Collection</a>
+            <a   onClick={()=>router.push("/UserFavorites/LikedProducts")}  href="#collection">Personal Collection</a>
             <a href="#drops">Drops</a>
             <a
               onClick={() => router.push("/about/about")}
