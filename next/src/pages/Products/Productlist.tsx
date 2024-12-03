@@ -9,12 +9,13 @@ import LikedProducts from "../UserFavorites/LikedProducts"; // Import the LikedP
 
 // Product Interface: Defines the structure of a product object, specifying the types of its properties
 interface Product {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  rarity: string;
-  chains: string;
+  // Define the structure of a product object.
+  id: number; // The unique ID of the product.
+  title: string; // The name/title of the product.
+  image: string; // The URL of the product image.
+  price: number; // The price of the product.
+  rarity: string; // The rarity level of the product.
+  chains: string; // Any associated chains (e.g., category or tags).
 }
 
 const ProductList: React.FC = () => {
@@ -26,30 +27,32 @@ const ProductList: React.FC = () => {
   const userId = localStorage.getItem("userId"); // Fetch user ID from local storage
 
   const fetchProducts = async () => {
+    // Function to fetch products based on filters.
     try {
-      // Fetches products from the server using the current filters
       const { data } = await axios.get("http://localhost:3001/products", {
-        params: filters,
+        params: filters, // Pass the current filters as query parameters.
       });
       // Updates the products state with the fetched data
       setProducts(data);
     } catch {
-      setError("Failed to load products");
+      setError("Failed to load products"); // Set an error message if the fetch fails.
     }
   };
 
-  // useEffect Hook: Runs fetchProducts whenever the filters change, ensuring the product list is updated.
+
+
   useEffect(() => {
+    // React hook to fetch products whenever filters change.
     fetchProducts();
   }, [filters]); // Re-fetch products when filters change
 
-  // Updates the filters based on user input.
   const handleFilterChange = (newFilters: Record<string, any>) => {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters, ...newFilters };
       return updatedFilters;
     });
   };
+
 
   // Adds a product to the favorites in the database.
   const handleLike = async (productId: number) => {
@@ -84,14 +87,28 @@ const ProductList: React.FC = () => {
         title: "Already Liked",
         text: "You have already liked this product.",
       });
+
+
+  const handleOwner = async (id: number) => {
+    // Increment the owner count of a product (e.g., a backend operation).
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/products/increment/${id}`
+      );
+      console.log(response.data.message); // Log success message to the console.
+    } catch (error) {
+      console.error("Error incrementing owner count:", error); // Log any errors.
+
     }
   };
 
   // Adds a product to the cart. If the user is not logged in, it prompts them to log in.
   const handleAddToCart = async (productId: number) => {
-    const token = localStorage.getItem("token");
+    // Function to add a product to the cart.
+    const token = localStorage.getItem("token"); // Check if the user is logged in using a token.
     if (!token) {
       const result = await Swal.fire({
+        // Show a warning if the user is not logged in.
         icon: "warning",
         title: "Not Logged In",
         text: "Please log in to add products to the cart",
@@ -99,20 +116,21 @@ const ProductList: React.FC = () => {
         confirmButtonText: "Log In",
         cancelButtonText: "Cancel",
       });
-      if (result.isConfirmed) navigate.push("/");
-      return;
+      if (result.isConfirmed) navigate.push("/"); // Redirect to login page if the user clicks "Log In."
+      return; // Exit the function.
     }
 
     try {
       const response = await axios.post(
         "http://localhost:3001/cart/add",
-        { productId },
+        { productId }, // Send product ID to add to cart.
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }, // Include the token for authentication.
         }
       );
       if (response.status === 200) {
         Swal.fire({
+          // Show success message when added to cart.
           icon: "success",
           title: "Added to Cart",
           text: "Product successfully added to your cart",
@@ -122,6 +140,7 @@ const ProductList: React.FC = () => {
       }
     } catch {
       Swal.fire({
+        // Show error message if adding to cart fails.
         icon: "error",
         title: "Error",
         text: "An error occurred while adding to the cart",
@@ -131,20 +150,21 @@ const ProductList: React.FC = () => {
 
   // Updates the filter based on the selected rarity.
   const handleRarityChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    // Update filters when rarity is selected.
     handleFilterChange({ rarity: e.target.value });
 
-  // Updates the filter based on the selected sort option.
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    // Update filters when sorting is selected.
     handleFilterChange({ sort: e.target.value });
 
-  if (error) return <div className="error">{error}</div>;
+  if (error) return <div className="error">{error}</div>; // Show an error message if fetching products fails.
 
   return (
     <>
-      <Navbar />
+      <Navbar /> {/* Display the Navbar component. */}
       <div className="product-list-container">
-        {/* Sidebar: Contains filters for the product list. */}
         <div className="sidebar-container">
+          {/* Sidebar: A component to display and apply filters */}
           <Sidebar onFilterChange={handleFilterChange} />
         </div>
         <div className="content-section">
@@ -154,6 +174,7 @@ const ProductList: React.FC = () => {
               <div className="total-items">{products.length} items</div>
             </div>
             <div className="header-filters">
+              {/* Dropdown for selecting rarity */}
               <select
                 className="header-filter-button"
                 onChange={handleRarityChange}
@@ -171,6 +192,7 @@ const ProductList: React.FC = () => {
                   Ultra Rare
                 </option>
               </select>
+              {/* Dropdown for sorting options */}
               <select
                 className="header-filter-button"
                 onChange={handleSortChange}
@@ -193,8 +215,10 @@ const ProductList: React.FC = () => {
           {/* Product Grid: Displays each product in a card format
            with an image, title, price, and buttons to like or buy the product. */}
           <div className="product-grid">
+            {/* Loop through products and display them as cards */}
             {products.map((product) => (
               <div key={product.id} className="product-card">
+                {/* Product image */}
                 <div className="product-image-container">
                   <img
                     src={product.image}
@@ -230,9 +254,7 @@ const ProductList: React.FC = () => {
                     </button>
                     <button
                       className="buy-button"
-                      onClick={() => {
-                        handleAddToCart(product.id);
-                      }}
+                      onClick={() => handleAddToCart(product.id)}
                     >
                       Buy Now
                     </button>
@@ -250,3 +272,4 @@ const ProductList: React.FC = () => {
 };
 
 export default ProductList;
+

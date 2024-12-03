@@ -14,7 +14,6 @@ app.use(cors(corsOptions));
 app.use(cors());
 app.use(express.json());
 
-
 require("./database/index.js");
 const PORT = 3001;
 const brandsroute = require("./routes/brands.js");
@@ -24,8 +23,6 @@ const cartRoute = require("./routes/cart.js");
 const postsRoute = require("./routes/posts.js");
 const userFavorites = require('./routes/user_favorites.js');
 const favorite=require('./routes/favorite.js')
-
-
 
 app.use("/brands", brandsroute);
 app.use("/user", userRoute);

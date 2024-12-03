@@ -3,6 +3,7 @@ import "./About.css";
 import { teamData } from "./data";
 import Navbar from "../navbar/navbar";
 import Footer from "../footer/footer";
+import "../../app/globals.css"
 
 const AboutUs: React.FC = () => {
   const [activeImageIndex1, setActiveImageIndex1] = useState<number>(0);

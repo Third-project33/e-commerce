@@ -104,7 +104,7 @@ const AdminBrandProducts = () => {
                     Swal.fire('Success!', 'Product added successfully', 'success');
                     setRefresh(!refresh); // Refresh the product list
                 }
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Error adding product:", error.response ? error.response.data : error.message);
                 Swal.fire('Error!', 'Failed to add product: ' + (error.response ? error.response.data.message : error.message), 'error');
             }
