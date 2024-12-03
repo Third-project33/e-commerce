@@ -93,6 +93,7 @@ const Home = () => {
   };
 
   return (
+    <>
     <div className="home">
       <Navbar />
       <div className="content-wrapper">
@@ -271,8 +272,12 @@ const Home = () => {
           <p>Explore our latest collection</p>
           <div className="collection-tabs">
             <button className="collection-tab active">All Collections</button>
-            <button className="collection-tab">Verified Brands</button>
-            <button className="collection-tab">Verified Artists</button>
+            <button className="collection-tab" onClick={() => router.push("/Home/VerifiedBrands")}>
+              Verified Brands
+            </button>
+            <button className="collection-tab" onClick={() => router.push("/Home/VerifiedArtists")}>
+              Verified Artists
+            </button>
             <button className="collection-tab">New Drops</button>
             <button className="collection-tab">Live Shows</button>
           </div>
@@ -487,6 +492,7 @@ const Home = () => {
       </div>
       <Footer />
     </div>
+    </>
   );
 };
 
