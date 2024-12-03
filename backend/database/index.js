@@ -41,7 +41,7 @@ db.products.belongsToMany(db.cart, {
 db.brands.hasMany(db.products);
 db.products.belongsTo(db.brands);
 
-db.user.hasMany(db.posts);
+db.user.hasMany(db.posts);  
 db.posts.belongsTo(db.user);
 
 db.user.hasMany(db.Favourites);
