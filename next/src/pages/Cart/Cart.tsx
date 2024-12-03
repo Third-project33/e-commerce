@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
+// Import React and hooks: useState (to manage state) and useEffect (to handle side effects like API calls).
+
 import axios from "axios";
+// Import Axios library for making HTTP requests.
+
 import Swal from "sweetalert2";
+// Import SweetAlert2 library for showing customizable pop-ups and alerts.
+
 import "../Cart/Cart.css";
+// Import the CSS file for styling the cart component.
+
 import Navbar from "../navbar/navbar";
+// Import the Navbar component to display the navigation bar in this component.
 
 interface Product {
   id: number;
@@ -13,37 +22,53 @@ interface Product {
     quantity: number;
   };
 }
+// Define a TypeScript interface for a Product, which includes its ID, title, image, and nested CartProducts object with price and quantity.
 
 interface CartData {
   Products: Product[];
   totalItems: number;
   totalAmount: number;
 }
+// Define a TypeScript interface for the entire CartData, containing an array of Products, total items, and total amount.
 
 const Cart: React.FC = () => {
+  // Define the Cart component using React's Functional Component (FC) type.
+
   const [cart, setCart] = useState<CartData | null>(null);
+  // Declare a state variable `cart` to store cart data, initialized as `null`.
+
   const [error, setError] = useState<string | null>(null);
+  // Declare a state variable `error` to store error messages, initialized as `null`.
 
   const fetchCart = async () => {
+    // Define an async function to fetch cart data from the backend.
     try {
       const token = localStorage.getItem("token");
+      // Get the authentication token from local storage.
       if (!token) throw new Error("No token found");
+      // If the token doesn't exist, throw an error.
 
       const response = await axios.get("http://localhost:3001/cart/itemcart", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      // Make a GET request to the backend to fetch cart data with the token in the headers.
       setCart(response.data);
+      // Update the cart state with the fetched data.
     } catch (err: any) {
       console.error("Error fetching cart:", err);
       setError(err.response?.data?.message || "Unable to load the cart");
+      // If there's an error, set the error message.
     }
   };
 
   useEffect(() => {
     fetchCart();
+    // Call `fetchCart` when the component loads for the first time.
   }, []);
+  // Pass an empty dependency array to ensure this effect runs only once after the initial render.
 
   const handleConfirmOrder = async () => {
+    // Define an async function to handle order confirmation.
     const result = await Swal.fire({
       title: "Confirm Order",
       text: "Are you sure you want to place this order?",
@@ -52,15 +77,20 @@ const Cart: React.FC = () => {
       confirmButtonText: "Yes, confirm order",
       cancelButtonText: "Cancel",
     });
+    // Show a confirmation pop-up using SweetAlert2.
 
     if (result.isConfirmed) {
+      // If the user confirms the order:
       try {
         const token = localStorage.getItem("token");
+        // Get the authentication token from local storage.
+
         await axios.post(
           "http://localhost:3001/cart/confirm-order",
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
+        // Send a POST request to confirm the order.
 
         Swal.fire({
           icon: "success",
@@ -69,23 +99,23 @@ const Cart: React.FC = () => {
           timer: 2000,
           showConfirmButton: false,
         });
+        // Show a success message.
 
-        setCart({
-          Products: [],
-          totalItems: 0,
-          totalAmount: 0,
-        });
+        setCart({ Products: [], totalItems: 0, totalAmount: 0 });
+        // Clear the cart after confirming the order.
       } catch (err: any) {
         Swal.fire({
           icon: "error",
           title: "Error",
           text: err.response?.data?.message || "Failed to confirm order",
         });
+        // Show an error message if the order confirmation fails.
       }
     }
   };
 
   const handleRemoveItem = async (productId: number) => {
+    // Define an async function to handle item removal from the cart.
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: "Do you want to remove this product from your cart?",
@@ -94,29 +124,37 @@ const Cart: React.FC = () => {
       confirmButtonText: "Yes, remove it!",
       cancelButtonText: "No, keep it",
     });
+    // Show a confirmation pop-up.
 
     if (confirm.isConfirmed) {
+      // If the user confirms removal:
       try {
         const token = localStorage.getItem("token");
         await axios.delete(`http://localhost:3001/cart/remove/${productId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        // Send a DELETE request to remove the product.
 
         setCart((prevCart) => {
+          // Update the cart state.
           if (!prevCart) return null;
           const updatedProducts = prevCart.Products.filter(
             (element) => element.id !== productId
           );
+          // Remove the product from the array.
           const totalItems = updatedProducts.reduce(
             (sum, el) => sum + el.CartProducts.quantity,
             0
           );
+          // Recalculate the total number of items.
+
           const totalAmount = updatedProducts.reduce(
             (sum, elm) =>
               sum +
               elm.CartProducts.priceAtPurchase * elm.CartProducts.quantity,
             0
           );
+          // Recalculate the total amount.
 
           return {
             ...prevCart,
@@ -132,30 +170,42 @@ const Cart: React.FC = () => {
           timer: 1500,
           showConfirmButton: false,
         });
+        // Show a success message after removal.
       } catch (err: any) {
         Swal.fire({
           icon: "error",
           title: "Error",
           text: err.response?.data?.message || "Unable to remove the product",
         });
+        // Show an error message if removal fails.
       }
     }
   };
 
   const handleOwner = async (id: number) => {
+    // Define an async function to decrement the owner's product count.
     try {
       await axios.post(`http://localhost:3001/products/decrement/${id}`);
+      // Send a POST request to decrement.
     } catch (error) {
       console.error("Error decrementing owner count:", error);
+      // Log any error.
     }
   };
 
   if (error) return <div className="cart-error">{error}</div>;
+  // Show the error message if there's an error.
+
   if (!cart) return <div className="cart-loading">Loading...</div>;
+  // Show a loading message until the cart data is fetched.
+
   console.log("cart", cart);
+  // Log the cart data to the console for debugging.
+
   return (
     <>
       <Navbar />
+      // Display the navigation bar.
       <div className="cart-container">
         <h2>My Cart</h2>
         <div className="cart-items">
@@ -190,6 +240,7 @@ const Cart: React.FC = () => {
             ))
           )}
         </div>
+
         <div className="cart-summary">
           <p>Total Items: {cart.totalItems || 0}</p>
           <p>Total Amount: {cart.totalAmount || 0} DT</p>
@@ -207,3 +258,4 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
+// Export the Cart component for use in other parts of the application.
