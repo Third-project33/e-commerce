@@ -24,8 +24,14 @@ const ProductList: React.FC = () => {
   const [filters, setFilters] = useState<Record<string, any>>({}); // Stores the current filter criteria
   const [likedProducts, setLikedProducts] = useState<number[]>([]); // Stores the IDs of liked products.
   const navigate = useRouter();
-  const userId = localStorage.getItem("userId"); // Fetch user ID from local storage
+ let userId: any  
 
+  if (global?.window !== undefined) {
+
+   userId  = JSON.parse(localStorage.getItem('user') || '{}').id;
+
+  }
+  console.log(userId, "hiiiiiiiiiiiiiiii");
   const fetchProducts = async () => {
     // Function to fetch products based on filters.
     try {
@@ -53,15 +59,16 @@ const ProductList: React.FC = () => {
     });
   };
 
-
   // Adds a product to the favorites in the database.
+
   const handleLike = async (productId: number) => {
     const isLiked = likedProducts.includes(productId);
-    
+    console.log(userId , "userid")
+    console.log(productId , "prodid")
     if (!isLiked) {
       try {
-        // Call the addFavourite function
-        await axios.post("http://localhost:3001/favorites/add", {
+        // Add the product to favorites
+        await axios.post("http://localhost:3001/favorite/add", {
           userId: Number(userId), // Replace with the actual user ID
           productId: productId,
         });
@@ -82,12 +89,14 @@ const ProductList: React.FC = () => {
         });
       }
     } else {
+      // If already liked, show a message but don't remove it
       Swal.fire({
         icon: "info",
         title: "Already Liked",
         text: "You have already liked this product.",
       });
-
+    }
+  };
 
   const handleOwner = async (id: number) => {
     // Increment the owner count of a product (e.g., a backend operation).
@@ -98,7 +107,6 @@ const ProductList: React.FC = () => {
       console.log(response.data.message); // Log success message to the console.
     } catch (error) {
       console.error("Error incrementing owner count:", error); // Log any errors.
-
     }
   };
 
@@ -137,7 +145,7 @@ const ProductList: React.FC = () => {
           timer: 1500,
           showConfirmButton: false,
         });
-      }
+      } 
     } catch {
       Swal.fire({
         // Show error message if adding to cart fails.
@@ -161,7 +169,8 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-      <Navbar /> {/* Display the Navbar component. */}
+    <div>
+      <Navbar /> Display the Navbar component.
       <div className="product-list-container">
         <div className="sidebar-container">
           {/* Sidebar: A component to display and apply filters */}
@@ -266,10 +275,10 @@ const ProductList: React.FC = () => {
         </div>
       </div>
       {/* Optionally, you can include the LikedProducts component here */}
-      {userId && <LikedProducts userId={Number(userId)} />}
+
+      </div>
     </>
   );
 };
   
 export default ProductList;
-

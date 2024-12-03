@@ -16,15 +16,23 @@ interface LikedProductsProps {
   userId: number; // User ID to fetch liked products
 }
 
-const LikedProducts: React.FC<LikedProductsProps> = ({ userId }) => {
+const LikedProducts: React.FC<LikedProductsProps> = ({  }) => {
   const [likedProducts, setLikedProducts] = useState<Product[]>([]); // State to hold liked products
   const [error, setError] = useState<string | null>(null); // State to hold error messages
+  let id: any  
 
+  if (global?.window !== undefined) {
+
+  //  id  = JSON.parse(localStorage.getItem('user') || '{}').id;
+id = 1
+  }
+  console.log(id, "hiiiiiiiiiiiiiiii");
   // Fetch liked products when the component mounts
   useEffect(() => {
     const fetchLikedProducts = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3001/favorites/${userId}`);
+        const { data } = await axios.get(`http://localhost:3001/favorite/Favourite/${id}`);
+        console.log(data , "data")
         setLikedProducts(data); // Set the liked products
       } catch (error) {
         console.error("Error fetching liked products:", error);
@@ -33,23 +41,20 @@ const LikedProducts: React.FC<LikedProductsProps> = ({ userId }) => {
     };
 
     fetchLikedProducts();
-  }, [userId]);
+  }, [id]);
 
+  // Function to delete a liked product
   // Function to delete a liked product
   const handleDelete = async (productId: number) => {
     try {
-      await axios.delete("http://localhost:3001/favorites/delete", {
-        data: {
-          userId: userId,
-          productId: productId,
-        },
-      });
-      // Remove the deleted product from the state
-      setLikedProducts((prev) => prev.filter((product) => product.id !== productId));
+      await axios.delete(`http://localhost:3001/favorite/delete/${productId}`);
+      setLikedProducts((prevLikedProducts) =>
+        prevLikedProducts.filter((product) => product.id !== productId)
+      ); // Update the likedProducts state
       Swal.fire({
         icon: "success",
-        title: "Product Unliked",
-        text: "You have unliked this product!",
+        title: "Product Removed",
+        text: "Product has been removed from your favorites.",
         timer: 1500,
         showConfirmButton: false,
       });
@@ -58,48 +63,42 @@ const LikedProducts: React.FC<LikedProductsProps> = ({ userId }) => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Failed to delete liked product.",
+        text: "Failed to remove product from favorites.",
       });
     }
   };
 
+
   return (
     <>
-    <Navbar />
-    <div className="liked-products-container">
-      <h2>Liked Products</h2>
-      {error && <p className="error">{error}</p>}
-      {likedProducts.length === 0 ? (
-        <p>No liked products found.</p>
-      ) : (
-        likedProducts.map((product) => (
-          <div key={product.id} className="product-card">
-            <div className="product-image-container">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="product-image"
-              />
-            </div>
-            <div className="product-info">
-              <h2 className="product-title">{product.title}</h2>
-              <span className="product-price">
-                {product.price.toLocaleString()} DT
-              </span>
-              <button
-                className="delete-button"
-                onClick={() => handleDelete(product.id)}
-              >
-                Remove
-              </button>
-            </div>
+      <Navbar /> {/* Optional, if you want navigation */}
+      <div className="liked-products-container">
+        <h2>Your Favorite Products</h2>
+        {error && <p className="error-message">{error}</p>}
+        {likedProducts.length > 0 ? (
+          <div className="liked-products-grid">
+            {likedProducts.map((product) => (
+              <div key={product.id} className="liked-product-card">
+                <img src={product.image} alt={product.title} />
+                <h3>{product.title}</h3>
+                <p>{product.price.toLocaleString()} DT</p>
+                <button
+                  className="delete-button"
+                  onClick={() => handleDelete(product.id)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
           </div>
-        ))
-      )}
-    </div>
-    <Footer />
+        ) : (
+          <p>No favorite products yet. Add some from the product list!</p>
+        )}
+      </div>
+      <Footer /> {/* Optional, if you want a footer */}
     </>
   );
+  
 };
 
 export default LikedProducts;
