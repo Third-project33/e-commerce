@@ -28,7 +28,7 @@ const Navbar = () => {
       setAvatar(savedAvatar);
     } else {
       setAvatar(
-        "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"
+        'https://res.cloudinary.com/dc9siq9ry/image/upload/v1732820101/xlmgkflkhvx5sptledom.jpg'
       );
     }
 
@@ -42,7 +42,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     router.push("/");
-    window.location.reload();
+    
   };
 
   return (

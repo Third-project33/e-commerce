@@ -25,7 +25,7 @@ const CreatePost = () => {
     };
 
     axios
-      .post('http://localhost:3000/posts/create', postData)
+      .post('http://localhost:3001/posts/create', postData)
       .then(() => {
         router.push('/Profile/Profile');
       })
@@ -44,6 +44,8 @@ const CreatePost = () => {
       axios.post('https://api.cloudinary.com/v1_1/dc9siq9ry/image/upload', data)
         .then((res) => {
           setImage(res.data.secure_url);
+          console.log(res.data.secure_url);
+          
         })
         .catch((err) => {
           console.error('Error uploading image:', err);
