@@ -22,15 +22,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
-    const savedAvatar =
-      userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
+    const savedAvatar = userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
     if (savedAvatar) {
       setAvatar(savedAvatar);
     } else {
       setAvatar(
-        'https://res.cloudinary.com/dc9siq9ry/image/upload/v1732820101/xlmgkflkhvx5sptledom.jpg'
+        'https://res.cloudinary.com/dc9siq9ry/image/upload/v1733175640/wzyow7lupj7tjjo9klby.jpg'
       );
     }
+
 
     // Removed Socket.IO listeners
     // return () => {
@@ -38,6 +38,8 @@ const Navbar = () => {
     //   socket.off("receiveMessage");
     // };
   }, []);
+  
+
 
   const handleLogout = () => {
     localStorage.removeItem("user");

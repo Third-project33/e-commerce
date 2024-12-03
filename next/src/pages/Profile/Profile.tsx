@@ -19,7 +19,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>('');
 
-const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v1732820101/xlmgkflkhvx5sptledom.jpg'; 
+const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v1733175640/wzyow7lupj7tjjo9klby.jpg'; 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -87,6 +87,11 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
               const updatedUser = { ...user, avatar: imageUrl };
               localStorage.setItem('user', JSON.stringify(updatedUser));
               setAvatar(imageUrl);
+            })
+            .then(()=>{
+              setTimeout(() => {
+                window.location.reload()
+              }, 50); 
             })
            
             .catch(err => {
@@ -261,17 +266,21 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
                         alt="Profile"
                         className="CreatedPostAvatar"
                       />
+                      
                       <div className="postInfo">
                         <h3 style={{ color: "#ffffff" }}>{user.name}</h3>
                       </div>
+                      <div className="PosttrashIcon" style={{ cursor: 'pointer' }} onClick={()=>handleDeletePost(post.id)}>
+                      <FontAwesomeIcon icon={faTrash} size="lg" color="red" />
+                    </div>
+
                       
+          
                     </div>
                     <div className="postContentWrapper">
                     <p style={{ color: "#ffffff" }}>{post.content}</p>
-                    <div className="PosttrashIcon" style={{ cursor: 'pointer' }} onClick={()=>handleDeletePost(post.id)}>
-                      <FontAwesomeIcon icon={faTrash} size="lg" color="red" />
                     </div>
-                    </div>
+                    
 
                     {post.image && (
                       <img

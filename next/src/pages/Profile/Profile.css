@@ -36,7 +36,7 @@
     bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
-    border: 5px solid #ffffff;
+    border: 5px solid #ffffff2f;
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -188,7 +188,7 @@
 }
 
 .metaLook img {
-    width: 50%;
+    width: 57%;
     border-radius: 8px;
     display: block;
     margin: 0 auto;
@@ -349,16 +349,20 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
+    border: 3px solid #ffffff2f;
+
 }
 
 .CreatedPostImage {
     width: 108%;
     height: 440px;
     border-radius: 8px;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-left: -4%;
     background: transparent;
     object-fit: fill;
+    border-bottom: 12px solid #ffffff06;
+
 }
 
 .editdescriptionPlace {
@@ -432,9 +436,8 @@
   }
   
   .PosttrashIcon {
-    position: absolute; 
-    right: 5% ; 
-    top: 50%;
+    margin-top: 16px;
+    margin-left: 10px;
     transform: translateY(-50%);
     cursor: pointer;
   }
