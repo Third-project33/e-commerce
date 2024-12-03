@@ -6,7 +6,7 @@ const db = require('../database'); // Adjust the path as necessary
         const { userId, productId } = req.body; // Expecting userId and productId in the request body
 
         const favourite = await db.Favourites.create({
-            userId: userId,
+            UserId: userId,
             productId: productId,
             added_at: new Date() // Optional: you can set this explicitly
         });
@@ -35,5 +35,19 @@ const db = require('../database'); // Adjust the path as necessary
         return res.status(500).json({ message: 'Error deleting favourite', error });
     }
 };
+const getFavorites = async (req, res) => {
+    try {
+        const { id } = req.params; // Expecting userId in the request parameters
+console.log(id)
+        const favorites = await db.Favourites.findOne({
+            where: { UserId: id },
+            include: [{ model: db.products ,as: "products"}] // Include product details if needed
+        });
+console.log(favorites);
+       res.send(favorites.products)
+    } catch (error) {
+        return res.status(500).json({ message: 'Error retrieving favorites', error });
+    }
+};
 
- module.exports={addFavourite,deleteFavourite}
+ module.exports={addFavourite,deleteFavourite,getFavorites}

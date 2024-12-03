@@ -48,8 +48,8 @@ db.posts.belongsTo(db.user);
 db.user.hasMany(db.Favourites);
 db.Favourites.belongsTo(db.user);
 
-db.Favourites.belongsToMany(db.products, { through: db.user_favorites });
-db.products.belongsToMany(db.Favourites, { through: db.user_favorites });
+db.products.belongsToMany(db.Favourites , {  through : db.user_favorites  , as : "favourites" , foreignKey : "productId" , otherKey : "FavouriteId"}) 
+db.Favourites.belongsToMany(db.products , {  through : db.user_favorites  , as : "products" , foreignKey :"FavouriteId" , otherKey : "productId" })
 
 // sequelize
 //   .sync({ alter: false })
