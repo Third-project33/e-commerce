@@ -38,7 +38,7 @@ exports.addToCart = (req, res) => {
       db.cart // Cart Lookup/Create: Finds or creates a cart for the user.
 
         .findOrCreate({
-          where: { UserId: decoded.id },
+          where: { UserId: decoded.id || decoded.uid },
           defaults: { totalItems: 0, totalAmount: 0 },
         })
         .then(([cart]) => {
