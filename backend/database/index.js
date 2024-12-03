@@ -1,8 +1,11 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("e-commerce", "root", "saf12@sql", {
-  host: "localhost",
-  dialect: "mysql",
+
+
+const sequelize = new Sequelize('e-commerce', 'root', 'root', {
+  host: 'localhost',
+  dialect: 'mysql' 
+
 });
 
 sequelize

@@ -51,7 +51,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const productsResponse = await axios.get(
-          "http://localhost:3000/products"
+          "http://localhost:3001/products"
         );
         setProducts(productsResponse.data.slice(0, 9));
 
@@ -61,12 +61,12 @@ const Home = () => {
         setTrendingProducts(newProducts);
 
         const creatorsResponse = await axios.get(
-          "http://localhost:3000/user/all"
+          "http://localhost:3001/user/all"
         );
         setCreators(creatorsResponse.data.slice(0, 3));
 
         const brandsResponse = await axios.get(
-          "http://localhost:3000/brands/allbrands"
+          "http://localhost:3001/brands/allbrands"
         );
         const verifiedBrands = brandsResponse.data
           .filter((brand: Brand) => brand.verified === 1)
