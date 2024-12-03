@@ -1,0 +1,180 @@
+/* LikedProducts.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ... keep existing code (root variables) */
+
+.liked-products-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16;
+}
+
+.liked-products-container h2 {
+  @apply text-4xl font-light text-center mb-12;
+  letter-spacing: -0.5px;
+  background: linear-gradient(to right, #1a1a1a, #4a4a4a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.liked-products-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.liked-product-card {
+  @apply bg-white rounded-2xl p-6 transition-all duration-300 relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(0);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.liked-product-card:hover {
+  @apply transform -translate-y-2;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.liked-product-card img {
+  @apply w-full h-48 object-cover rounded-xl mb-4;
+  transition: transform 0.3s ease-out;
+}
+
+.liked-product-card:hover img {
+  transform: scale(1.02);
+}
+
+.liked-product-card h3 {
+  @apply text-xl font-medium mb-2 text-gray-900;
+  letter-spacing: -0.5px;
+}
+
+.liked-product-card p {
+  @apply text-lg text-gray-700 mb-4;
+  font-weight: 300;
+}
+
+.delete-button {
+  @apply w-full py-3 px-4 rounded-xl text-sm font-medium transition-all duration-300;
+  background: rgba(234, 56, 77, 0.05);
+  color: #ea384d;
+  border: 1px solid rgba(234, 56, 77, 0.1);
+}
+
+.delete-button:hover {
+  background: rgba(234, 56, 77, 0.1);
+  transform: translateY(-1px);
+}
+
+.error-message {
+  @apply text-red-500 text-center my-8 text-lg;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Empty state styling */
+.liked-products-container > p {
+  @apply text-center text-gray-500 text-lg mt-12;
+  animation: fadeIn 0.6s ease-out;
+  letter-spacing: -0.3px;
+}
+.liked-products-container {
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .liked-products-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Darker text for better readability */
+  }
+  
+  .error {
+    color: red; /* Red color for error messages */
+    margin-bottom: 10px;
+  }
+  
+  .product-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff; /* White background for product cards */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px;
+    margin-bottom: 15px; /* Space between product cards */
+    transition: box-shadow 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+  }
+  
+  .product-image-container {
+    flex-shrink: 0; /* Prevent image from shrinking */
+    width: 100px; /* Fixed width for images */
+    height: 100px; /* Fixed height for images */
+    overflow: hidden; /* Hide overflow */
+    border-radius: 8px; /* Rounded corners for images */
+  }
+  
+  .product-image {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the container */
+  }
+  
+  .product-info {
+    flex-grow: 1; /* Allow info to take remaining space */
+    padding-left: 15px; /* Space between image and text */
+  }
+  
+  .product-title {
+    font-size: 18px;
+    margin: 0; /* Remove default margin */
+    color: #333; /* Darker text for better readability */
+  }
+  
+  .product-price {
+    font-size: 16px;
+    color: #555; /* Slightly lighter text for price */
+  }
+  
+  .delete-button {
+    background-color: #ff4d4d; /* Red background for delete button */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 8px 12px; /* Padding for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .delete-button:hover {
+    background-color: #ff1a1a; /* Darker red on hover */
+  }
