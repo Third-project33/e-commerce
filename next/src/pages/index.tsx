@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { FaGoogle, FaFacebook , FaGithub} from 'react-icons/fa';
 import { auth } from '../firebaseConfig'; 
 import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider  , GithubAuthProvider } from 'firebase/auth'; 
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import '../pages/Signup/Login.css';
 import '../app/globals.css'
@@ -32,11 +33,25 @@ const Login = () => {
             localStorage.setItem('userAvatar', response.data.user.avatar);
             localStorage.setItem('userType', user.type);
             
-            if (user.type === 'admin') {
-              router.push('/Admin');
-              window.location.reload();
-            } else {
+            if (user.type === 'admin' && user.banned === false ) {
+              router.push('/Admin/hooks/Admin');
+            } else if ( (user.type === 'user' && user.banned === false) ) {
               router.push('/Home/home');
+            }
+            else if(user.banned === true) {
+              Swal.fire({
+                icon: 'error',
+                title: '<span class="swal-title-error">Account Suspended</span>',
+                text: 'Your account has been suspended due to policy violations. Please contact support for more information.',
+                background: 'rgba(255, 255, 255, 0.1)', 
+                color: 'red', 
+                confirmButtonText: 'Got it!',
+                customClass: {
+                  title: 'swal-title-error',
+                  htmlContainer: 'swal-content',
+                    confirmButton: 'login-custom-button',
+                }
+              });
             }
           }
         })

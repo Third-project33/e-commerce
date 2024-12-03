@@ -93,11 +93,7 @@ const login = async (req, res) => {
         if (!user) {//if the email address is not in our database, an error message will be shown indicaing that we do not have this user
             return res.status(404).json({ message: 'User not found' });
         }
-         // Check if the user is banned
-         if (user.banned) {
-            return res.status(403).json({ message: 'User is banned' }); // Forbidden
-        }
-
+      
         const isMatch = await bcrypt.compare(password, user.password);//this to compare if the given password is the same as the hashed one in our database
 
         if (!isMatch) {
@@ -107,9 +103,9 @@ const login = async (req, res) => {
         const fullName = `${user.firstName} ${user.lastName}`;
 
         const token = jwt.sign(//json web token to give a token to the user once they are logged in 
-            { id: user.id, name: fullName, email: user.email , avatar: user.avatar},//the token will include these
+            { id: user.id, name: fullName, email: user.email , avatar: user.avatar , banned:user.banned},//the token will include these
             JWT_SECRET,
-            { expiresIn: '5h' }
+            { expiresIn: '24h' }
         );
 
         return res.status(200).json({
@@ -119,7 +115,8 @@ const login = async (req, res) => {
                 name: fullName,
                 email: user.email,
                 type: user.type,
-                avatar: user.avatar 
+                avatar: user.avatar,
+                banned: user.banned 
 
             },
             token
