@@ -1,0 +1,32 @@
+.verified-brands, .verified-artists {
+  background: linear-gradient(to right, #5c373c, #181e41);
+    background-size: cover;
+    color: white; /* Adjust text color as needed */
+  }
+  
+  .content-wrapper {
+    padding: 20px;
+    text-align: center;
+  }
+  .about-text1 {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+  }
+  .makers-grid1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+  }
+  .maker-card1 {
+    text-align: center;
+  }
+  .maker-image1 {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }

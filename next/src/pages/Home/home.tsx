@@ -51,7 +51,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const productsResponse = await axios.get(
-          "http://localhost:3000/products"
+          "http://localhost:3001/products"
         );
         setProducts(productsResponse.data.slice(0, 9));
     
@@ -61,12 +61,12 @@ const Home = () => {
         setTrendingProducts(newProducts);
     
         const creatorsResponse = await axios.get(
-          "http://localhost:3000/user/all"
+          "http://localhost:3001/user/all"
         );
         setCreators(creatorsResponse.data.slice(0, 3));
     
         const brandsResponse = await axios.get(
-          "http://localhost:3000/brands/allbrands"
+          "http://localhost:3001/brands/allbrands"
         );
         const verifiedBrands = brandsResponse.data
           .filter((brand: Brand) => brand.verified === 1)
@@ -89,6 +89,7 @@ const Home = () => {
   };
 
   return (
+    <>
     <div className="home">
       <Navbar />
       <div className="content-wrapper">
@@ -264,8 +265,12 @@ const Home = () => {
           <p>Explore our latest collection</p>
           <div className="collection-tabs">
             <button className="collection-tab active">All Collections</button>
-            <button className="collection-tab">Verified Brands</button>
-            <button className="collection-tab">Verified Artists</button>
+            <button className="collection-tab" onClick={() => router.push("/Home/VerifiedBrands")}>
+              Verified Brands
+            </button>
+            <button className="collection-tab" onClick={() => router.push("/Home/VerifiedArtists")}>
+              Verified Artists
+            </button>
             <button className="collection-tab">New Drops</button>
             <button className="collection-tab">Live Shows</button>
           </div>
@@ -480,6 +485,7 @@ const Home = () => {
       </div>
       <Footer />
     </div>
+    </>
   );
 };
 
