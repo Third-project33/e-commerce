@@ -9,9 +9,8 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import "./navbar.css";
-import ChatWidget from "../ChatWidget";
-// Removed Socket.IO import
-// const socket = io("http://localhost:3000");
+import ChatWidget from "../chat/ChatWidget";
+
 
 const Navbar = () => {
   const router = useRouter();
@@ -31,12 +30,7 @@ const Navbar = () => {
       );
     }
 
-
-    // Removed Socket.IO listeners
-    // return () => {
-    //   socket.off("receiveNotification");
-    //   socket.off("receiveMessage");
-    // };
+ 
   }, []);
   
 

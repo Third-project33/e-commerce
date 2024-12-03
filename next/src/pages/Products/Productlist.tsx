@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react"; // Import React and hooks for state and lifecycle management.
-import axios from "axios"; // Import Axios for making HTTP requests.
-import Sidebar from "./Sidebar"; // Import the Sidebar component.
-import Swal from "sweetalert2"; // Import SweetAlert2 for creating pop-up alerts.
-import { useRouter } from "next/router"; // Import the Next.js router for navigation.
-import Navbar from "../navbar/navbar"; // Import the Navbar component.
-import "./Productslist.css"; // Import the CSS file for styling.
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Sidebar from "./Sidebar";
+import Swal from "sweetalert2"; // A library for showing pop-up alerts.
+import { useRouter } from "next/router"; //  A hook from Next.js for navigation.
+import Navbar from "../navbar/navbar";
+import "./Productslist.css";
 
+// Product Interface: Defines the structure of a product object, specifying the types of its properties
 interface Product {
   // Define the structure of a product object.
   id: number; // The unique ID of the product.
@@ -17,11 +18,11 @@ interface Product {
 }
 
 const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]); // State to store the list of products.
-  const [error, setError] = useState<string | null>(null); // State to handle any error messages.
-  const [filters, setFilters] = useState<Record<string, any>>({}); // State for managing filters.
-  const [likedProducts, setLikedProducts] = useState<number[]>([]); // State to track IDs of liked products.
-  const navigate = useRouter(); // A hook for navigation (useRouter is part of Next.js).
+  const [products, setProducts] = useState<Product[]>([]); // Stores the list of products.
+  const [error, setError] = useState<string | null>(null); // Stores any error messages.
+  const [filters, setFilters] = useState<Record<string, any>>({}); // Stores the current filter criteria
+  const [likedProducts, setLikedProducts] = useState<number[]>([]); // Stores the IDs of liked products.
+  const navigate = useRouter();
 
   const fetchProducts = async () => {
     // Function to fetch products based on filters.
@@ -29,7 +30,8 @@ const ProductList: React.FC = () => {
       const { data } = await axios.get("http://localhost:3001/products", {
         params: filters, // Pass the current filters as query parameters.
       });
-      setProducts(data); // Update the products state with the fetched data.
+      //Updates the products state with the fetched data
+      setProducts(data);
     } catch {
       setError("Failed to load products"); // Set an error message if the fetch fails.
     }
@@ -38,13 +40,16 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     // React hook to fetch products whenever filters change.
     fetchProducts();
-  }, [filters]); // Dependencies: this hook re-runs when `filters` changes.
+  }, [filters]); // Re-fetch products when filters change
 
   const handleFilterChange = (newFilters: Record<string, any>) => {
-    // Update the filter criteria.
-    setFilters((prevFilters) => ({ ...prevFilters, ...newFilters })); // Merge new filters with the current ones.
+    setFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters, ...newFilters };
+      return updatedFilters;
+    });
   };
 
+  // Toggles the liked status of a product.
   const handleLike = (productId: number) => {
     // Toggle the liked status of a product.
     setLikedProducts(
@@ -66,6 +71,8 @@ const ProductList: React.FC = () => {
       console.error("Error incrementing owner count:", error); // Log any errors.
     }
   };
+
+  // Adds a product to the cart. If the user is not logged in, it prompts them to log in.
 
   const handleAddToCart = async (productId: number) => {
     // Function to add a product to the cart.
@@ -111,7 +118,7 @@ const ProductList: React.FC = () => {
       });
     }
   };
-
+  //  Updates the filter based on the selected rarity.
   const handleRarityChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     // Update filters when rarity is selected.
     handleFilterChange({ rarity: e.target.value });
@@ -131,7 +138,7 @@ const ProductList: React.FC = () => {
           <Sidebar onFilterChange={handleFilterChange} />
         </div>
         <div className="content-section">
-          {/* Header section to show product count and filter options */}
+          {/* Header Bar: Displays the total number of items and filter options. */}
           <div className="header-bar">
             <div className="header-left">
               <div className="total-items">{products.length} items</div>
@@ -175,6 +182,8 @@ const ProductList: React.FC = () => {
               </select>
             </div>
           </div>
+          {/* Product Grid: Displays each product in a card format
+           with an image, title, price, and buttons to like or buy the product. */}
           <div className="product-grid">
             {/* Loop through products and display them as cards */}
             {products.map((product) => (
