@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
 import Swal from "sweetalert2"; // A library for showing pop-up alerts.
-import { useRouter } from "next/router"; //  A hook from Next.js for navigation.
+import { useRouter } from "next/router"; // A hook from Next.js for navigation.
 import Navbar from "../navbar/navbar";
 import "./Productslist.css";
+import LikedProducts from "../UserFavorites/LikedProducts"; // Import the LikedProducts component
 
 // Product Interface: Defines the structure of a product object, specifying the types of its properties
 interface Product {
@@ -23,6 +24,7 @@ const ProductList: React.FC = () => {
   const [filters, setFilters] = useState<Record<string, any>>({}); // Stores the current filter criteria
   const [likedProducts, setLikedProducts] = useState<number[]>([]); // Stores the IDs of liked products.
   const navigate = useRouter();
+  const userId = localStorage.getItem("userId"); // Fetch user ID from local storage
 
   const fetchProducts = async () => {
     // Function to fetch products based on filters.
@@ -30,12 +32,14 @@ const ProductList: React.FC = () => {
       const { data } = await axios.get("http://localhost:3001/products", {
         params: filters, // Pass the current filters as query parameters.
       });
-      //Updates the products state with the fetched data
+      // Updates the products state with the fetched data
       setProducts(data);
     } catch {
       setError("Failed to load products"); // Set an error message if the fetch fails.
     }
   };
+
+
 
   useEffect(() => {
     // React hook to fetch products whenever filters change.
@@ -49,16 +53,41 @@ const ProductList: React.FC = () => {
     });
   };
 
-  // Toggles the liked status of a product.
-  const handleLike = (productId: number) => {
-    // Toggle the liked status of a product.
-    setLikedProducts(
-      (prev) =>
-        prev.includes(productId)
-          ? prev.filter((id) => id !== productId) // Remove from liked list if already liked.
-          : [...prev, productId] // Add to liked list if not liked yet.
-    );
-  };
+
+  // Adds a product to the favorites in the database.
+  const handleLike = async (productId: number) => {
+    const isLiked = likedProducts.includes(productId);
+    
+    if (!isLiked) {
+      try {
+        // Call the addFavourite function
+        await axios.post("http://localhost:3001/favorites/add", {
+          userId: Number(userId), // Replace with the actual user ID
+          productId: productId,
+        });
+        setLikedProducts((prev) => [...prev, productId]); // Update local state
+        Swal.fire({
+          icon: "success",
+          title: "Product Liked",
+          text: "You have liked this product!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      } catch (error) {
+        console.error("Error adding product to favorites:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to add product to favorites.",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "info",
+        title: "Already Liked",
+        text: "You have already liked this product.",
+      });
+
 
   const handleOwner = async (id: number) => {
     // Increment the owner count of a product (e.g., a backend operation).
@@ -69,11 +98,11 @@ const ProductList: React.FC = () => {
       console.log(response.data.message); // Log success message to the console.
     } catch (error) {
       console.error("Error incrementing owner count:", error); // Log any errors.
+
     }
   };
 
   // Adds a product to the cart. If the user is not logged in, it prompts them to log in.
-
   const handleAddToCart = async (productId: number) => {
     // Function to add a product to the cart.
     const token = localStorage.getItem("token"); // Check if the user is logged in using a token.
@@ -118,7 +147,8 @@ const ProductList: React.FC = () => {
       });
     }
   };
-  //  Updates the filter based on the selected rarity.
+
+  // Updates the filter based on the selected rarity.
   const handleRarityChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     // Update filters when rarity is selected.
     handleFilterChange({ rarity: e.target.value });
@@ -235,8 +265,11 @@ const ProductList: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Optionally, you can include the LikedProducts component here */}
+      {userId && <LikedProducts userId={Number(userId)} />}
     </>
   );
 };
 
-export default ProductList; // Export the ProductList component.
+export default ProductList;
+

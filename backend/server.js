@@ -21,12 +21,17 @@ const userRoute = require("./routes/user.js");
 const productsRoute = require("./routes/AllProducts.js");
 const cartRoute = require("./routes/cart.js");
 const postsRoute = require("./routes/posts.js");
+const userFavorites = require('./routes/user_favorites.js');
+const favorite=require('./routes/favorite.js')
 
 app.use("/brands", brandsroute);
 app.use("/user", userRoute);
 app.use("/products", productsRoute);
 app.use("/cart", cartRoute);
 app.use("/posts", postsRoute);
+app.use("/user_favorites",userFavorites)
+app.use("/favorite",favorite)
+
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
