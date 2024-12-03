@@ -32,11 +32,13 @@ const Login = () => {
             localStorage.setItem('userAvatar', response.data.user.avatar);
             localStorage.setItem('userType', user.type);
             
-            if (user.type === 'admin') {
-              router.push('/Admin');
-              window.location.reload();
-            } else {
+            if (user.type === 'admin' && user.banned === false ) {
+              router.push('/Admin/hooks/Admin');
+            } else if ( (user.type === 'user' && user.banned === false) ) {
               router.push('/Home/home');
+            }
+            else if(user.banned === true) {
+              alert("hello")
             }
           }
         })
