@@ -2,7 +2,13 @@ const { Sequelize } = require("sequelize");
 
 
 
+<<<<<<< HEAD
 const sequelize = new Sequelize('e-commerce', 'root', '23707560eya', {
+=======
+
+const sequelize = new Sequelize('e-commerce', 'root', '23707560eya', {
+
+>>>>>>> 8f49076a7010156958d6cd54d49d6478ce16f870
   host: 'localhost',
   dialect: 'mysql' 
 });

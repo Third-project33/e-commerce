@@ -45,7 +45,12 @@ const ProductList: React.FC = () => {
     }
   };
 
+<<<<<<< HEAD
   // useEffect Hook: Runs fetchProducts whenever the filters change, ensuring the product list is updated.
+=======
+
+
+>>>>>>> 8f49076a7010156958d6cd54d49d6478ce16f870
   useEffect(() => {
     // React hook to fetch products whenever filters change.
     fetchProducts();
@@ -58,6 +63,10 @@ const ProductList: React.FC = () => {
     });
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f49076a7010156958d6cd54d49d6478ce16f870
   // Adds a product to the favorites in the database.
 
   const handleLike = async (productId: number) => {
@@ -95,11 +104,15 @@ const ProductList: React.FC = () => {
         title: "Already Liked",
         text: "You have already liked this product.",
       });
+<<<<<<< HEAD
     }
   };
   
   
   // Toggles the liked status of a product.
+=======
+
+>>>>>>> 8f49076a7010156958d6cd54d49d6478ce16f870
 
   const handleOwner = async (id: number) => {
     // Increment the owner count of a product (e.g., a backend operation).
@@ -110,6 +123,10 @@ const ProductList: React.FC = () => {
       console.log(response.data.message); // Log success message to the console.
     } catch (error) {
       console.error("Error incrementing owner count:", error); // Log any errors.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f49076a7010156958d6cd54d49d6478ce16f870
     }
   };
 
@@ -285,3 +302,7 @@ const ProductList: React.FC = () => {
 };
 
 export default ProductList;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f49076a7010156958d6cd54d49d6478ce16f870
