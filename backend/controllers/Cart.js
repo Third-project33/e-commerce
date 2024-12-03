@@ -15,11 +15,10 @@ const getCart = (req, res) => {
   /* Token Verification: The token is verified using a secret key ('ascefbth,plnihcdxuwy').
  If the token is valid, it decodes the token to extract the userId.*/
   const decoded = jwt.verify(token, "ascefbth,plnihcdxuwy");
-  const userId = decoded.id;
-
+  const userId = decoded.id 
   db.cart
     .findOne({
-      where: { UserId: userId }, // Filters the cart by the user's ID.
+      where: { UserId: userId || uid }, // Filters the cart by the user's ID.
       include: [
         // Joins
         {
