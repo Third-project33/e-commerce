@@ -24,7 +24,9 @@ const VerifiedArtists = () => {
         <div className="makers-grid1">
           {teamData.map((member) => (
             <div key={member.id} className="maker-card1">
-              <img src={member.image} alt={member.name} className="maker-image1" />
+              <div className="image-container">
+                <img src={member.image} alt={member.name} className="maker-image1" />
+              </div>
               <h3 className="maker-name">{member.name}</h3>
               <div className="maker-role">{member.role}</div>
             </div>

@@ -88,10 +88,13 @@ const CreateProduct: React.FC = () => {
       data.append('cloud_name', 'dc9siq9ry');
       try {
         const res = await axios.post('https://api.cloudinary.com/v1_1/dc9siq9ry/image/upload', data);
+        
         setFormData(prev => ({
           ...prev,
           image: res.data.secure_url
-        }));
+          
+        }
+      ));
       } catch (err) {
         console.error('Error uploading image:', err);
         alert('Error uploading image. Please try again.');

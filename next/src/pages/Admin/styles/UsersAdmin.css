@@ -27,6 +27,7 @@
     text-shadow: 0 0 10px rgba(164, 69, 247, 0.5); /* Soft glow effect */
 }
 
+/* Users Grid */
 .users-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -36,8 +37,9 @@
     padding: 20px;
 }
 
+/* User Card Styles */
 .user-card {
-    background: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    background: rgba(255, 255, 255, 0.7); /* More transparent background */
     border-radius: 20px;
     padding: 25px;
     position: relative;
@@ -46,6 +48,18 @@
     box-shadow: 
         0 5px 15px rgba(0, 0, 0, 0.1),
         0 15px 25px rgba(0, 0, 0, 0.05);
+    animation: cardFadeIn 0.5s ease; /* Added fade-in animation */
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .user-card:hover {
@@ -55,6 +69,7 @@
         0 5px 15px rgba(74, 144, 226, 0.1);
 }
 
+/* User Avatar Styles */
 .user-avatar-container {
     width: 100px;
     height: 100px;
@@ -71,6 +86,7 @@
     object-position: center;
 }
 
+/* User Info Styles */
 .user-info {
     text-align: center;
     margin-bottom: 20px;
@@ -91,6 +107,7 @@
     margin: 5px 0;
 }
 
+/* User Actions Styles */
 .user-actions {
     display: flex;
     gap: 10px;
@@ -125,6 +142,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Search Container Styles */
 .search-container {
     max-width: 600px;
     margin: 0 auto 40px;
@@ -147,6 +165,7 @@
     box-shadow: 0 5px 20px rgba(74, 144, 226, 0.2);
 }
 
+/* Loading Spinner Styles */
 .loading-spinner {
     width: 50px;
     height: 50px;
@@ -161,6 +180,8 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -217,4 +238,43 @@
 .scroll-top:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+}
+
+.left-button {
+    position: fixed; /* Keep it fixed */
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+    background: linear-gradient(45deg, #28a745, #20c997);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.left-button:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+    animation: pulse 0.5s ease; /* Pulse animation on hover */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05); /* Slightly larger */
+    }
+    100% {
+        transform: scale(1); /* Back to original size */
+    }
 }

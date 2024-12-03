@@ -10,6 +10,8 @@ interface Product {
     image: string;
     name: string;
     price: number;
+    rarity: string;
+    collection: string;
 }
 
 const AdminBrandProducts = () => {
@@ -29,7 +31,7 @@ const AdminBrandProducts = () => {
             
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(`http://localhost:3000/api/products/${brandId}`);
+                const response = await axios.get<Product[]>(`http://localhost:3001/products/${brandId}`);
                 console.log('Fetched products:', response.data);
                 setProducts(response.data);
             } catch (error) {
@@ -48,6 +50,68 @@ const AdminBrandProducts = () => {
         fetchProducts();
     }, [brandId, refresh]);
 
+    //=> Add product using SweetAlert modal
+    const handleAddProduct = async () => {
+        const { value: formValues } = await Swal.fire({
+            title: 'Add New Product',
+            html: `
+                <input id="title" class="swal2-input" placeholder="Product Title">
+                <input id="image" class="swal2-input" placeholder="Image URL">
+                <input id="price" type="number" class="swal2-input" placeholder="Price">
+                <input id="rarity" class="swal2-input" placeholder="Rarity">
+                <input id="collection" class="swal2-input" placeholder="Collection">
+            `,
+            focusConfirm: false,
+            preConfirm: () => {
+                return {
+                    title: (document.getElementById('title') as HTMLInputElement).value,
+                    image: (document.getElementById('image') as HTMLInputElement).value,
+                    price: Number((document.getElementById('price') as HTMLInputElement).value),
+                    rarity: (document.getElementById('rarity') as HTMLInputElement).value,
+                    collection: (document.getElementById('collection') as HTMLInputElement).value,
+                };
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Add Product',
+            cancelButtonText: 'Cancel',
+        });
+
+        if (formValues) {
+            const { title, image, price, rarity, collection } = formValues;
+
+            if (!title || !image || price <= 0 || !rarity || !collection || !brandId) {
+                Swal.fire({
+                    title: 'Invalid Input',
+                    text: 'Please fill in all fields correctly.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            try {
+                console.log('Adding product with payload:', { title, image, price, rarity, collection, brandId });
+                const response = await axios.post(`http://localhost:3001/products/create`, { 
+                    title, 
+                    image, 
+                    price, 
+                    rarity, 
+                    collection, 
+                    brandId 
+                });
+
+                if (response.status === 201) {
+                    Swal.fire('Success!', 'Product added successfully', 'success');
+                    setRefresh(!refresh); // Refresh the product list
+                }
+            } catch (error:any) {
+                console.error("Error adding product:", error.response ? error.response.data : error.message);
+                Swal.fire('Error!', 'Failed to add product: ' + (error.response ? error.response.data.message : error.message), 'error');
+            }
+        }
+    };
+
+    //=> Price update
     const handlePriceUpdate = async (productId: number): Promise<void> => {
         if (!newPrice || isNaN(Number(newPrice)) || Number(newPrice) <= 0) {
             Swal.fire({
@@ -61,7 +125,7 @@ const AdminBrandProducts = () => {
 
         try {
             console.log('Updating price for product:', productId, 'New price:', newPrice);
-            await axios.put(`http://localhost:3000/api/products/${productId}`, { 
+            await axios.put(`http://localhost:3001/products/${productId}`, { 
                 price: Number(newPrice) 
             });
             
@@ -86,6 +150,43 @@ const AdminBrandProducts = () => {
         }
     };
 
+    //=> Image update
+    const handleImageUpdate = async (productId: number): Promise<void> => {
+        const { value: newImage } = await Swal.fire({
+            title: 'Update Product Image',
+            input: 'text',
+            inputLabel: 'Enter the new image URL',
+            inputPlaceholder: 'Image URL',
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            cancelButtonText: 'Cancel',
+        });
+    
+        if (newImage) {
+            try {
+                const response = await axios.put(`http://localhost:3001/products/${productId}`, { 
+                    image: newImage 
+                });
+                if (response.status === 200) {
+                    Swal.fire('Success!', 'Image updated successfully', 'success');
+                    setRefresh(prev => !prev); // Refresh the product list
+                }
+            } catch (error) {
+                console.error("Error updating image:", error);
+                Swal.fire('Error!', 'Failed to update image. Please try again.', 'error');
+            }
+        }
+    };
+
+    const handleBackButtonClick = () => {
+        const currentUrl = router.asPath; // Get the current URL
+        const targetUrl = "/Admin/hooks/BrandsAdmin"; // Define your target URL
+
+        if (currentUrl !== targetUrl) {
+            router.push(targetUrl); // Only navigate if the URLs are different
+        }
+    };
+
     if (loading) {
         return (
             <div className="loading-container">
@@ -94,7 +195,6 @@ const AdminBrandProducts = () => {
         );
     }
 
-    // Filter products based on the search term
     const filteredProducts = products.filter(product =>
         (product.title && product.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -112,7 +212,22 @@ const AdminBrandProducts = () => {
                     className="search-input"
                 />
             </div>
-            
+
+            <button 
+                className="add-product-button" 
+                onClick={handleAddProduct} // Call the SweetAlert function here
+            >
+                +
+            </button>
+
+
+            <button 
+            className="back-button" 
+            onClick={handleBackButtonClick}
+        >
+           ←
+        </button>
+
             <div className="products-wrapper">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
@@ -140,6 +255,12 @@ const AdminBrandProducts = () => {
                                 }))}
                             >
                                 Update Price
+                            </button>
+                            <button 
+                                className="update-image-button"
+                                onClick={() => handleImageUpdate(product.id)}
+                            >
+                                Update Image
                             </button>
                             {showDropdown[product.id] && (
                                 <div className="price-update-dropdown">
@@ -169,15 +290,9 @@ const AdminBrandProducts = () => {
                 )}
             </div>
             
-            <button 
-                className="back-button" 
-                onClick={() => router.push("/Admin/hooks/BrandsAdmin")}
-            >
-                Back
-            </button>
+           
         </div>
     );
 };
-
 
 export default AdminBrandProducts;

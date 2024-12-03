@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faPlus, faEdit  , faTrash} from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import "../Profile/Profile.css"
+import Navbar from '../navbar/navbar';
+import Footer from '../footer/footer';
+import "../../app/globals.css"
 
 const Profile = () => {
   const router = useRouter();
@@ -52,7 +55,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
     const [firstName, lastName] = newName.split(' ');
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
 
-    axios.put('http://localhost:3000/user/update-name', {
+    axios.put('http://localhost:3001/user/update-name', {
       userId: userData.id,
       firstName,
       lastName,
@@ -79,7 +82,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
         .then((data) => {
           const imageUrl = data.data.secure_url;
           const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
-          axios.put('http://localhost:3000/user/update-avatar', { userId, avatar: imageUrl })
+          axios.put('http://localhost:3001/user/update-avatar', { userId, avatar: imageUrl })
             .then(() => {
               const updatedUser = { ...user, avatar: imageUrl };
               localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -96,7 +99,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
   useEffect(() => {
     const fetchPosts = () => {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      axios.get(`http://localhost:3000/posts/user/${user.id}`)
+      axios.get(`http://localhost:3001/posts/user/${user.id}`)
         .then(response => {
           setPosts(response.data);
         })
@@ -134,7 +137,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
     })
     .then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3000/posts/deletePost/${postId}`)
+        axios.delete(`http://localhost:3001/posts/deletePost/${postId}`)
           .then(() => {
             setPosts(posts.filter(post => post.id !== postId));
             Swal.fire(
@@ -158,6 +161,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
 
   return (
     <div className="pageWrapper">
+      <Navbar/> 
       <div className="profilePage">
         <div className="profileHeader">
           <div className="profilePicture">
@@ -291,6 +295,7 @@ const defaultAvatar = 'https://res.cloudinary.com/dc9siq9ry/image/upload/v173282
           onChange={handleFileChange}
         />
       </div>
+      <Footer/>
     </div>
   );
 };
